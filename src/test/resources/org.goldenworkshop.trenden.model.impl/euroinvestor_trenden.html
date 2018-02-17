@@ -1,0 +1,1614 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+<head id="ctl00_Head1"><title>
+    Euroinvestor Trenden - Få købs- og salgssignaler på dine aktier
+</title><meta content="initial-scale=1.0, width=device-width" name="viewport" /><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><meta id="ctl00_metacopyright" name="copyright" content="Copyright (C) 1995-2018, EuroInvestor.com A/S" /><link href="/httpcombiner.ashx?s=set_css&amp;t=text/css&amp;v=LiveBranchBuild_20180209.1" type="text/css" rel="stylesheet" />
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+
+    <!-- this script is neccessary for Xaxis to be able to buy wallpapers through prebid -->
+
+    <script src='https://macro.adnami.io/adsm.macro.97797f27-e5a9-4dd2-9260-2c6b4dc0b3de.js'></script>
+    <script>
+        var adsmtag = adsmtag || {};
+        adsmtag.cmd = adsmtag.cmd || [];
+    </script>
+
+
+
+
+
+
+
+    <script type="text/javascript">
+
+        var slotIds = {
+            'div-gpt-ad-1-101':'/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Top1-930x180',
+            'div-gpt-ad-1-103':'/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Top2-728x90',
+            'div-gpt-ad-1-111':'/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Knap1-150x90',
+            'div-gpt-ad-1-112':'/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Knap2-150x90',
+        };
+
+
+        var search = window.location.search;
+        var PROTOCOL = window.location.protocol;
+
+        // a very basic test to check if we're on a mobile device; CMS might have
+        // something based on useragent
+        var isMobile = (window.matchMedia && window.matchMedia('(max-width: 720px)').matches) || screen.width < 720;
+
+        // timeout is in milliseconds
+        var TIMEOUT_DURATION = 1400;
+
+        // create the prebid async queue so we can load prebid
+        window.pbjs = window.pbjs || { que: [] };
+
+        function hasQueryParam(param) {
+            return search.indexOf(param) !== -1;
+        }
+        function loadScript(src, callback) {
+            var script = document.createElement('SCRIPT');
+            callback = callback || function () { };
+            script.async = true;
+            script.type = 'text/javascript';
+            script.src = PROTOCOL + src;
+            script.onload = function () {
+                callback(null, script);
+            };
+
+            script.onerror = function (e) {
+                callback(e, script);
+            };
+
+            (document.head || document.getElementsByTagName('HEAD')[0]).appendChild(script);
+        }
+
+        /**
+         * Helper function to "unload" an async
+         * queue
+         *
+         * @param {function} fn to call immediately
+         */
+        function immediate(fn) {
+            try {
+                fn();
+            } catch (e) {
+                console.error('error executing queue:', e);
+            }
+        }
+
+        // to be executed when the header auction
+        // is complete
+        var displayQueue = [];
+        var auctionFinished = false;
+
+        function callDFP() {
+            if (auctionFinished) {
+                return;
+            }
+            auctionFinished = true;
+
+            window.pbjs.que.push(function () {
+                // this sets the key-value pairs representing
+                // the bids received by prebid;
+                // we need to do this before we display()
+                // the ads (e.g., fetch ads from DFP)
+                window.pbjs.setTargetingForGPTAsync();
+            });
+
+            for (var i = 0, l = displayQueue.length; i < l; i++) {
+                immediate(displayQueue[i]);
+            }
+
+            // from now on this will execute immediately
+            displayQueue.push = immediate;
+
+            // call the lazy-loaded ads
+            console.log('lazy-loading ads');
+            var handle = setInterval(loadVisibleAds, 500);
+            $(window).on("adsloaded", function () {
+                clearInterval(handle);
+            });
+
+        }
+
+        /**
+         * When we load GPT, we want to override
+         * the googletag.display() method so we can prevent
+         * ads from being fetched from DFP (and defer it until)
+         * we've finished the header auction
+         */
+        function loadGPT() {
+            window.googletag = window.googletag || { cmd: [] };
+            window.googletag.cmd.push(function () {
+                // shim googeltag.display so the display call
+                // won't fetch ads from the server immediately --
+                // it will wait until we call `callDfp()`
+                var _display = window.googletag.display;
+                window.googletag.display = function (elementId) {
+                    displayQueue.push(function () {
+                        _display.call(window.googletag, elementId);
+                    });
+                };
+            });
+
+            // actually load GPT script
+            loadScript('//www.googletagservices.com/tag/js/gpt.js');
+        }
+
+        // begin loading prebid & GPT -- we want to do this as early as possible
+        loadGPT();
+        loadScript('//i.euroinvestor.com/prebid/prebid-0.31.js', function (err) {
+            // there was an error loading prebid;
+            // we want to exit early and allow DFP to load normally
+            if (err) {
+                console.log('error occurred: ' + err + ' -> callDFP');
+                callDFP();
+            }
+        });
+
+        var RUBICON_ACCOUNT_ID = '13766';
+        var RUBICON_SITE_ID = '67526';
+        var ADFORM_TEST_MODE = hasQueryParam('adform_test') ? 1 : 0;
+        var PUBMATIC_PUBLISHER_ID = '132110';
+        var RUBICON_ACTIVE = hasQueryParam('rubicon_test');
+        var PUBMATIC_ACTIVE = hasQueryParam('pubmatic_test');
+
+        /**
+         * A function that returns a rubicon bid;
+         * defined as a function to factor out parameters common
+         * to all rubicon bids (eg., accountId, siteId)
+         *
+         * @param {string} zoneId the zone (tag) we're targeting
+         *
+         * @return {object} bid for rubicon fastlane
+         */
+        function rubiconBid(zoneId) {
+            //if (!RUBICON_ACTIVE) return {};
+            return {
+                bidder: 'rubicon',
+                params: {
+                    accountId: RUBICON_ACCOUNT_ID,
+                    siteId: RUBICON_SITE_ID,
+                    zoneId: zoneId,
+                },
+            };
+        }
+
+        /**
+         * Return a bid formatted for adForm
+         * this lets us easily change the value of their
+         * "test" parameter, which we'll have set as a constant
+         *
+         * @param {string} mid the identifier for this tag
+         *
+         * @return {object} a bid for adform
+         */
+        function adformBid(mid) {
+            return {
+                bidder: 'adform',
+                params: {
+                    mid: mid,
+                    rcur: 'USD'
+                    //test: ADFORM_TEST_MODE,
+                }
+            };
+        }
+
+        /**
+         * Return a pubmatic bid
+         * this factors out the 'publisherId'
+         * which is common to all bids
+         *
+         * @param {string} adSlot the pubmatic adunit we're using
+         *
+         * @return {object} a pubmatic prebid bid definition
+         */
+        function pubmaticBid(adSlot) {
+            //if (!PUBMATIC_ACTIVE) return {};
+            return {
+                bidder: 'pubmatic',
+                params: {
+                    publisherId: PUBMATIC_PUBLISHER_ID,
+                    adSlot: adSlot,
+                },
+            };
+        }
+
+        /**
+         * Return a Criteo bid
+         *
+         * @param {string} zoneId
+         *
+         * @return {object} a criteo prebid definition
+         */
+        function criteoBid(zoneId) {
+            return {
+                bidder: 'criteo',
+                params: {
+                    zoneId: zoneId
+                }
+            }
+        }
+
+        /**
+         * Return an AppNexus bid
+         *
+         * @param placementId
+         *
+         * @return {object} an AppNexus prebid definition
+         */
+        function appNexusBid(placementId) {
+            return {
+                bidder: 'appnexus',
+                params: {
+                    placementId: placementId
+                }
+            }
+        }
+
+        /**
+         * Return an xAxis bid
+         *
+         * @param placementId
+         *
+         * @return {object} an xAxis prebid definition
+         */
+        function xAxisBid(placementId) {
+            return {
+                bidder: 'xhb',
+                params: {
+                    placementId: placementId
+                }
+            }
+        }
+
+        var adSlotDefinitions = {
+            '/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Top1-930x180': {sizes: [[930, 180],[950, 200],[ 728, 90],[ 728, 180]],bids: [rubiconBid('545000'),adformBid('278167'),criteoBid('736503'),appNexusBid('11999105'),xAxisBid('11564038')]},
+            '/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Top2-728x90': {sizes: [[728, 90],[728, 180],[940, 40]],bids: [rubiconBid('545002'),adformBid('278173'),criteoBid('736513'),appNexusBid('11999106'),xAxisBid('11564039')]},
+            '/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Knap1-150x90': {sizes: [[150, 90],[150, 230]],bids: []},
+            '/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Knap2-150x90': {sizes: [[150, 90],[150, 230]],bids: []},
+        };
+
+
+        // the above configuration isn't in the prebid format; this is because we have it configured
+        // by adunit path. It's possible (although unlikely) that we define the same slot multiple times
+        // on the page as separate divs. Here we want to iterate the list of ad divs that we've defined on the page
+        // this might be provided by the application (eg., the rendering code calls a helper that ads defined IDs to a static array)
+        // or we could also use DFP to fetch the defined slots.
+        // note that if we use DFP, we have to call prebid after we've loaded GPT, which adds more latency.
+
+        // this doesn't have to contain all of the units we have configured above. For example,
+        // some pages might only have one mrect, so it wouldn't show up here
+        var definedAdUnitsElements = [
+            'div-gpt-ad-1-101',
+            'div-gpt-ad-1-103',
+            'div-gpt-ad-1-111',
+            'div-gpt-ad-1-112',
+        ];
+
+        var i = 0;
+        var length = definedAdUnitsElements.length;
+
+        var adUnits = [];
+        for (; i < length; i++) {
+            var elementId = definedAdUnitsElements[i];
+            var slotId = slotIds[elementId];
+
+            if (!slotId) {
+                console.warn('displayed slot without mapping it to a adunit:', elementId);
+                continue;
+            }
+
+            var definition = adSlotDefinitions[slotId];
+            if (!definition) {
+                console.warn('attempted to setup header bidding for ad without configuration: ', slotId);
+                continue;
+            }
+
+            // if we have the same slot used twice on the page,
+            // we need to clone the definition so we can safeuly reuse it
+            // (since we need to set the 'code' parameter)
+
+            // this is a very basic clone operation leveraging JSON
+            // since the object is known to only contain primative values
+            var adUnitDefinition = JSON.parse(JSON.stringify(definition));
+            adUnitDefinition.code = elementId; // now prebid knows which specific slot this set of bids is for
+
+            adUnits.push(adUnitDefinition);
+        }
+
+        // now that we have the adunits,
+        // we can set up the prebid auction and start our timeout
+        window.pbjs.que.push(function () {
+            window.pbjs.addAdUnits(adUnits);
+
+            window.pbjs.requestBids({
+                // everything has come back before the timeout
+                // so now we can call DFP
+                bidsBackHandler: function (bidResponses) {
+                    var stop = new Date().getTime();
+                    if (!auctionFinished)
+                        console.info('all bids received before timeout: ', bidResponses);
+                    else {
+                        console.warn('bids were not received before timeout. Elapsed: ' + (stop - start));
+                    }
+
+                    callDFP();
+                },
+            });
+        });
+
+        // enable google analytics
+        pbjs.que.push(function () {
+            pbjs.enableAnalytics({
+                provider: 'ga',
+                options: {
+                    global: 'ga',
+                    enableDistribution: false
+                }
+            });
+        });
+
+        // set a timeout outside of prebid so that we
+        // don't have to worry about any errors in prebid
+        // breaking all ads on the page
+        var start = new Date().getTime();
+        setTimeout(callDFP, TIMEOUT_DURATION);
+
+    </script>
+    <script type="text/javascript">var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+
+
+    if (!''.contains) {
+        String.prototype.contains = function(it) {
+            return this.indexOf(it) != -1;
+        };
+    }
+
+
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
+            results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    var bannerdebug = location.href.contains('bannerdebug');
+    var urlTargeting = getParameterByName('target');
+    var adGroupId = Math.round(Math.random() * 1000);
+    var adsCount = 4;
+    var slots = {}
+    var slotsRendered = 0;
+    googletag.cmd.push(function() {
+        if(bannerdebug) debug('Defining banner slot: /56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Top1-930x180');
+        slots['/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Top1-930x180'] = googletag.defineSlot('/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Top1-930x180', [[930, 180],[950, 200],[ 728, 90],[ 728, 180]], 'div-gpt-ad-1-101').addService(googletag.pubads()).setTargeting('url', urlTargeting).setTargeting('adgroupid', adGroupId);
+        if(bannerdebug) debug('Defining banner slot: /56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Top2-728x90');
+        slots['/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Top2-728x90'] = googletag.defineSlot('/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Top2-728x90', [[728, 90],[728, 180],[940, 40]], 'div-gpt-ad-1-103').addService(googletag.pubads()).setTargeting('url', urlTargeting).setTargeting('adgroupid', adGroupId);
+        if(bannerdebug) debug('Defining banner slot: /56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Knap1-150x90');
+        slots['/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Knap1-150x90'] = googletag.defineSlot('/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Knap1-150x90', [[150, 90],[150, 230]], 'div-gpt-ad-1-111').addService(googletag.pubads()).setTargeting('url', urlTargeting).setTargeting('adgroupid', adGroupId);
+        if(bannerdebug) debug('Defining banner slot: /56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Knap2-150x90');
+        slots['/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Knap2-150x90'] = googletag.defineSlot('/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Knap2-150x90', [[150, 90],[150, 230]], 'div-gpt-ad-1-112').addService(googletag.pubads()).setTargeting('url', urlTargeting).setTargeting('adgroupid', adGroupId);
+
+        googletag.pubads().addEventListener('slotRenderEnded', function(event) {
+            slotsRendered++;
+            var slotName = getSlotName(event);
+            if(bannerdebug) debug(slotName + ' has rendered');
+            EI.Global.slotRendered(slotName);
+        });
+        function getSlotName(e) {
+            for (var prop in e.slot) {
+                try {
+                    if(e.slot[prop].match(/\/\d*\/.*\/.*\/.*/g))
+                        return e.slot[prop];
+                } catch(ex) {}
+            }
+            return null;
+        }
+        googletag.pubads().disableInitialLoad();
+        googletag.enableServices();
+    });
+
+    function loadVisibleAds(divSlots){
+        var divSlots = $('div[data-cu-name]'), isForumPage = false
+        var checkVisibility = function(){
+            var adsLoaded = false;
+            divSlots.each(function(){
+                var slotName = $(this).data('cu-name');
+                var elem = null;
+
+                if($(this).attr('id').endsWith('101') && $('.top_banner_placeholder').length > 0){
+                    elem = $('.top_banner_placeholder');
+                } else if ($(this).attr('id').endsWith('101') && $('.top_banner_placeholder_debat').length > 0) {
+                    isForumPage = true;
+                    elem = $('.top_banner_placeholder_debat');
+                } else {
+                    elem = $(this);
+                }
+
+                if(slots[slotName] != null && elem.isInScreen({ elementShouldBeVisibleToTrigger: isForumPage })) {
+                    console.log('Async loading ' + slotName);
+                    googletag.cmd.push(function() {
+                        googletag.pubads().refresh([slots[slotName]]);
+                    });
+
+                    // remove from slots so we don't reload positions on scroll
+                    delete slots[slotName];
+                    adsLoaded = true;
+                }
+                // debug
+                else {
+                    //console.log('Could not load ' + slotName);
+                    //console.log('slots[slotName]:', slots[slotName]);
+                    //console.log('elem.isInScreen():', elem.isInScreen());
+                }
+            });
+            if(adsLoaded) $(window).trigger('adsloaded');
+
+        }
+        // hook function to scroll
+        $(window).on('scroll', checkVisibility);
+        checkVisibility();
+    }
+
+    </script><script type="text/javascript" src="/js/stickytopbanner.js"></script><script type="text/javascript" src='/js/load.js.axd?o=-570657765&v=LiveBranchBuild_20180209.1'></script>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MHZ4S73');</script>
+    <!-- End Google Tag Manager -->
+
+
+
+    <script type="text/javascript" src="//eas8.emediate.eu/EAS_tag.1.0.js"></script>
+
+
+
+    <!-- Adform Header Bidding - test på valutakurser -->
+
+
+
+
+
+    <!-- shim the _gaq.push from old GA to redirect calls to GTM -->
+    <script type="text/javascript">
+        if (typeof _gaq === 'undefined' || typeof _gaq !== 'object') {
+            var _gaq = {};
+            _gaq.push =  function(array){
+                if(array[0] === '_trackPageview'){
+                    dataLayer.push({
+                        'event': 'pageview',
+                        'pagePath': array[1]
+                    });
+                }else if(array[0] === '_trackEvent'){
+                    dataLayer.push({
+                        'event': 'event',
+                        'category': array[1],
+                        'action': array[2],
+                        'label': array[3],
+                        'value': array[4]
+                    });
+                } else if(array[0] === '_addTrans') {
+                    dataLayer.push({
+                        'event': '_addTrans',
+                        'transactionId': array[1],
+                        'affiliation': array[2],
+                        'total': array[3],
+                        'tax': array[4],
+                        'shipping': array[5],
+                        'city': array[6],
+                        'state': array[7],
+                        'country': arrray[8]
+                    });
+                } else if(array[0] === '_addItem') {
+                    dataLayer.push({
+                        'event': '_addItem',
+                        'transactionId': array[1],
+                        'sku': array[2],
+                        'name': array[3],
+                        'category': array[4],
+                        'price': array[5],
+                        'quantity': '1'
+                    });
+                } else if(array[0] === '_trackTrans') {
+                    dataLayer.push({
+                        'event': '_trackTrans'
+                    });
+                }
+            }
+        }
+    </script>
+    <meta name="description" content="Med Euronvestor trenden får du på baggrund af teknisk analyse købs- og salgssignaler på dine aktier som du kan bruge til administration af din aktieportefølje." /><meta name="keywords" content="Trenden, kurser, afkast, hitliste, aktieanbefalinger, købssignaler, salgsignaler, aktieportefølje" /></head>
+
+<body id="ctl00_masterbody" class="top-sky-sticky">
+
+
+
+
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MHZ4S73"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+
+
+<div id="ctl00_BannerContainerSkyScraperLeft" class="scyscraper_banner_placeholder_left collapsable">
+
+</div>
+<div id="ctl00_BannerContainerSkyScraperLeftFloat" class="scyscraper_banner_placeholder_left_float collapsable">
+
+</div>
+
+<div id="ctl00_BannerContainerSkyScraperFloat" class="scyscraper_banner_placeholder_float collapsable">
+
+</div>
+
+
+
+<form name="aspnetForm" method="post" action="./?marketcode=dk&amp;indexid=303" id="aspnetForm">
+    <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="" />
+
+    <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="PCN3NB6LuR8Le0Vh1pZjBydkqGBURPSJU/AnLNuNwVEmcJw9eRT0QGW/TY/VRApd35xQVeleCIDyKZu4kzDp+WzqxPqta4xWaF/V9YgMeJRRvxeiRuDPfTcPl1QwCp1bkLvfkVW81m93CMdv7IXiaA==" />
+    <div id="ctl00_BannerContainerTop" class="top_banner_placeholder collapsable" style="text-align: center; line-height: 0px;">
+        <div class="top_banner_div">
+
+
+            <!-- PlacementId: 101<br/>SiteID: 1<br/>Content unit: 476<br/>Top1-930x180<br/>/Top1-930x180 -->
+
+            <div id="div-gpt-ad-1-101" data-cu-name="/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Top1-930x180">
+                <script type="text/javascript">
+                    googletag.cmd.push(function() {
+                        googletag.display('div-gpt-ad-1-101');
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+
+    <div id="ei_logo_container">
+        <div id="ctl00_ei_logo" style="margin: auto; width: 950px;">
+            <div id="ctl00_ProfileInfo" style="float: right" class="profile_info">
+
+
+
+
+                <div style="float: right; margin-bottom:4px">
+                    <a href="javascript:void(0)" id="ctl00_loginTopRightElement_Loginlnk" style="cursor:pointer">Log ind</a>
+                    <span id="ctl00_loginTopRightElement_loginSep" class="seperator">|</span>
+                    <a href="javascript:void(0)" id="ctl00_loginTopRightElement_linkSignup" style="font-weight:bold;">Opret profil</a>
+                    <span id="ctl00_loginTopRightElement_feedbackSep" class="seperator">|</span><a href="http://support.euroinvestor.com" id="ctl00_loginTopRightElement_lnkHelp" target="_blank"> Hjælp</a>
+                </div>
+
+
+                <div id="ei_search" style="margin-top: 5px; clear: right;">
+                    <div style="clear: both"></div>
+                    <div style="float: right; width: 300px;">
+                        <div id="ctl00_multipleAutoComplete_auto_complete">
+
+
+                            <input name="ctl00$multipleAutoComplete$textbox" type="text" id="ctl00_multipleAutoComplete_textbox" matchcontains="true" rightaligndropdown="true" placeholder="Søg efter aktier og nyheder" width="196px" class="ac_input" searchmode="true" selectfirst="false" style="float:right; margin-top:-5px; width:220px" size="40" spellcheck="false" excludenews="false" mode="4" matchsubset="false" limit="10" />
+                            <input type="hidden" name="ctl00$multipleAutoComplete$hiddenValue" id="ctl00_multipleAutoComplete_hiddenValue" />
+                            <div id="ctl00_multipleAutoComplete_divOutput"></div>
+                        </div>
+
+                    </div>
+                    <div style="clear: both"></div>
+                </div>
+            </div>
+
+            <a href="http://www.euroinvestor.dk">
+                <img class="IE6Fix" style="float: left; padding: 10px 0 0 0; bottom: 4px; border: solid 0px white;" alt="EuroInvestor.dk" src="http://i.euroinvestor.com/toplogos/ei_top_test.png" />
+            </a>
+
+
+
+        </div>
+    </div>
+    <div id="MenuBarDiv">
+
+        <div id="ei_menu_container">
+            <div id="ei_menu">
+                <div style="position: relative;">
+                    <div id="completionbox" class="autocomplete" style="display: none; right: 0px; position: absolute; top: -14px;"></div>
+
+                    <ul class="new_menu">
+
+                        <li id="ctl00_MenuTopBar_FirstLevelMenu_ctl00_ItemContainer" class="item"><a id="ctl00_MenuTopBar_FirstLevelMenu_ctl00_FirstLevelHyperLink" class="last" href="/">Forside</a>
+
+                        </li>
+
+                        <li id="ctl00_MenuTopBar_FirstLevelMenu_ctl01_ItemContainer" class="item"><a id="ctl00_MenuTopBar_FirstLevelMenu_ctl01_FirstLevelHyperLink" class="last selected" href="/markeder/aktier/europa/danmark">Aktier</a>
+
+                        </li>
+
+                        <li id="ctl00_MenuTopBar_FirstLevelMenu_ctl02_ItemContainer" class="item"><a id="ctl00_MenuTopBar_FirstLevelMenu_ctl02_FirstLevelHyperLink" class="last" href="/portfolio/">Mine porteføljer</a>
+
+                        </li>
+
+                        <li id="ctl00_MenuTopBar_FirstLevelMenu_ctl03_ItemContainer" class="item"><a id="ctl00_MenuTopBar_FirstLevelMenu_ctl03_FirstLevelHyperLink" class="last" href="http://www.valutakurser.dk/">Valuta</a>
+
+                        </li>
+
+                        <li id="ctl00_MenuTopBar_FirstLevelMenu_ctl04_ItemContainer" class="item webshop-menu-item"><a id="ctl00_MenuTopBar_FirstLevelMenu_ctl04_FirstLevelHyperLink" class="last" href="/webshop">Webshop</a>
+
+                        </li>
+
+                        <li id="ctl00_MenuTopBar_FirstLevelMenu_ctl05_ItemContainer" class="item"><a id="ctl00_MenuTopBar_FirstLevelMenu_ctl05_FirstLevelHyperLink" class="last" href="/debat">Debat</a>
+
+                        </li>
+
+                        <li id="ctl00_MenuTopBar_FirstLevelMenu_ctl06_ItemContainer" class="item"><a id="ctl00_MenuTopBar_FirstLevelMenu_ctl06_FirstLevelHyperLink" class="last" href="/nyheder">Nyheder</a>
+
+                        </li>
+
+                        <li id="ctl00_MenuTopBar_FirstLevelMenu_ctl07_ItemContainer" class="item last"><a id="ctl00_MenuTopBar_FirstLevelMenu_ctl07_FirstLevelHyperLink" class="last" href="http://www.euroinvestor.dk/markeder/kryptovaluta">Kryptovaluta</a>
+
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div id="kantspace">
+        <div id="ei_content" style="background-color: #fafafa;">
+            <!-- Submenu with logos -->
+
+
+            <div id="ctl00_SponsorSubmenuContainer" class="CONTROL_WIDTH_12_FIRST collapsable" style="text-align: center; line-height: 0px; float: none; width: auto">
+                <div class="sponsor_submenu_placeholder">
+
+
+                    <!-- PlacementId: 103<br/>SiteID: 1<br/>Content unit: 478<br/>Top2-728x90<br/>/Top2-728x90 -->
+
+                    <div id="div-gpt-ad-1-103" data-cu-name="/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Top2-728x90">
+                        <script type="text/javascript">
+                            googletag.cmd.push(function() {
+                                googletag.display('div-gpt-ad-1-103');
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div id="ctl00_masterContentDiv" class="CONTROL_WIDTH_12_FIRST">
+
+
+                <div class="CONTROL_WIDTH_2_FIRST">
+                    <div class="CONTROL_WIDTH_2_FIRST">
+
+
+
+
+
+
+                        <div id="ctl00_content_WebsiteLeftMenuFrontpageGeneric1_FirstLevelMenu_ctl01_divContainer" class="content_box_network" style="padding-bottom: 10px;">
+                            <div class="header" style="background: url('http://i.euroinvestor.com/global/header_top.png')">
+                                <span class="header_top_left" style="background-image: url(http://i.euroinvestor.com/global/header_top_left.png)"></span>
+                                <h3 class="boxheader">
+                                    Populære markeder
+                                </h3>
+                                <span class="header_top_right" style="background-image: url(http://i.euroinvestor.com/global/header_top_right.png)"></span>
+                            </div>
+                            <div class="contentbox width_2" style="padding-top: 5px;">
+
+                                <div style="clear:left">
+                                    <div style="float:left;width:24px">
+                                        <span class="flag flag-dk"></span>
+                                    </div>
+                                    <div style="margin-left: 24px;">
+                                        <a id="ctl00_content_WebsiteLeftMenuFrontpageGeneric1_FirstLevelMenu_ctl01_SecondLevelMenu_ctl00_SecondLevelMenuHyperLink" title="Oversigt - det danske aktiemarked" href="/markeder/aktier/europa/danmark">Danmark</a>
+                                    </div>
+                                </div>
+
+                                <div style="clear:left">
+                                    <div style="float:left;width:24px">
+                                        <span class="flag flag-se"></span>
+                                    </div>
+                                    <div style="margin-left: 24px;">
+                                        <a id="ctl00_content_WebsiteLeftMenuFrontpageGeneric1_FirstLevelMenu_ctl01_SecondLevelMenu_ctl01_SecondLevelMenuHyperLink" title="Oversigt - det svenske aktiemarked" href="/markeder/aktier/europa/sverige">Sverige</a>
+                                    </div>
+                                </div>
+
+                                <div style="clear:left">
+                                    <div style="float:left;width:24px">
+                                        <span class="flag flag-no"></span>
+                                    </div>
+                                    <div style="margin-left: 24px;">
+                                        <a id="ctl00_content_WebsiteLeftMenuFrontpageGeneric1_FirstLevelMenu_ctl01_SecondLevelMenu_ctl02_SecondLevelMenuHyperLink" title="Oversigt - det norske aktiemarked" href="/markeder/aktier/europa/norge">Norge</a>
+                                    </div>
+                                </div>
+
+                                <div style="clear:left">
+                                    <div style="float:left;width:24px">
+                                        <span class="flag flag-de"></span>
+                                    </div>
+                                    <div style="margin-left: 24px;">
+                                        <a id="ctl00_content_WebsiteLeftMenuFrontpageGeneric1_FirstLevelMenu_ctl01_SecondLevelMenu_ctl03_SecondLevelMenuHyperLink" title="Oversigt - det tyske aktiemarked " href="/markeder/aktier/europa/tyskland">Tyskland</a>
+                                    </div>
+                                </div>
+
+                                <div style="clear:left">
+                                    <div style="float:left;width:24px">
+                                        <span class="flag flag-us"></span>
+                                    </div>
+                                    <div style="margin-left: 24px;">
+                                        <a id="ctl00_content_WebsiteLeftMenuFrontpageGeneric1_FirstLevelMenu_ctl01_SecondLevelMenu_ctl04_SecondLevelMenuHyperLink" title="Oversigt -  det amerikanske aktiemarked" href="/markeder/aktier/nordamerika/usa">USA</a>
+                                    </div>
+                                </div>
+
+                                <div style="clear:left">
+                                    <div style="float:left;width:24px">
+                                        <span class="flag flag-xg"></span>
+                                    </div>
+                                    <div style="margin-left: 24px;">
+                                        <a id="ctl00_content_WebsiteLeftMenuFrontpageGeneric1_FirstLevelMenu_ctl01_SecondLevelMenu_ctl05_SecondLevelMenuHyperLink" title="Oversigt - globale aktiemarkeder" href="/markeder/aktier">Globale</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="footer">
+                                <span class="bottom_empty_left"></span>
+                                <span class="bottom_empty_right"></span>
+                            </div>
+                        </div>
+                        <div id="ctl00_content_WebsiteLeftMenuFrontpageGeneric1_FirstLevelMenu_ctl01_MenuCommercial" class="collapsable" style="padding-bottom:5px">
+
+                            <!-- PlacementId: 111<br/>SiteID: 1<br/>Content unit: 486<br/>Knap1-150x90<br/>/Knap1-150x90 -->
+
+                            <div id="div-gpt-ad-1-111" data-cu-name="/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Knap1-150x90">
+                                <script type="text/javascript">
+                                    googletag.cmd.push(function() {
+                                        googletag.display('div-gpt-ad-1-111');
+                                    });
+                                </script>
+                            </div></div>
+
+
+
+
+
+
+                        <div id="ctl00_content_WebsiteLeftMenuFrontpageGeneric1_FirstLevelMenu_ctl03_divContainer" class="content_box_network" style="padding-bottom: 10px;">
+                            <div class="header" style="background: url('http://i.euroinvestor.com/global/header_top.png')">
+                                <span class="header_top_left" style="background-image: url(http://i.euroinvestor.com/global/header_top_left.png)"></span>
+                                <h3 class="boxheader">
+                                    Tjenester
+                                </h3>
+                                <span class="header_top_right" style="background-image: url(http://i.euroinvestor.com/global/header_top_right.png)"></span>
+                            </div>
+                            <div class="contentbox width_2" style="padding-top: 5px;">
+
+                                <div style="clear:left">
+                                    <div style="float:left;width:24px">
+                                        <img src="http://i.euroinvestor.com/icons/bullet_lblue.png" height="16" width="16" style="vertical-align:middle;" />
+                                    </div>
+                                    <div style="margin-left: 24px;">
+                                        <a id="ctl00_content_WebsiteLeftMenuFrontpageGeneric1_FirstLevelMenu_ctl03_SecondLevelMenu_ctl00_SecondLevelMenuHyperLink" href="/webshop/product.aspx?pId=20644">EuroInvestor Plus</a>
+                                    </div>
+                                </div>
+
+                                <div style="clear:left">
+                                    <div style="float:left;width:24px">
+                                        <img src="http://i.euroinvestor.com/icons/bullet_lblue.png" height="16" width="16" style="vertical-align:middle;" />
+                                    </div>
+                                    <div style="margin-left: 24px;">
+                                        <a id="ctl00_content_WebsiteLeftMenuFrontpageGeneric1_FirstLevelMenu_ctl03_SecondLevelMenu_ctl01_SecondLevelMenuHyperLink" href="/trenden">Trenden</a>
+                                    </div>
+                                </div>
+
+                                <div style="clear:left">
+                                    <div style="float:left;width:24px">
+                                        <img src="http://i.euroinvestor.com/icons/bullet_lblue.png" height="16" width="16" style="vertical-align:middle;" />
+                                    </div>
+                                    <div style="margin-left: 24px;">
+                                        <a id="ctl00_content_WebsiteLeftMenuFrontpageGeneric1_FirstLevelMenu_ctl03_SecondLevelMenu_ctl02_SecondLevelMenuHyperLink" href="/pengemaskinen">Pengemaskinen</a>
+                                    </div>
+                                </div>
+
+                                <div style="clear:left">
+                                    <div style="float:left;width:24px">
+                                        <img src="http://i.euroinvestor.com/icons/bullet_lblue.png" height="16" width="16" style="vertical-align:middle;" />
+                                    </div>
+                                    <div style="margin-left: 24px;">
+                                        <a id="ctl00_content_WebsiteLeftMenuFrontpageGeneric1_FirstLevelMenu_ctl03_SecondLevelMenu_ctl03_SecondLevelMenuHyperLink" href="/notification/usernotifications.aspx">Aktie alarm</a>
+                                    </div>
+                                </div>
+
+                                <div style="clear:left">
+                                    <div style="float:left;width:24px">
+                                        <img src="http://i.euroinvestor.com/icons/bullet_lblue.png" height="16" width="16" style="vertical-align:middle;" />
+                                    </div>
+                                    <div style="margin-left: 24px;">
+                                        <a id="ctl00_content_WebsiteLeftMenuFrontpageGeneric1_FirstLevelMenu_ctl03_SecondLevelMenu_ctl04_SecondLevelMenuHyperLink" href="/rss">RSS Feeds</a>
+                                    </div>
+                                </div>
+
+                                <div style="clear:left">
+                                    <div style="float:left;width:24px">
+                                        <img src="http://i.euroinvestor.com/icons/bullet_lblue.png" height="16" width="16" style="vertical-align:middle;" />
+                                    </div>
+                                    <div style="margin-left: 24px;">
+                                        <a id="ctl00_content_WebsiteLeftMenuFrontpageGeneric1_FirstLevelMenu_ctl03_SecondLevelMenu_ctl05_SecondLevelMenuHyperLink" href="http://www.euroinvestor.dk/ei-nyheder/2012/09/01/euroinvestor-aktieskole-videos/21269">Aktieskole</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="footer">
+                                <span class="bottom_empty_left"></span>
+                                <span class="bottom_empty_right"></span>
+                            </div>
+                        </div>
+                        <div id="ctl00_content_WebsiteLeftMenuFrontpageGeneric1_FirstLevelMenu_ctl03_MenuCommercial" class="collapsable" style="padding-bottom:5px">
+
+                            <!-- PlacementId: 112<br/>SiteID: 1<br/>Content unit: 487<br/>Knap2-150x90<br/>/Knap2-150x90 -->
+
+                            <div id="div-gpt-ad-1-112" data-cu-name="/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Knap2-150x90">
+                                <script type="text/javascript">
+                                    googletag.cmd.push(function() {
+                                        googletag.display('div-gpt-ad-1-112');
+                                    });
+                                </script>
+                            </div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                        <div class="content_box">
+                            <div class="header">
+                                <span class="header_top_left"></span>
+                                <h3 class="boxheader">Alle markeder</h3>
+                                <span class="header_top_right"></span>
+                            </div>
+                            <div class="contentbox width_2_nopadding">
+
+                                <div style="padding-left:10px; padding-right: 10px; height: 25px; width: 128px;  cursor:pointer;" onclick="javascript:showHideMarkets('euContinentNameLabel','euMarketsDiv','euArrowImage', false);">
+                                    <div style="clear: both; float:left; line-height: 25px; font-weight: bold;">
+                                        <span id='euContinentNameLabel'>Europa</span>
+                                    </div>
+                                    <div style="float:right; line-height: 25px;">
+                                        <img id='euArrowImage' src='http://i.euroinvestor.com/marketoverview/MO_arrow_down.png' alt="" />
+                                    </div>
+                                </div>
+                                <div id='euMarketsDiv' style="display: block;">
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-eu"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl00_marketsRepeater_ctl00_marketCountryName" href="/trenden/?marketcode=eu">Europa</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-be"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl00_marketsRepeater_ctl01_marketCountryName" href="/trenden/?marketcode=be">Belgien</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; background: url(http://i.euroinvestor.com/marketoverview/continentmenuselectedrepeat.png) repeat-x;">
+                                        <span class="flag flag-dk"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl00_marketsRepeater_ctl02_marketCountryName" href="/trenden/?marketcode=dk">Danmark</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-fi"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl00_marketsRepeater_ctl03_marketCountryName" href="/trenden/?marketcode=fi">Finland</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-fr"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl00_marketsRepeater_ctl04_marketCountryName" href="/trenden/?marketcode=fr">Frankrig</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-gr"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl00_marketsRepeater_ctl05_marketCountryName" href="/trenden/?marketcode=gr">Grækenland</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-nl"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl00_marketsRepeater_ctl06_marketCountryName" href="/trenden/?marketcode=nl">Holland</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-is"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl00_marketsRepeater_ctl07_marketCountryName" href="/trenden/?marketcode=is">Island</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-it"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl00_marketsRepeater_ctl08_marketCountryName" href="/trenden/?marketcode=it">Italien</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-no"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl00_marketsRepeater_ctl09_marketCountryName" href="/trenden/?marketcode=no">Norge</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-pt"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl00_marketsRepeater_ctl10_marketCountryName" href="/trenden/?marketcode=pt">Portugal</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-ch"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl00_marketsRepeater_ctl11_marketCountryName" href="/trenden/?marketcode=ch">Schweiz</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-es"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl00_marketsRepeater_ctl12_marketCountryName" href="/trenden/?marketcode=es">Spanien</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-gb"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl00_marketsRepeater_ctl13_marketCountryName" href="/trenden/?marketcode=gb">Storbritannien</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-se"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl00_marketsRepeater_ctl14_marketCountryName" href="/trenden/?marketcode=se">Sverige</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-cz"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl00_marketsRepeater_ctl15_marketCountryName" href="/trenden/?marketcode=cz">Tjekkiet</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-de"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl00_marketsRepeater_ctl16_marketCountryName" href="/trenden/?marketcode=de">Tyskland</a>
+                                    </div>
+
+                                </div>
+
+                                <div style="height: 1px; background-color: #C8C8C8;"></div>
+
+                                <div style="padding-left:10px; padding-right: 10px; height: 25px; width: 128px;  cursor:pointer;" onclick="javascript:showHideMarkets('naContinentNameLabel','naMarketsDiv','naArrowImage', false);">
+                                    <div style="clear: both; float:left; line-height: 25px; ">
+                                        <span id='naContinentNameLabel'>Nordamerika</span>
+                                    </div>
+                                    <div style="float:right; line-height: 25px;">
+                                        <img id='naArrowImage' src='http://i.euroinvestor.com/marketoverview/MO_arrow.jpg' alt="" />
+                                    </div>
+                                </div>
+                                <div id='naMarketsDiv' style="display: none;">
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-na"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl02_marketsRepeater_ctl00_marketCountryName" href="/trenden/?marketcode=na">Nordamerika</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-ca"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl02_marketsRepeater_ctl01_marketCountryName" href="/trenden/?marketcode=ca">Canada</a>
+                                    </div>
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-us"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl02_marketsRepeater_ctl02_marketCountryName" href="/trenden/?marketcode=us">USA</a>
+                                    </div>
+
+                                </div>
+
+                                <div style="height: 1px; background-color: #C8C8C8;"></div>
+
+                                <div style="padding-left:10px; padding-right: 10px; height: 25px; width: 128px;  cursor:pointer;" onclick="javascript:showHideMarkets('asContinentNameLabel','asMarketsDiv','asArrowImage', false);">
+                                    <div style="clear: both; float:left; line-height: 25px; ">
+                                        <span id='asContinentNameLabel'>Asien</span>
+                                    </div>
+                                    <div style="float:right; line-height: 25px;">
+                                        <img id='asArrowImage' src='http://i.euroinvestor.com/marketoverview/MO_arrow.jpg' alt="" />
+                                    </div>
+                                </div>
+                                <div id='asMarketsDiv' style="display: none;">
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-sg"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl04_marketsRepeater_ctl00_marketCountryName" href="/trenden/?marketcode=sg">Singapore</a>
+                                    </div>
+
+                                </div>
+
+                                <div style="height: 1px; background-color: #C8C8C8;"></div>
+
+                                <div style="padding-left:10px; padding-right: 10px; height: 25px; width: 128px;  cursor:pointer;" onclick="javascript:showHideMarkets('saContinentNameLabel','saMarketsDiv','saArrowImage', false);">
+                                    <div style="clear: both; float:left; line-height: 25px; ">
+                                        <span id='saContinentNameLabel'>Sydamerika</span>
+                                    </div>
+                                    <div style="float:right; line-height: 25px;">
+                                        <img id='saArrowImage' src='http://i.euroinvestor.com/marketoverview/MO_arrow.jpg' alt="" />
+                                    </div>
+                                </div>
+                                <div id='saMarketsDiv' style="display: none;">
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-ar"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl06_marketsRepeater_ctl00_marketCountryName" href="/trenden/?marketcode=ar">Argentina</a>
+                                    </div>
+
+                                </div>
+
+                                <div style="height: 1px; background-color: #C8C8C8;"></div>
+
+                                <div style="padding-left:10px; padding-right: 10px; height: 25px; width: 128px;  cursor:pointer;" onclick="javascript:showHideMarkets('meContinentNameLabel','meMarketsDiv','meArrowImage', false);">
+                                    <div style="clear: both; float:left; line-height: 25px; ">
+                                        <span id='meContinentNameLabel'>Mellemøsten</span>
+                                    </div>
+                                    <div style="float:right; line-height: 25px;">
+                                        <img id='meArrowImage' src='http://i.euroinvestor.com/marketoverview/MO_arrow.jpg' alt="" />
+                                    </div>
+                                </div>
+                                <div id='meMarketsDiv' style="display: none;">
+
+                                    <div style="padding-left: 10px; padding-top: 2px; height: 25px; clear: left; ">
+                                        <span class="flag flag-il"></span>&nbsp;&nbsp;<a id="ctl00_content_MarketOverviewContinentMenu_continentsRepeater_ctl08_marketsRepeater_ctl00_marketCountryName" href="/trenden/?marketcode=il">Israel</a>
+                                    </div>
+
+                                </div>
+
+                                <div style="height: 1px; background-color: #C8C8C8;"></div>
+
+                                <div style="padding-left:10px; padding-right: 10px; height: 25px; width: 128px;  cursor:pointer;" onclick="javascript:showHideMarkets('ocContinentNameLabel','ocMarketsDiv','ocArrowImage', false);">
+                                    <div style="clear: both; float:left; line-height: 25px; ">
+                                        <span id='ocContinentNameLabel'>Oceanien</span>
+                                    </div>
+                                    <div style="float:right; line-height: 25px;">
+                                        <img id='ocArrowImage' src='http://i.euroinvestor.com/marketoverview/MO_arrow.jpg' alt="" />
+                                    </div>
+                                </div>
+                                <div id='ocMarketsDiv' style="display: none;">
+
+                                </div>
+
+                            </div>
+                            <div class="footer"><span class="bottom_empty_left"></span><span class="bottom_empty_right"></span></div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="CONTROL_WIDTH_10">
+                    <div class="CONTROL_WIDTH_10_FIRST">
+                        <div class="portfolioBar">
+                            <span class="portfolioBarLeft"></span>
+                            <div class="portfolioInfo">Index</div>
+                            <span class="portfolioBarRight"></span>
+                            <div id="ctl00_content_divIndexes" class="portfolioLinks"><div class="portfolioLink">
+                                <div>
+
+                                </div><div>
+
+                            </div><a href="./?marketcode=dk&amp;indexid=300">OMX Copenhagen 20</a>
+                            </div><div class="portfolioLink selected">
+                                <div>
+
+                                </div><div>
+
+                            </div><a href="./?marketcode=dk&amp;indexid=303">OMX C25</a>
+                            </div><div class="portfolioLink">
+                                <div>
+
+                                </div><div>
+
+                            </div><a href="./?marketcode=dk&amp;indexid=381">OMXC Large Cap</a>
+                            </div><div class="portfolioLink">
+                                <div>
+
+                                </div><div>
+
+                            </div><a href="./?marketcode=dk&amp;indexid=327">OMXC Mid Cap</a>
+                            </div><div class="portfolioLink">
+                                <div>
+
+                                </div><div>
+
+                            </div><a href="./?marketcode=dk&amp;indexid=328">OMXC Small Cap</a>
+                            </div><div class="portfolioLink">
+                                <div>
+
+                                </div><div>
+
+                            </div><a href="./?marketcode=dk">Nye Signaler</a>
+                            </div></div>
+                        </div>
+                    </div>
+                    <div class="CONTROL_WIDTH_10_FIRST">
+
+
+                        <div class="content_box">
+                            <div class="header">
+
+                                <h3 class="boxheader">
+                                    OMX C25
+                                </h3>
+
+                            </div>
+                            <div class="contentbox width_10_nopadding">
+                                <table id="table1" class="sortable tabular1" border="0" cellpadding="0" cellspacing="0">
+                                    <thead>
+                                    <tr style="cursor: pointer">
+                                        <th class="sorttable_alpha first tleft ellipsis">Navn</th>
+                                        <th class="sorttable_alpha" title="Fortæller om aktien har et købs- eller salgssignal">Signal </th>
+                                        <th class="sorttable_numeric" title="Viser hvor mange dage aktien har haft købs- eller salgssignal" style="width: 41px">Dage</th>
+
+                                        <th title="Viser hvilken dato købs- eller salgsignalet blev udløst" style="width: 99px">Signaldato</th>
+                                        <th class="sorttable_numeric" title="Viser ved hvilken kurs købs- eller salgssignalet blev udløst" style="width: 104px">Signalkurs</th>
+                                        <th class="sorttable_numeric" title="Angiver den senest handlede kurs for aktien" style="width: 127px">Seneste kurs</th>
+
+                                        <th class="sorttable_numeric last" style="width: 86px" title="Viser hvor meget aktien har rykket sig siden udløsning af købs- eller salgsanbefalingen">Ændring</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl00_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/ap-moeller-maersk-a-a-s/395357">A.P. Møller - Mærsk A A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:red;">Sælg</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">16</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">30-01-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">10.380,00</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">10.300,00</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="red">-0,77%&nbsp;<img src="http://i.euroinvestor.com/downsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Fald i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl01_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/ap-moeller-maersk-b-a-s/395356">A.P. Møller - Mærsk B A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:red;">Sælg</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">15</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">31-01-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">10.700,00</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">10.840,00</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="green">1,31%&nbsp;<img src="http://i.euroinvestor.com/upsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Stigning i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl02_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/bavarian-nordic-a-s/205512">Bavarian Nordic A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:green;">Køb</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">2</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">13-02-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">237,70</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">244,80</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="green">2,99%&nbsp;<img src="http://i.euroinvestor.com/upsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Stigning i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl03_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/carlsberg-b-a-s/205057">Carlsberg B A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:red;">Sælg</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">9</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">06-02-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">741,80</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">733,00</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="red">-1,19%&nbsp;<img src="http://i.euroinvestor.com/downsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Fald i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl04_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/chr-hansen-holding-a-s/2337926">Chr Hansen Holding A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:red;">Sælg</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">34</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">12-01-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">535,40</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">523,60</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="red">-2,20%&nbsp;<img src="http://i.euroinvestor.com/downsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Fald i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl05_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/coloplast-b-a-s/206388">Coloplast B A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:red;">Sælg</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">13</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">02-02-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">497,90</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">522,80</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="green">5,00%&nbsp;<img src="http://i.euroinvestor.com/upsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Stigning i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl06_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/danske-bank-a-s/235240">Danske Bank A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:red;">Sælg</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">21</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">25-01-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">238,60</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">248,80</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="green">4,27%&nbsp;<img src="http://i.euroinvestor.com/upsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Stigning i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl07_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/dsv-a-s/335810">DSV A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:red;">Sælg</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">30</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">16-01-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">487,30</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">492,70</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="green">1,11%&nbsp;<img src="http://i.euroinvestor.com/upsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Stigning i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl08_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/flsmidth-co-a-s/205618">FLSmidth & Co A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:green;">Køb</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">8</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">07-02-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">371,80</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">392,70</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="green">5,62%&nbsp;<img src="http://i.euroinvestor.com/upsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Stigning i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl09_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/genmab-a-s/235621">Genmab A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:red;">Sælg</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">21</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">25-01-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">1.099,00</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">1.088,00</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="red">-1,00%&nbsp;<img src="http://i.euroinvestor.com/downsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Fald i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl10_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/gn-store-nord-a-s/203359">GN Store Nord A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:green;">Køb</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">1</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">14-02-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">205,90</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">212,70</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="green">3,30%&nbsp;<img src="http://i.euroinvestor.com/upsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Stigning i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl11_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/iss-a-s/205491">ISS A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:red;">Sælg</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">21</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">25-01-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">238,30</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">229,10</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="red">-3,86%&nbsp;<img src="http://i.euroinvestor.com/downsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Fald i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl12_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/jyske-bank-a-s/206220">Jyske Bank A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:red;">Sælg</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">27</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">19-01-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">344,60</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">350,20</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="green">1,63%&nbsp;<img src="http://i.euroinvestor.com/upsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Stigning i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl13_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/lundbeck-a-s/204900">Lundbeck A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:green;">Køb</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">1</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">14-02-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">317,40</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">324,00</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="green">2,08%&nbsp;<img src="http://i.euroinvestor.com/upsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Stigning i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl14_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/nets-a-s/32651003">Nets A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:green;">Køb</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">210</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">17-07-2017</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">151,50</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">164,80</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="green">8,78%&nbsp;<img src="http://i.euroinvestor.com/upsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Stigning i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl15_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/nkt-a-s/205239">NKT A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:red;">Sælg</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">36</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">10-01-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">271,80</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">245,00</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="red">-9,86%&nbsp;<img src="http://i.euroinvestor.com/downsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Fald i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl16_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/nordea-bank-ab/242556">Nordea Bank AB</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:red;">Sælg</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">21</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">25-01-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">72,96</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">71,04</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="red">-2,63%&nbsp;<img src="http://i.euroinvestor.com/downsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Fald i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl17_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/novo-nordisk-b-a-s/205365">Novo Nordisk B A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:red;">Sælg</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">14</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">01-02-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">309,00</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">313,45</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="green">1,44%&nbsp;<img src="http://i.euroinvestor.com/upsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Stigning i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl18_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/novozymes-b-a-s/239698">Novozymes B A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:red;">Sælg</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">35</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">11-01-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">340,30</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">322,00</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="red">-5,38%&nbsp;<img src="http://i.euroinvestor.com/downsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Fald i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl19_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/pandora-a-s/2632080">Pandora A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:red;">Sælg</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">35</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">11-01-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">595,40</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">623,20</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="green">4,67%&nbsp;<img src="http://i.euroinvestor.com/upsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Stigning i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl20_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/tdc-a-s/275952">TDC A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:green;">Køb</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">7</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">08-02-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">44,15</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">49,25</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="green">11,55%&nbsp;<img src="http://i.euroinvestor.com/upsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Stigning i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl21_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/tryg-a-s/511785">Tryg A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:red;">Sælg</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">23</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">23-01-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">149,30</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">144,80</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="red">-3,01%&nbsp;<img src="http://i.euroinvestor.com/downsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Fald i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl22_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/vestas-wind-systems-a-s/206326">Vestas Wind Systems A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:green;">Køb</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">3</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">12-02-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">430,30</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">426,40</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="red">-0,91%&nbsp;<img src="http://i.euroinvestor.com/downsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Fald i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl23_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/william-demant-holding-a-s/205058">William Demant Holding A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:green;">Køb</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">28</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">18-01-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">177,10</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">196,40</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="green">10,90%&nbsp;<img src="http://i.euroinvestor.com/upsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Stigning i aktiekurs" /></span></td>
+                                    </tr>
+
+                                    <tr style="line-height:20px">
+                                        <td style="line-height:20px; vertical-align:middle" class="first tleft"><a id="ctl00_content_trend_IndexRpt_ctl24_HyperLink1" href="/boerser/nasdaq-omx-copenhagen/oersted-a-s/34573954">Ørsted A/S</a></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right"><span style="color:green;">Køb</span></td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">3</td>
+
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">12-02-2018</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">359,50</td>
+                                        <td style="line-height:20px; vertical-align:middle; text-align:right">369,00</td>
+
+                                        <td  style="line-height:20px; vertical-align:middle; text-align:right" class="last"><span class="green">2,64%&nbsp;<img src="http://i.euroinvestor.com/upsmall.gif" style="vertical-align:middle" width="8px" height="4px" border="0" alt="Stigning i aktiekurs" /></span></td>
+                                    </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="CONTROL_WIDTH_10_FIRST" style="text-align:center">
+
+
+
+
+
+                    </div>
+                    <div class="CONTROL_WIDTH_10_FIRST">
+
+                        <div class="content_box">
+                            <div class="header">
+                                <span class="header_top_left"></span>
+                                <h3 class="boxheader">Trenden - Hvad er</h3>
+                                <span class="header_top_right"></span>
+                            </div>
+                            <div class="contentbox width_10">
+                                EuroInvestor TRENDEN indeholder tekniske købs- og salgssignaler på de mest likvide danske aktier. Modellen bygger på analysefirmaet Fondsguidens erfaring i brug af teknisk analyse.<br>
+                                <br>
+                                EuroInvestor TRENDEN bør alene bruges som indikator for markedets vurdering af de udvalgte aktier. Signalerne skal ikke betragtes konkrete Købs- eller Salgs-anbefalinger.<br>
+                                <br>
+                                Modelbeskrivelse:<br>
+                                - TRENDEN bygger på en simpel men effektiv model, tilpasset det danske aktiemarked.<br>
+                                - Modellen benytter to af de mest brugte indikatorer og opererer udelukkende på dagsbasis.<br>
+                                - Købs- og Salgssignaler gives ud fra 55 dages glidende gennemsnit og RSI på 9 dage.<br>
+                                - Den gennemsnitlige holdeperiode for en aktie er 20-30 dage (kortsigtet model)<br>
+                                <br>
+                                TRENDEN er udarbejdet af fondsguiden.dk i samarbejde med EuroInvestor.
+                            </div>
+                            <div class="footer">
+                                <span class="bottom_empty_left"></span>
+                                <span class="bottom_empty_right"></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="clear: both;"></div>
+
+            <div id="ctl00_BannerContainerBottom" class="bottom_banner_placeholder collapsable" style="display: block; text-align: center; line-height: 0px;">
+                <div class="bottom_banner_div">
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+    <div id="footerContainer">
+        <div id="new_footer">
+
+
+            <div class="right_module">
+                <div class="logotype_partners IE6Fix"></div>
+            </div>
+
+            <div class="bottom_module">
+                <span><a id="ctl00_Footer1_BottomMenuLeftBottom_ctl00_HyperLinkBottomMenuLeftBottom" href="http://www.euroinvestor.dk/dk/euroinvestor/om/virksomhedsbeskrivelse.aspx">Firmaprofil</a></span> | <span><a id="ctl00_Footer1_BottomMenuLeftBottom_ctl02_HyperLinkBottomMenuLeftBottom" href="http://jobs.euroinvestor.com">Job</a></span> | <span><a id="ctl00_Footer1_BottomMenuLeftBottom_ctl04_HyperLinkBottomMenuLeftBottom" href="http://www.euroinvestor.dk/investor/">Investor</a></span> | <span><a id="ctl00_Footer1_BottomMenuLeftBottom_ctl06_HyperLinkBottomMenuLeftBottom" href="http://mediekit.euroinvestor.dk">Annoncering</a></span> | <span><a id="ctl00_Footer1_BottomMenuLeftBottom_ctl08_HyperLinkBottomMenuLeftBottom" href="http://www.euroinvestor.dk/dk/sitemap.aspx">Sitemap</a></span> | <span><a id="ctl00_Footer1_BottomMenuLeftBottom_ctl10_HyperLinkBottomMenuLeftBottom" href="http://www.euroinvestor.dk/dk/euroinvestor/om/kontakt.aspx">Kontakt</a></span> | <span><a id="ctl00_Footer1_BottomMenuLeftBottom_ctl12_HyperLinkBottomMenuLeftBottom" href="http://support.euroinvestor.com">Hjælp</a></span>
+            </div>
+
+            <div style="clear: both;">
+                <div id="ctl00_Footer1_divFollowUs">
+                    Følg os:
+
+                    <a href="https://www.facebook.com/euroinvestordk"><img align="absmiddle" src="http://i.euroinvestor.com/Icons/socialmedia/facebook-16x16.png" />Facebook</a>
+
+                    <a href="https://twitter.com/#!/Euroinvestor"><img align="absmiddle" src="http://i.euroinvestor.com/Icons/socialmedia/twitter-16x16.png" />Twitter</a>
+                    <a href="http://www.linkedin.com/groups/EuroInvestorcom-95259"><img align="absmiddle" src="http://i.euroinvestor.com/Icons/socialmedia/linkedin-16x16.png" />LinkedIn</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div style="clear:both; padding-left:10px;">
+
+            <br />
+            <span class="copyright">Copyright Euroinvestor A/S 2018</span>
+            <span>&nbsp;<a href="http://i.euroinvestor.com/DisclaimerDKEuroinvestor.pdf">Disclaimer</a>&nbsp;<a href="http://i.euroinvestor.com/Privatlivspolitik_DK_Euroinvestor.pdf">Privatlivspolitik</a></span><br />
+            Aktieinformation leveres af <a href="http://ir1.euroinvestor.com/asp/ir/IrTermsConditions.asp" target="_blank">Interactive Data</a>.<br />
+            Data er forsinket 15-20 minutter iht. de enkelte børsers regler om videredistribution.
+            <br />
+        </div>
+
+        <div style="clear: both;">&nbsp;</div>
+        <div id="footerTimezone">
+            17. februar 2018 21:12:05<br />
+            (UTC+01:00) Brussels, Copenhagen, Madrid, Paris
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <div id="OverlayPlaceHolder" style="display: none"></div>
+
+
+    <div class="serverinfo">
+        Version: LiveBranchBuild_20180209.1
+        -
+        EUROWEB2
+        -
+        2018-02-17 21:12:05
+        -
+        2018-02-17 21:12:05
+        -
+        1
+        -
+        Website: OKAY
+    </div>
+
+
+
+
+    <script type="text/javascript">
+        EI.Global.IsDevelopment = false;
+        EI.Global.IsInternalSite = false;
+        EI.Global.UseGainerLoserStreaming =false;
+
+        (function () {
+            var firstPartyDomains = ['euroinvestor.dk', 'valutakurser.dk', 'euroinvestorprivat.dk', 'euroinvestor.com', 'forexinvestor.com', 'euroinvestor.nl', 'wisselkoersen.nl', 'euroinvestor.se', 'valuta.se', 'euroinvestor.no', 'valuta.euroinvestor.no', 'euroinvestor.es', 'divisas.euroinvestor.es', 'euroinvestor.fr', 'devises.fr', 'euroinvestor.it', 'valute.it'];
+            var pattern = new RegExp(firstPartyDomains.join('|').replace('.', '\.').replace('-', '\-'));
+            $("a").filter(function () {
+                return (this.hostname && this.hostname !== window.location.hostname && pattern.test(this.hostname));
+            }).click(function (evt) {
+                var tracker = window._gat._getTrackerByName();
+                var newUrl = tracker._getLinkerUrl(evt.target.href);
+                if(newUrl.contains("eurotrader")) return true;
+                evt.target.href = newUrl.replace(/(\||,)/g, "&#124;");
+                return true;
+            });
+        })();
+    </script>
+</form>
+
+
+
+<div id="ctl00_ctl06_InfoBox" class="infoBox"></div>
+
+<script type="text/javascript">
+    var currencyDecimalSeparator = ',';var currencyGroupSeparator = '.';var numberDecimalSeparator = ',';var numberGroupSeparator = '.';var datetimeLongTimeFormat = 'HH:mm:ss';var datetimeShortDateFormat = 'dd-mm-yy';var instrumentLocalTimeOffset = 0;var UTCLocalTimeOffset = 3600000;var serverNowDay = new Date();serverNowDay.setUTCFullYear(2018, 1, 17);var siteCountry = 'dk';
+    $(function () {
+        EI.Tooltip.load();isUserAuthenticatedKeepAlive(480000);$('a[id$=Loginlnk]').click(function() {EI.Global.loadLogin(); return false;});$('a[id$=linkSignup]').click(function() {EI.Global.loadSignup(); return false;});
+    });
+</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
