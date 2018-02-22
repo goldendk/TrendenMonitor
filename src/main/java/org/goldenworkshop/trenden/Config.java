@@ -71,4 +71,15 @@ public class Config {
     public String getEuroInvestorTrendenOmx25Url(){
         return configuration.getString("euroinvestetor.trenden.omx25.url");
     }
+
+    public String getTrendenDatabaseName() {
+        return configuration.getString("trenden.database.name");
+    }
+
+    public String getRecommendationPeriodCollectionName() {
+        return configuration.getString("trenden.collection.recommendation-period.name");
+    }
+    public String getMongoConnectionUrl(){
+        return configuration.getString("mongo.url");
+    }
 }

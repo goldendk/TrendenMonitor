@@ -3,7 +3,7 @@ package org.goldenworkshop.trenden.model;
 import java.util.List;
 import java.util.Map;
 
-public interface RecommendationSyncDAO {
+public interface RecommendationSyncDAO extends ExternalInterface{
 
     void save(RecommendationPeriod period);
 
@@ -13,5 +13,10 @@ public interface RecommendationSyncDAO {
      */
     Map<String, RecommendationPeriod> loadOpenRecommendationPeriods();
 
+    /**
+     * Test interface - do not use in production
+     * @param companyCName
+     * @return
+     */
     List<RecommendationPeriod> loadPeriodsByName(String companyCName);
 }

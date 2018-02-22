@@ -27,4 +27,14 @@ public class MemoryRecommendationDAO implements RecommendationSyncDAO {
     public List<RecommendationPeriod> loadPeriodsByName(String companyCName) {
         return periods.stream().filter(e->e.getName().equalsIgnoreCase(companyCName)).collect(Collectors.toList());
     }
+
+    @Override
+    public void initialize() throws Exception {
+        //nothing.
+    }
+
+    @Override
+    public void shutdown() throws Exception {
+        //nothing.
+    }
 }

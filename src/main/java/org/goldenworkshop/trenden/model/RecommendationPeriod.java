@@ -20,6 +20,7 @@ public class RecommendationPeriod {
 
     private boolean seen;
     private BigDecimal latestValue;
+    private String id;
 
     public String getName() {
         return name;
@@ -123,5 +124,13 @@ public class RecommendationPeriod {
 
     public BigDecimal getLatestValue() {
         return latestValue;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 }
