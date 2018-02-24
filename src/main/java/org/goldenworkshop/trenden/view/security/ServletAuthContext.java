@@ -20,7 +20,12 @@ public class ServletAuthContext implements AuthContext {
 
     @Override
     public void setUser(User user) {
-        req.getSession(true).removeAttribute(USER_SESSION_KEY);
+        if(user == null){
+            req.getSession(true).removeAttribute(USER_SESSION_KEY);
+        }
+        else{
+            req.getSession(true).setAttribute(USER_SESSION_KEY, user);
+        }
     }
 
     @Override

@@ -8,7 +8,8 @@ const retrievePromise = googleyolo.retrieve({
             uri: "https://accounts.google.com",
             clientId: "1069165987697-2bgck91g7v9tagd0qimq7nqvhshbumqg.apps.googleusercontent.com"
         }
-    ]
+    ],
+    context: 'signin'
 }).then((credential) => {
         if (credential.idToken) {
             // Send the token to your auth backend.
@@ -47,5 +48,5 @@ const retrievePromise = googleyolo.retrieve({
     }
 );
 useGoogleIdTokenForAuth = function(token){
-    window.location = "/googleAuth?idToken=" + token;
+    window.location = "/GoogleAuth?idToken=" + token;
 };

@@ -11,15 +11,41 @@
         <filter-name>AuthenticatedFilter</filter-name>
         <filter-class>org.goldenworkshop.trenden.view.security.AuthenticatedFilter</filter-class>
     </filter>
+    <servlet>
+        <servlet-name>GoogleAuthServlet</servlet-name>
+        <servlet-class>org.goldenworkshop.trenden.view.security.GoogleAuthServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GoogleAuthServlet</servlet-name>
+        <url-pattern>/GoogleAuth</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>org.goldenworkshop.trenden.view.security.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoutServlet</servlet-name>
+        <url-pattern>/user/logout</url-pattern>
+    </servlet-mapping>
 
 
     <filter-mapping>
         <filter-name>UserContextFilter</filter-name>
         <url-pattern>/user/*</url-pattern>
     </filter-mapping>
+<filter-mapping>
+    <filter-name>UserContextFilter</filter-name>
+    <url-pattern>/GoogleAuth</url-pattern>
+</filter-mapping>
+
     <filter-mapping>
         <filter-name>AuthenticatedFilter</filter-name>
         <url-pattern>/user/*</url-pattern>
     </filter-mapping>
+
+    <welcome-file-list>
+        <welcome-file>/googleAuth.html</welcome-file>
+    </welcome-file-list>
+
 
 </web-app>

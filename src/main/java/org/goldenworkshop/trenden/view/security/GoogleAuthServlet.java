@@ -23,11 +23,11 @@ public class GoogleAuthServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         this.doPost(req, resp);
     }
-
+    private static String googleOAuth = "1069165987697-c8c4rvl7nc0jpbbuoom8uodjtn4n0nua.apps.googleusercontent.com";
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new ApacheHttpTransport(), jacksonFactory)
-                .setAudience(Collections.singletonList("1069165987697-2bgck91g7v9tagd0qimq7nqvhshbumqg.apps.googleusercontent.com"))
+                .setAudience(Collections.singletonList(googleOAuth))
                 // Or, if multiple clients access the backend:
                 //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
                 .build();
@@ -64,7 +64,7 @@ public class GoogleAuthServlet extends HttpServlet {
             user.setPictureUrl(pictureUrl);
 
             AuthContext.get().setUser(user);
-
+            resp.sendRedirect("/user/protected.html");
         } else {
             AuthContext.get().setUser(null);
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
