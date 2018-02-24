@@ -9,7 +9,7 @@ import org.goldenworkshop.trenden.model.impl.MongoRecommendationDAO;
 import java.math.BigDecimal;
 import java.util.Iterator;
 
-public class Application {
+public class ConsoleApplication {
 
     public static void main(String... args) throws Exception {
         System.setProperty("APPENV", "local");
