@@ -1,9 +1,11 @@
 package org.goldenworkshop.trenden;
 
 import org.goldenworkshop.trenden.model.Recommendation;
+import org.goldenworkshop.trenden.model.RecommendationPeriod;
 import org.goldenworkshop.trenden.model.Signal;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 
 public class TestHelper {
@@ -22,5 +24,24 @@ public class TestHelper {
         recommendation.setChange("2.9%");
 
         return recommendation;
+    }
+
+    public static RecommendationPeriod createRecommendationPeriod(Calendar twoDaysAgo, Calendar today) {
+        RecommendationPeriod period = new RecommendationPeriod();
+        period.setStartSignal(Signal.BUY);
+        period.setEndSignal(Signal.SELL);
+
+        period.setCreated(twoDaysAgo.getTime());
+        period.setUpdated(today.getTime());
+        period.setStartDate(twoDaysAgo.getTime());
+        period.setEndDate(today.getTime());
+        period.setLatestValue(new BigDecimal("200.00"));
+        period.setChangePercent("2.9%");
+        period.setStartValue(new BigDecimal("100.00"));
+        period.setEndValue(new BigDecimal("300.00"));
+        period.setName(TestHelper.COMPANY_A_NAME);
+        period.setPeriodDays(20);
+
+        return period;
     }
 }

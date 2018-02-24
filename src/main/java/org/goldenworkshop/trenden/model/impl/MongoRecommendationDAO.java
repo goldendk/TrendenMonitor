@@ -2,19 +2,25 @@ package org.goldenworkshop.trenden.model.impl;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.UpdateOptions;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.bson.Document;
+import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 import org.goldenworkshop.trenden.Config;
 import org.goldenworkshop.trenden.model.RecommendationPeriod;
 import org.goldenworkshop.trenden.model.RecommendationSyncDAO;
 import org.goldenworkshop.trenden.model.Signal;
 
+import javax.xml.bind.DatatypeConverter;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,7 +40,7 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
     private static final String FIELD_NAME_CHANGE_PERCENT = "changePercent";
     private static final String FIELD_NAME_CREATED = "created";
     private static final String FIELD_NAME_UPDATED = "updated";
-    private static final String FIELDNAME_LATEST_VALUE = "latestValue";
+    private static final String FIELD_NAME_LATEST_VALUE = "latestValue";
     private static Logger logger = Logger.getLogger(MongoRecommendationDAO.class.getName());
 
     private static final Object FIELD_NAME_ID = "_id";
@@ -51,6 +57,10 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
         String url = Config.get().getMongoConnectionUrl();
         client = new MongoClient(new MongoClientURI(url));
         db = client.getDatabase(Config.get().getTrendenDatabaseName());
+        loadRecommendationCollection();
+    }
+
+    private void loadRecommendationCollection() {
         recommendationPeriodCollection = db.getCollection(Config.get().getRecommendationPeriodCollectionName());
     }
 
@@ -65,13 +75,45 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
 
 
     @Override
-    public void save(RecommendationPeriod period) {
+    public void upsert(RecommendationPeriod period) {
+        Document theDocument = new Document()
+                .append(FIELD_NAME_NAME, period.getName())
+                .append(FIELD_NAME_START_SIGNAL, Converter.toString(period.getStartSignal()))
+                .append(FIELD_NAME_END_SIGNAL, Converter.toString(period.getEndSignal()))
+                .append(FIELD_NAME_CREATED, period.getCreated())
+                .append(FIELD_NAME_UPDATED, period.getUpdated())
+                .append(FIELD_NAME_START_DATE, period.getStartDate())
+                .append(FIELD_NAME_END_DATE, period.getEndDate())
+                .append(FIELD_NAME_CHANGE_PERCENT, period.getChangePercent())
+                .append(FIELD_NAME_START_VALUE, Converter.toString(period.getStartValue()))
+                .append(FIELD_NAME_END_VALUE, Converter.toString(period.getEndValue()))
+                .append(FIELD_NAME_LATEST_VALUE, Converter.toString(period.getLatestValue()))
+                .append(FIELD_NAME_PERIOD_DAYS, period.getPeriodDays());
 
+        Bson update = new Document("$set",
+                theDocument
+        );
+
+        if (StringUtils.isNotBlank(period.getId())) {
+            Bson filter = Filters.eq("_id", new ObjectId(period.getId()));
+            UpdateOptions options = new UpdateOptions().upsert(true);
+            recommendationPeriodCollection
+                    .updateOne(filter, update, options);
+        } else {
+            recommendationPeriodCollection.insertOne(theDocument);
+        }
     }
 
     @Override
     public Map<String, RecommendationPeriod> loadOpenRecommendationPeriods() {
-        return null;
+        MongoCursor<Document> iterator = recommendationPeriodCollection.find(Filters.eq(FIELD_NAME_END_SIGNAL, null)).iterator();
+        Map<String, RecommendationPeriod> map = new HashMap<>();
+        while(iterator.hasNext()){
+            Document next = iterator.next();
+            RecommendationPeriod recommendationPeriod = documentToPeriod(next);
+            map.put(recommendationPeriod.getName(), recommendationPeriod);
+        }
+        return map;
     }
 
     @Override
@@ -87,26 +129,31 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
         try {
             while (cursor.hasNext()) {
                 org.bson.Document bson = cursor.next();
-                RecommendationPeriod period = new RecommendationPeriod();
-                period.setId(bson.getObjectId(FIELD_NAME_ID).toString());
-                period.setStartSignal(Signal.fromString(bson.getString(FIELD_NAME_START_SIGNAL)));
-                period.setEndSignal(Signal.fromString(bson.getString(FIELD_NAME_END_SIGNAL)));
-                period.setPeriodDays(bson.getInteger(FIELD_NAME_PERIOD_DAYS));
-                period.setName(bson.getString(FIELD_NAME_NAME));
-                period.setStartDate(bson.getDate(FIELD_NAME_START_DATE));
-                period.setEndDate(bson.getDate(FIELD_NAME_END_DATE));
-                period.setStartValue(Converter.toBigDecimal(bson.getString(FIELD_NAME_START_VALUE)));
-                period.setEndValue(Converter.toBigDecimal(bson.getString(FIELD_NAME_END_VALUE)));
-                period.setChangePercent(bson.getString(FIELD_NAME_CHANGE_PERCENT));
-                period.setCreated(bson.getDate(FIELD_NAME_CREATED));
-                period.setUpdated(bson.getDate(FIELD_NAME_UPDATED));
-                period.setLatestValue(Converter.toBigDecimal(bson.getString(FIELDNAME_LATEST_VALUE)));
+                RecommendationPeriod period = documentToPeriod(bson);
                 returnList.add(period);
             }
         } finally {
             cursor.close();
         }
         return returnList;
+    }
+
+    private RecommendationPeriod documentToPeriod(Document bson) {
+        RecommendationPeriod period = new RecommendationPeriod();
+        period.setId(bson.getObjectId(FIELD_NAME_ID).toString());
+        period.setStartSignal(Signal.fromString(bson.getString(FIELD_NAME_START_SIGNAL)));
+        period.setEndSignal(Signal.fromString(bson.getString(FIELD_NAME_END_SIGNAL)));
+        period.setPeriodDays(bson.getInteger(FIELD_NAME_PERIOD_DAYS));
+        period.setName(bson.getString(FIELD_NAME_NAME));
+        period.setStartDate(bson.getDate(FIELD_NAME_START_DATE));
+        period.setEndDate(bson.getDate(FIELD_NAME_END_DATE));
+        period.setStartValue(Converter.toBigDecimal(bson.getString(FIELD_NAME_START_VALUE)));
+        period.setEndValue(Converter.toBigDecimal(bson.getString(FIELD_NAME_END_VALUE)));
+        period.setChangePercent(bson.getString(FIELD_NAME_CHANGE_PERCENT));
+        period.setCreated(bson.getDate(FIELD_NAME_CREATED));
+        period.setUpdated(bson.getDate(FIELD_NAME_UPDATED));
+        period.setLatestValue(Converter.toBigDecimal(bson.getString(FIELD_NAME_LATEST_VALUE)));
+        return period;
     }
 
 
@@ -119,8 +166,29 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
         public static BigDecimal toBigDecimal(String value) {
             return (value == null) ? null : new BigDecimal(value);
         }
+
+        public static String toString(Signal endSignal) {
+            return (endSignal == null) ? null : endSignal.name();
+        }
+
+        public static String toString(Date created) {
+            return created == null ? null : DatatypeConverter.printDateTime(DateUtils.toCalendar(created));
+        }
     }
 
+    /**
+     * Never-ever use this, it will drop the collection!
+     * //     *
+     * //     * @param secret must be set to the secret password
+     * //     * to do the actual dropping of the collection.
+     * //
+     */
+    public void dropTheDb(String secret) {
+        if (secret.equals("yes-i-am-testing")) {
+            recommendationPeriodCollection.drop();
+            loadRecommendationCollection();
+        }
+    }
 //
 //
 //    @Override

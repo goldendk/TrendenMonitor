@@ -5,7 +5,11 @@ import java.util.Map;
 
 public interface RecommendationSyncDAO extends ExternalInterface{
 
-    void save(RecommendationPeriod period);
+    /**
+     * Saves the period object, updates it if it already exists.
+     * @param period
+     */
+    void upsert(RecommendationPeriod period);
 
     /**
      * Load the recommendations that are not closed yet. A recommendation is recognized by its {@link Recommendation#name}.

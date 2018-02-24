@@ -32,7 +32,7 @@ public class RecommendationController {
                 if (period != null && recommendation.getSignal() != period.getStartSignal()) {
                     this.updateRecomendationPeriod(recommendation, period);
                     this.endRecommendationPeriod(recommendation, period);
-                    syncDao.save(period);
+                    syncDao.upsert(period);
                     //start new period
                     period = createRecommendationPeriod(recommendation);
                 }
@@ -40,7 +40,7 @@ public class RecommendationController {
                     updateRecomendationPeriod(recommendation, period);
                 }
             }
-            syncDao.save(period);
+            syncDao.upsert(period);
             openRecommendations.remove(name);
         }
         for(RecommendationPeriod toClose : openRecommendations.values()){
@@ -104,7 +104,7 @@ public class RecommendationController {
         this.recommendationSource = recommendationSource;
     }
 
-    public void setSyncDao(MemoryRecommendationDAO syncDao) {
+    public void setSyncDao(RecommendationSyncDAO syncDao) {
         this.syncDao = syncDao;
     }
 

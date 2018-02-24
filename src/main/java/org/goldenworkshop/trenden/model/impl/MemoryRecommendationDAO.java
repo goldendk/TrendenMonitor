@@ -11,7 +11,7 @@ public class MemoryRecommendationDAO implements RecommendationSyncDAO {
 
     Set<RecommendationPeriod> periods = new LinkedHashSet<>();
     @Override
-    public void save(RecommendationPeriod period) {
+    public void upsert(RecommendationPeriod period) {
         periods.add(period);
     }
 
