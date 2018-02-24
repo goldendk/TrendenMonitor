@@ -9,6 +9,7 @@ buildscript {    // Configuration for building
         mavenCentral()
     }
 }
+ext.jerseyVersion ="2.26"
 
 repositories {
     jcenter()
@@ -37,6 +38,15 @@ dependencies {
     //google auth
     // https://mvnrepository.com/artifact/com.google.api-client/google-api-client
     compile 'com.google.api-client:google-api-client-servlet:1.23.0'
+
+    compile group: 'org.glassfish.jersey.core', name: 'jersey-common', version: "$jerseyVersion"
+    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version: "$jerseyVersion"
+    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: "$jerseyVersion"
+   compile group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '2.26'
+
+    // testCompile group: 'org.glassfish.jersey.test-framework', name: 'jersey-test-framework-core', version: "$jerseyVersion"
+    //testCompile group: 'org.glassfish.jersey.test-framework.providers', name : 'jersey-test-framework-provider-grizzly2', version: "$jerseyVersion"
+    //compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
 
 
     testCompile group: 'com.github.tomakehurst', name: 'wiremock', version: '2.15.0'
