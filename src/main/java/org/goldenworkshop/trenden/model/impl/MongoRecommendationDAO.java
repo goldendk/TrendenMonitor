@@ -10,6 +10,8 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.UpdateOptions;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -21,8 +23,6 @@ import org.goldenworkshop.trenden.model.Signal;
 import javax.xml.bind.DatatypeConverter;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -41,7 +41,7 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
     private static final String FIELD_NAME_CREATED = "created";
     private static final String FIELD_NAME_UPDATED = "updated";
     private static final String FIELD_NAME_LATEST_VALUE = "latestValue";
-    private static Logger logger = Logger.getLogger(MongoRecommendationDAO.class.getName());
+    private static Logger logger = LogManager.getLogger(MongoRecommendationDAO.class);
 
     private static final Object FIELD_NAME_ID = "_id";
 
@@ -54,6 +54,8 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
 
     @Override
     public void initialize() throws Exception {
+
+
         String url = Config.get().getMongoConnectionUrl();
         client = new MongoClient(new MongoClientURI(url));
         db = client.getDatabase(Config.get().getTrendenDatabaseName());
@@ -69,7 +71,7 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
         try {
             client.close();
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Failed to shutdown mongo client", e);
+            logger.error("Failed to shutdown MongoDB client", e);
         }
     }
 

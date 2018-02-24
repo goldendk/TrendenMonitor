@@ -133,4 +133,24 @@ public class RecommendationPeriod {
     public String getId() {
         return id;
     }
+
+    @Override
+    public String toString() {
+        return "RecommendationPeriod{" +
+                "name='" + name + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", startSignal=" + startSignal +
+                ", endSignal=" + endSignal +
+                ", startValue=" + startValue +
+                ", endValue=" + endValue +
+                ", periodDays=" + periodDays +
+                ", changePercent='" + changePercent + '\'' +
+                ", created=" + created +
+                ", updated=" + updated +
+                ", seen=" + seen +
+                ", latestValue=" + latestValue +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }

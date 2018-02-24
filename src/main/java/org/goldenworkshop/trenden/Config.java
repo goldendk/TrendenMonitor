@@ -82,4 +82,8 @@ public class Config {
     public String getMongoConnectionUrl(){
         return configuration.getString("mongo.url");
     }
+
+    public String getAuthenticationUrl() {
+        return configuration.getString("authentication.url");
+    }
 }

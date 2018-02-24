@@ -1,14 +1,13 @@
 package org.goldenworkshop.trenden.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.goldenworkshop.trenden.model.*;
-import org.goldenworkshop.trenden.model.impl.MemoryRecommendationDAO;
 
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class RecommendationController {
-    private static Logger logger = Logger.getLogger(RecommendationController.class.getName());
+    private static Logger logger = LogManager.getLogger(RecommendationController.class);
 
     private RecommendationSource recommendationSource;
     private RecommendationSyncDAO syncDao;
@@ -19,8 +18,11 @@ public class RecommendationController {
 
         Iterator<Recommendation> recommendationIterator = recommendationSource.iterator();
         Map<String, RecommendationPeriod> openRecommendations = syncDao.loadOpenRecommendationPeriods();
-
+        logger.info("Open recommendation: " + openRecommendations.size());
+        int recommendationCount = 0;
         while (recommendationIterator.hasNext()) {
+            logger.info("Recommendation count " + ++recommendationCount);
+
             Recommendation recommendation = recommendationIterator.next();
             String name = recommendation.getName();
             RecommendationPeriod period = openRecommendations.get(name);
@@ -48,14 +50,15 @@ public class RecommendationController {
             closingRecommendation.setLatestValue(toClose.getLatestValue());
             closingRecommendation.setSignal(Signal.MISSING);
             closingRecommendation.setSignalDate(new Date());
+            logger.warn("Forcing closing recommendation period " + toClose.getName());
             this.endRecommendationPeriod(closingRecommendation, toClose);
         }
-
+        logger.info("Calling listeners");
         for(RecommendationPeriodListener listener : listeners){
             try{
                 listener.finish();
             }catch (Exception e){
-                logger.log(Level.SEVERE, "Exception when calling finish on RecommendationListener", e);
+                logger.error("Exception when calling finish on RecommendationListener", e);
             }
         }
     }
@@ -65,6 +68,7 @@ public class RecommendationController {
         period.setPeriodDays(recommendation.getDays());
         period.setLatestValue(recommendation.getLatestValue());
         period.setChangePercent(recommendation.getChange());
+        logger.info("Updated recommendation period to " + period);
     }
 
     private void endRecommendationPeriod(Recommendation recommendation, RecommendationPeriod period) {
@@ -72,12 +76,12 @@ public class RecommendationController {
         period.setEndValue(recommendation.getLatestValue());
         period.setEndSignal(recommendation.getSignal());
         period.setUpdated(new Date());
-
+        logger.info("Ended recommendation period: " + period);
         for(RecommendationPeriodListener listener : listeners){
             try{
                 listener.onPeriodComplete(period);
             }catch (Exception e){
-                logger.log(Level.SEVERE, "Exception triggers listener for ending period: " + period, e);
+                logger.error( "Exception triggers listener for ending period: " + period, e);
             }
         }
     }
@@ -90,11 +94,12 @@ public class RecommendationController {
         period.setStartValue(recommendation.getSignalValue());
         period.setCreated(new Date());
 
+        logger.info("Created recommendation period: " + period);
         for (RecommendationPeriodListener listener : listeners) {
             try {
                 listener.onPeriodCreate(period);
             } catch (Exception e) {
-                logger.log(Level.SEVERE, "Exception triggering listener for creating period: " + period, e);
+                logger.error( "Exception triggering listener for creating period: " + period, e);
             }
         }
         return period;

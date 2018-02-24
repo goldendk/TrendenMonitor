@@ -2,5 +2,24 @@
 
 
 
+    <filter>
+        <filter-name>UserContextFilter</filter-name>
+        <filter-class>org.goldenworkshop.trenden.view.security.AuthContextFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>AuthenticatedFilter</filter-name>
+        <filter-class>org.goldenworkshop.trenden.view.security.AuthenticatedFilter</filter-class>
+    </filter>
+
+
+    <filter-mapping>
+        <filter-name>UserContextFilter</filter-name>
+        <url-pattern>/user/*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>AuthenticatedFilter</filter-name>
+        <url-pattern>/user/*</url-pattern>
+    </filter-mapping>
 
 </web-app>
