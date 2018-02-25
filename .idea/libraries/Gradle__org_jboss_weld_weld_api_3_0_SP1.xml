@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: org.jboss.weld:weld-api:3.0.SP1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jboss.weld/weld-api/3.0.SP1/e2592751e8542ebe5f5024c8cd12e449a498eefc/weld-api-3.0.SP1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jboss.weld/weld-api/3.0.SP1/ba65908b592de17fc5ba8b654c86f15113590a60/weld-api-3.0.SP1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jboss.weld/weld-api/3.0.SP1/c31ee4a9de00e1b4b81f11b4f457d444ffa4a261/weld-api-3.0.SP1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
