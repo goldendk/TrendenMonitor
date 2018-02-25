@@ -28,3 +28,8 @@
 hs_err_pid*
 /frontend/node_modules
 /frontend/yarn.lock
+.idea/inspectionProfiles/
+frontend/trenden/build/
+frontend/trenden/node_modules/
+frontend/trenden/package-lock.json
+frontend/trenden/yarn.lock
