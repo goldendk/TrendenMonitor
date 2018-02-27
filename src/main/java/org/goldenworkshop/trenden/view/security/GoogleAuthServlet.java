@@ -1,6 +1,7 @@
 package org.goldenworkshop.trenden.view.security;
 
 import com.google.api.client.auth.openidconnect.IdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.apache.ApacheHttpTransport;
@@ -32,7 +33,7 @@ public class GoogleAuthServlet extends HttpServlet {
                 //.setAudience(Arrays.asList(CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3))
                 .build();
 
-// (Receive idTokenString by HTTPS POST)
+            // (Receive idTokenString by HTTPS POST)
         String idTokenString = req.getParameter("idToken");
         GoogleIdToken idToken = null;
         try {
