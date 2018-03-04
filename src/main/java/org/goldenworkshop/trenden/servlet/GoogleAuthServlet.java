@@ -1,4 +1,4 @@
-package org.goldenworkshop.trenden.view.security;
+package org.goldenworkshop.trenden.servlet;
 
 import com.google.api.client.auth.openidconnect.IdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeTokenRequest;

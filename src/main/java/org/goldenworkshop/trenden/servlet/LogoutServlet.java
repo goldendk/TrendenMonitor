@@ -1,4 +1,4 @@
-package org.goldenworkshop.trenden.view.security;
+package org.goldenworkshop.trenden.servlet;
 
 import org.goldenworkshop.trenden.controller.AuthContext;
 

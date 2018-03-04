@@ -1,6 +1,8 @@
 package org.goldenworkshop.trenden.model;
 
-public interface ExternalInterface {
+import java.io.Serializable;
+
+public interface ExternalInterface  extends Serializable{
     void initialize() throws Exception;
     void shutdown() throws Exception;
 }

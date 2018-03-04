@@ -48,6 +48,10 @@ dependencies {
     //testCompile group: 'org.glassfish.jersey.test-framework.providers', name : 'jersey-test-framework-provider-grizzly2', version: "$jerseyVersion"
     //compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
 
+    //CDI: Weld
+    // https://mvnrepository.com/artifact/org.jboss.weld.servlet/weld-servlet
+    compile group: 'org.jboss.weld.servlet', name: 'weld-servlet', version: '3.0.0.Alpha1'
+
 
     testCompile group: 'com.github.tomakehurst', name: 'wiremock', version: '2.15.0'
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'

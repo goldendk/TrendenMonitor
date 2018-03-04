@@ -32,6 +32,7 @@
     <orderEntry type="library" name="Gradle: org.glassfish.jersey.core:jersey-client:2.26" level="project" />
     <orderEntry type="library" name="Gradle: org.glassfish.jersey.media:jersey-media-jaxb:2.26" level="project" />
     <orderEntry type="library" name="Gradle: org.glassfish.jersey.core:jersey-common:2.26" level="project" />
+    <orderEntry type="library" name="Gradle: org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1" level="project" />
     <orderEntry type="library" name="Gradle: org.mockito:mockito-all:1.9.5" level="project" />
     <orderEntry type="library" name="Gradle: org.xmlunit:xmlunit-legacy:2.3.0" level="project" />
     <orderEntry type="library" name="Gradle: junit:junit:4.12" level="project" />
