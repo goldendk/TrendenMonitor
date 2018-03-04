@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: org.glassfish.jersey.containers.glassfish:jersey-gf-cdi-ban-custom-hk2-binding:2.9">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jersey.containers.glassfish/jersey-gf-cdi-ban-custom-hk2-binding/2.9/4d674066feb98cb3c8283bfd4f849ac599ce82b7/jersey-gf-cdi-ban-custom-hk2-binding-2.9.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jersey.containers.glassfish/jersey-gf-cdi-ban-custom-hk2-binding/2.9/c2329f626a18f77c2310d2594489fc19c7e3a624/jersey-gf-cdi-ban-custom-hk2-binding-2.9-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.glassfish.jersey.containers.glassfish/jersey-gf-cdi-ban-custom-hk2-binding/2.9/1394a57cb38c2a088b80f8cd71108a3dea311b95/jersey-gf-cdi-ban-custom-hk2-binding-2.9-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

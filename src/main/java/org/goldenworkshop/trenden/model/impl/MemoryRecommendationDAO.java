@@ -3,10 +3,11 @@ package org.goldenworkshop.trenden.model.impl;
 import org.goldenworkshop.trenden.model.RecommendationPeriod;
 import org.goldenworkshop.trenden.model.RecommendationSyncDAO;
 
+import javax.enterprise.inject.Alternative;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
+@Alternative
 public class MemoryRecommendationDAO implements RecommendationSyncDAO {
 
     Set<RecommendationPeriod> periods = new LinkedHashSet<>();

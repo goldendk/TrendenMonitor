@@ -1,5 +1,6 @@
 package org.goldenworkshop.trenden.model;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.util.List;
 import java.util.Map;
 

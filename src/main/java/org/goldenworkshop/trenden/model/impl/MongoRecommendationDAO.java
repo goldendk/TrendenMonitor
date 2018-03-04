@@ -20,6 +20,8 @@ import org.goldenworkshop.trenden.model.RecommendationPeriod;
 import org.goldenworkshop.trenden.model.RecommendationSyncDAO;
 import org.goldenworkshop.trenden.model.Signal;
 
+import javax.annotation.Priority;
+import javax.enterprise.inject.Default;
 import javax.xml.bind.DatatypeConverter;
 import java.math.BigDecimal;
 import java.util.*;
@@ -29,6 +31,7 @@ import static com.mongodb.client.model.Filters.eq;
 /**
  * Mongo implementation of DAO for trenden recommendation.
  */
+
 public class MongoRecommendationDAO implements RecommendationSyncDAO {
     private static final String FIELD_NAME_START_SIGNAL = "startSignal";
     private static final String FIELD_NAME_END_SIGNAL = "endSignal";
@@ -54,7 +57,7 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
 
     @Override
     public void initialize() throws Exception {
-
+        logger.info("Initializing MongoDB client");
 
         String url = Config.get().getMongoConnectionUrl();
         client = new MongoClient(new MongoClientURI(url));
@@ -68,6 +71,7 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
 
     @Override
     public void shutdown() {
+        logger.info("Shutting down MongoDB client");
         try {
             client.close();
         } catch (Exception e) {

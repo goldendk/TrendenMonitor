@@ -9,7 +9,7 @@ buildscript {    // Configuration for building
         mavenCentral()
     }
 }
-ext.jerseyVersion ="2.26"
+ext.jerseyVersion ="2.14"
 
 repositories {
     jcenter()
@@ -23,7 +23,6 @@ dependencies {
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.10.0'
 
 
-    compile group: 'javax.servlet', name: 'javax.servlet-api', version:'3.0.1'
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
     compile group: 'org.jsoup', name: 'jsoup', version: '1.8.3'
 
@@ -37,12 +36,14 @@ dependencies {
 
     //google auth
     // https://mvnrepository.com/artifact/com.google.api-client/google-api-client
-    compile 'com.google.api-client:google-api-client-servlet:1.23.0'
+    compile( 'com.google.api-client:google-api-client-servlet:1.23.0'){
+        exclude( group: 'javax.servlet')
+    }
 
     compile group: 'org.glassfish.jersey.core', name: 'jersey-common', version: "$jerseyVersion"
     compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet', version: "$jerseyVersion"
     compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: "$jerseyVersion"
-   compile group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '2.26'
+   //  compile group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: "$jerseyVersion"
 
     // testCompile group: 'org.glassfish.jersey.test-framework', name: 'jersey-test-framework-core', version: "$jerseyVersion"
     //testCompile group: 'org.glassfish.jersey.test-framework.providers', name : 'jersey-test-framework-provider-grizzly2', version: "$jerseyVersion"
@@ -50,8 +51,17 @@ dependencies {
 
     //CDI: Weld
     // https://mvnrepository.com/artifact/org.jboss.weld.servlet/weld-servlet
-    compile group: 'org.jboss.weld.servlet', name: 'weld-servlet', version: '3.0.0.Alpha1'
+    compile( group: 'org.jboss.weld.servlet', name: 'weld-servlet', version: '3.0.0.Alpha1'){
+        exclude(group: 'javax.servlet')
+    }
+    //CDI bridge hk2 -> weld
+    compile 'org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14'
+     compile group: 'org.glassfish.jersey.containers.glassfish', name: 'jersey-gf-cdi-ban-custom-hk2-binding', version: '2.9'
+    compile group: 'javax.transaction', name: 'javax.transaction-api', version: '1.2'
 
+
+
+    providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version:'3.0.1'
 
     testCompile group: 'com.github.tomakehurst', name: 'wiremock', version: '2.15.0'
     testCompile group: 'org.mockito', name: 'mockito-all', version: '1.9.5'

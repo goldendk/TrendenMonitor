@@ -13,7 +13,6 @@ compile - Dependencies for source set 'main' (deprecated, use 'implementation ' 
 +--- org.apache.logging.log4j:log4j-api:2.10.0
 +--- org.apache.logging.log4j:log4j-core:2.10.0
 |    \--- org.apache.logging.log4j:log4j-api:2.10.0
-+--- javax.servlet:javax.servlet-api:3.0.1
 +--- commons-io:commons-io:2.6
 +--- org.jsoup:jsoup:1.8.3
 +--- org.mongodb:mongo-java-driver:3.6.3
@@ -42,71 +41,80 @@ compile - Dependencies for source set 'main' (deprecated, use 'implementation ' 
 |    |    +--- com.google.oauth-client:google-oauth-client:1.23.0 (*)
 |    |    +--- com.google.http-client:google-http-client-jackson2:1.23.0
 |    |    |    +--- com.google.http-client:google-http-client:1.23.0 (*)
-|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.9.4
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.3.2
 |    |    \--- com.google.guava:guava-jdk5:17.0
-|    +--- javax.servlet:servlet-api:2.5
 |    \--- javax.jdo:jdo2-api:2.3-eb (*)
-+--- org.glassfish.jersey.containers:jersey-container-servlet:2.25.1
-|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.25.1
-|    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.1
++--- org.glassfish.jersey.core:jersey-common:2.14
+|    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- javax.annotation:javax.annotation-api:1.2
+|    +--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.14
+|    +--- org.glassfish.hk2:hk2-api:2.4.0-b06
+|    |    +--- javax.inject:javax.inject:1
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06
+|    |    |    \--- javax.inject:javax.inject:1
+|    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06 (*)
+|    |    \--- org.javassist:javassist:3.18.1-GA
+|    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
++--- org.glassfish.jersey.containers:jersey-container-servlet:2.14
+|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.14
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    +--- org.glassfish.jersey.core:jersey-server:2.14
+|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.14
+|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
+|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
 |    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b42
-|    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    +--- org.glassfish.jersey.core:jersey-server:2.25.1
-|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.25.1
-|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32
-|    |    |    |    |    +--- javax.inject:javax.inject:1
-|    |    |    |    |    +--- org.glassfish.hk2:hk2-utils:2.5.0-b32
-|    |    |    |    |    |    \--- javax.inject:javax.inject:1
-|    |    |    |    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |         +--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |         +--- org.glassfish.hk2:hk2-utils:2.5.0-b32 (*)
-|    |    |    |         \--- org.javassist:javassist:3.20.0-GA
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    +--- org.glassfish.jersey.media:jersey-media-jaxb:2.25.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
-|    |    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
+|    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
 |    |    |    \--- javax.validation:validation-api:1.1.0.Final
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    +--- org.glassfish.jersey.core:jersey-server:2.25.1 (*)
-|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-+--- com.fasterxml.jackson.core:jackson-databind:2.9.4
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.0
-|    \--- com.fasterxml.jackson.core:jackson-core:2.9.4
-+--- org.glassfish.jersey.media:jersey-media-json-jackson:2.26
-|    +--- org.glassfish.jersey.core:jersey-common:2.26 (*)
-|    +--- org.glassfish.jersey.ext:jersey-entity-filtering:2.26
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.1
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.4 -> 2.9.0
-|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-|    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.4
-|         +--- com.fasterxml.jackson.core:jackson-core:2.8.4 -> 2.9.4
-|         +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.9.0
-|         \--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-\--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.6
+|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.media:jersey-media-json-jackson:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    |    \--- com.fasterxml.jackson.core:jackson-databind:2.3.2
+|    |         +--- com.fasterxml.jackson.core:jackson-annotations:2.3.0 -> 2.3.2
+|    |         \--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.3.2
+|    |    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.3.2 (*)
+|    |    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.3.2
+|    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 (*)
+|    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2
++--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
++--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi-ban-custom-hk2-binding:2.9
+|    +--- org.glassfish.jersey.core:jersey-common:2.9 -> 2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.9 -> 2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0 -> 2.0.1
++--- javax.transaction:javax.transaction-api:1.2
+\--- javax.servlet:javax.servlet-api:3.0.1
 
 compileClasspath - Compile classpath for source set 'main'.
 +--- org.apache.logging.log4j:log4j-api:2.10.0
 +--- org.apache.logging.log4j:log4j-core:2.10.0
 |    \--- org.apache.logging.log4j:log4j-api:2.10.0
-+--- javax.servlet:javax.servlet-api:3.0.1
 +--- commons-io:commons-io:2.6
 +--- org.jsoup:jsoup:1.8.3
 +--- org.mongodb:mongo-java-driver:3.6.3
@@ -135,65 +143,75 @@ compileClasspath - Compile classpath for source set 'main'.
 |    |    +--- com.google.oauth-client:google-oauth-client:1.23.0 (*)
 |    |    +--- com.google.http-client:google-http-client-jackson2:1.23.0
 |    |    |    +--- com.google.http-client:google-http-client:1.23.0 (*)
-|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.9.4
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.3.2
 |    |    \--- com.google.guava:guava-jdk5:17.0
-|    +--- javax.servlet:servlet-api:2.5
 |    \--- javax.jdo:jdo2-api:2.3-eb (*)
-+--- org.glassfish.jersey.containers:jersey-container-servlet:2.25.1
-|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.25.1
-|    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.1
++--- org.glassfish.jersey.core:jersey-common:2.14
+|    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- javax.annotation:javax.annotation-api:1.2
+|    +--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.14
+|    +--- org.glassfish.hk2:hk2-api:2.4.0-b06
+|    |    +--- javax.inject:javax.inject:1
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06
+|    |    |    \--- javax.inject:javax.inject:1
+|    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06 (*)
+|    |    \--- org.javassist:javassist:3.18.1-GA
+|    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
++--- org.glassfish.jersey.containers:jersey-container-servlet:2.14
+|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.14
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    +--- org.glassfish.jersey.core:jersey-server:2.14
+|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.14
+|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
+|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
 |    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b42
-|    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    +--- org.glassfish.jersey.core:jersey-server:2.25.1
-|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.25.1
-|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32
-|    |    |    |    |    +--- javax.inject:javax.inject:1
-|    |    |    |    |    +--- org.glassfish.hk2:hk2-utils:2.5.0-b32
-|    |    |    |    |    |    \--- javax.inject:javax.inject:1
-|    |    |    |    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |         +--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |         +--- org.glassfish.hk2:hk2-utils:2.5.0-b32 (*)
-|    |    |    |         \--- org.javassist:javassist:3.20.0-GA
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    +--- org.glassfish.jersey.media:jersey-media-jaxb:2.25.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
-|    |    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
+|    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
 |    |    |    \--- javax.validation:validation-api:1.1.0.Final
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    +--- org.glassfish.jersey.core:jersey-server:2.25.1 (*)
-|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-+--- com.fasterxml.jackson.core:jackson-databind:2.9.4
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.0
-|    \--- com.fasterxml.jackson.core:jackson-core:2.9.4
-+--- org.glassfish.jersey.media:jersey-media-json-jackson:2.26
-|    +--- org.glassfish.jersey.core:jersey-common:2.26 (*)
-|    +--- org.glassfish.jersey.ext:jersey-entity-filtering:2.26
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.1
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.4 -> 2.9.0
-|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-|    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.4
-|         +--- com.fasterxml.jackson.core:jackson-core:2.8.4 -> 2.9.4
-|         +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.9.0
-|         \--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-\--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.6
+|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.media:jersey-media-json-jackson:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    |    \--- com.fasterxml.jackson.core:jackson-databind:2.3.2
+|    |         +--- com.fasterxml.jackson.core:jackson-annotations:2.3.0 -> 2.3.2
+|    |         \--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.3.2
+|    |    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.3.2 (*)
+|    |    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.3.2
+|    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 (*)
+|    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2
++--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
++--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi-ban-custom-hk2-binding:2.9
+|    +--- org.glassfish.jersey.core:jersey-common:2.9 -> 2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.9 -> 2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0 -> 2.0.1
++--- javax.transaction:javax.transaction-api:1.2
+\--- javax.servlet:javax.servlet-api:3.0.1
 
 compileOnly - Compile only dependencies for source set 'main'.
 No dependencies
@@ -202,7 +220,6 @@ default - Configuration for default artifacts.
 +--- org.apache.logging.log4j:log4j-api:2.10.0
 +--- org.apache.logging.log4j:log4j-core:2.10.0
 |    \--- org.apache.logging.log4j:log4j-api:2.10.0
-+--- javax.servlet:javax.servlet-api:3.0.1
 +--- commons-io:commons-io:2.6
 +--- org.jsoup:jsoup:1.8.3
 +--- org.mongodb:mongo-java-driver:3.6.3
@@ -231,80 +248,89 @@ default - Configuration for default artifacts.
 |    |    +--- com.google.oauth-client:google-oauth-client:1.23.0 (*)
 |    |    +--- com.google.http-client:google-http-client-jackson2:1.23.0
 |    |    |    +--- com.google.http-client:google-http-client:1.23.0 (*)
-|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.9.4
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.3.2
 |    |    \--- com.google.guava:guava-jdk5:17.0
-|    +--- javax.servlet:servlet-api:2.5
 |    \--- javax.jdo:jdo2-api:2.3-eb (*)
-+--- org.glassfish.jersey.containers:jersey-container-servlet:2.25.1
-|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.25.1
-|    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.1
++--- org.glassfish.jersey.core:jersey-common:2.14
+|    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- javax.annotation:javax.annotation-api:1.2
+|    +--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.14
+|    +--- org.glassfish.hk2:hk2-api:2.4.0-b06
+|    |    +--- javax.inject:javax.inject:1
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06
+|    |    |    \--- javax.inject:javax.inject:1
+|    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06 (*)
+|    |    \--- org.javassist:javassist:3.18.1-GA
+|    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
++--- org.glassfish.jersey.containers:jersey-container-servlet:2.14
+|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.14
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    +--- org.glassfish.jersey.core:jersey-server:2.14
+|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.14
+|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
+|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
 |    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b42
-|    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    +--- org.glassfish.jersey.core:jersey-server:2.25.1
-|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.25.1
-|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32
-|    |    |    |    |    +--- javax.inject:javax.inject:1
-|    |    |    |    |    +--- org.glassfish.hk2:hk2-utils:2.5.0-b32
-|    |    |    |    |    |    \--- javax.inject:javax.inject:1
-|    |    |    |    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |         +--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |         +--- org.glassfish.hk2:hk2-utils:2.5.0-b32 (*)
-|    |    |    |         \--- org.javassist:javassist:3.20.0-GA
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    +--- org.glassfish.jersey.media:jersey-media-jaxb:2.25.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
-|    |    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
+|    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
 |    |    |    \--- javax.validation:validation-api:1.1.0.Final
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    +--- org.glassfish.jersey.core:jersey-server:2.25.1 (*)
-|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-+--- com.fasterxml.jackson.core:jackson-databind:2.9.4
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.0
-|    \--- com.fasterxml.jackson.core:jackson-core:2.9.4
-+--- org.glassfish.jersey.media:jersey-media-json-jackson:2.26
-|    +--- org.glassfish.jersey.core:jersey-common:2.26 (*)
-|    +--- org.glassfish.jersey.ext:jersey-entity-filtering:2.26
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.1
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.4 -> 2.9.0
-|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-|    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.4
-|         +--- com.fasterxml.jackson.core:jackson-core:2.8.4 -> 2.9.4
-|         +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.9.0
-|         \--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-\--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.6
+|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.media:jersey-media-json-jackson:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    |    \--- com.fasterxml.jackson.core:jackson-databind:2.3.2
+|    |         +--- com.fasterxml.jackson.core:jackson-annotations:2.3.0 -> 2.3.2
+|    |         \--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.3.2
+|    |    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.3.2 (*)
+|    |    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.3.2
+|    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 (*)
+|    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2
++--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
++--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi-ban-custom-hk2-binding:2.9
+|    +--- org.glassfish.jersey.core:jersey-common:2.9 -> 2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.9 -> 2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0 -> 2.0.1
++--- javax.transaction:javax.transaction-api:1.2
+\--- javax.servlet:javax.servlet-api:3.0.1
 
 implementation - Implementation only dependencies for source set 'main'. (n)
 No dependencies
 
 providedCompile - Additional compile classpath for libraries that should not be part of the WAR archive.
-No dependencies
+\--- javax.servlet:javax.servlet-api:3.0.1
 
 providedRuntime - Additional runtime classpath for libraries that should not be part of the WAR archive.
-No dependencies
+\--- javax.servlet:javax.servlet-api:3.0.1
 
 runtime - Runtime dependencies for source set 'main' (deprecated, use 'runtimeOnly ' instead).
 +--- org.apache.logging.log4j:log4j-api:2.10.0
 +--- org.apache.logging.log4j:log4j-core:2.10.0
 |    \--- org.apache.logging.log4j:log4j-api:2.10.0
-+--- javax.servlet:javax.servlet-api:3.0.1
 +--- commons-io:commons-io:2.6
 +--- org.jsoup:jsoup:1.8.3
 +--- org.mongodb:mongo-java-driver:3.6.3
@@ -333,71 +359,80 @@ runtime - Runtime dependencies for source set 'main' (deprecated, use 'runtimeOn
 |    |    +--- com.google.oauth-client:google-oauth-client:1.23.0 (*)
 |    |    +--- com.google.http-client:google-http-client-jackson2:1.23.0
 |    |    |    +--- com.google.http-client:google-http-client:1.23.0 (*)
-|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.9.4
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.3.2
 |    |    \--- com.google.guava:guava-jdk5:17.0
-|    +--- javax.servlet:servlet-api:2.5
 |    \--- javax.jdo:jdo2-api:2.3-eb (*)
-+--- org.glassfish.jersey.containers:jersey-container-servlet:2.25.1
-|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.25.1
-|    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.1
++--- org.glassfish.jersey.core:jersey-common:2.14
+|    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- javax.annotation:javax.annotation-api:1.2
+|    +--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.14
+|    +--- org.glassfish.hk2:hk2-api:2.4.0-b06
+|    |    +--- javax.inject:javax.inject:1
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06
+|    |    |    \--- javax.inject:javax.inject:1
+|    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06 (*)
+|    |    \--- org.javassist:javassist:3.18.1-GA
+|    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
++--- org.glassfish.jersey.containers:jersey-container-servlet:2.14
+|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.14
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    +--- org.glassfish.jersey.core:jersey-server:2.14
+|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.14
+|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
+|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
 |    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b42
-|    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    +--- org.glassfish.jersey.core:jersey-server:2.25.1
-|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.25.1
-|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32
-|    |    |    |    |    +--- javax.inject:javax.inject:1
-|    |    |    |    |    +--- org.glassfish.hk2:hk2-utils:2.5.0-b32
-|    |    |    |    |    |    \--- javax.inject:javax.inject:1
-|    |    |    |    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |         +--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |         +--- org.glassfish.hk2:hk2-utils:2.5.0-b32 (*)
-|    |    |    |         \--- org.javassist:javassist:3.20.0-GA
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    +--- org.glassfish.jersey.media:jersey-media-jaxb:2.25.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
-|    |    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
+|    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
 |    |    |    \--- javax.validation:validation-api:1.1.0.Final
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    +--- org.glassfish.jersey.core:jersey-server:2.25.1 (*)
-|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-+--- com.fasterxml.jackson.core:jackson-databind:2.9.4
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.0
-|    \--- com.fasterxml.jackson.core:jackson-core:2.9.4
-+--- org.glassfish.jersey.media:jersey-media-json-jackson:2.26
-|    +--- org.glassfish.jersey.core:jersey-common:2.26 (*)
-|    +--- org.glassfish.jersey.ext:jersey-entity-filtering:2.26
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.1
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.4 -> 2.9.0
-|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-|    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.4
-|         +--- com.fasterxml.jackson.core:jackson-core:2.8.4 -> 2.9.4
-|         +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.9.0
-|         \--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-\--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.6
+|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.media:jersey-media-json-jackson:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    |    \--- com.fasterxml.jackson.core:jackson-databind:2.3.2
+|    |         +--- com.fasterxml.jackson.core:jackson-annotations:2.3.0 -> 2.3.2
+|    |         \--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.3.2
+|    |    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.3.2 (*)
+|    |    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.3.2
+|    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 (*)
+|    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2
++--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
++--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi-ban-custom-hk2-binding:2.9
+|    +--- org.glassfish.jersey.core:jersey-common:2.9 -> 2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.9 -> 2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0 -> 2.0.1
++--- javax.transaction:javax.transaction-api:1.2
+\--- javax.servlet:javax.servlet-api:3.0.1
 
 runtimeClasspath - Runtime classpath of source set 'main'.
 +--- org.apache.logging.log4j:log4j-api:2.10.0
 +--- org.apache.logging.log4j:log4j-core:2.10.0
 |    \--- org.apache.logging.log4j:log4j-api:2.10.0
-+--- javax.servlet:javax.servlet-api:3.0.1
 +--- commons-io:commons-io:2.6
 +--- org.jsoup:jsoup:1.8.3
 +--- org.mongodb:mongo-java-driver:3.6.3
@@ -426,65 +461,75 @@ runtimeClasspath - Runtime classpath of source set 'main'.
 |    |    +--- com.google.oauth-client:google-oauth-client:1.23.0 (*)
 |    |    +--- com.google.http-client:google-http-client-jackson2:1.23.0
 |    |    |    +--- com.google.http-client:google-http-client:1.23.0 (*)
-|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.9.4
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.3.2
 |    |    \--- com.google.guava:guava-jdk5:17.0
-|    +--- javax.servlet:servlet-api:2.5
 |    \--- javax.jdo:jdo2-api:2.3-eb (*)
-+--- org.glassfish.jersey.containers:jersey-container-servlet:2.25.1
-|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.25.1
-|    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.1
++--- org.glassfish.jersey.core:jersey-common:2.14
+|    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- javax.annotation:javax.annotation-api:1.2
+|    +--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.14
+|    +--- org.glassfish.hk2:hk2-api:2.4.0-b06
+|    |    +--- javax.inject:javax.inject:1
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06
+|    |    |    \--- javax.inject:javax.inject:1
+|    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06 (*)
+|    |    \--- org.javassist:javassist:3.18.1-GA
+|    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
++--- org.glassfish.jersey.containers:jersey-container-servlet:2.14
+|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.14
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    +--- org.glassfish.jersey.core:jersey-server:2.14
+|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.14
+|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
+|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
 |    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b42
-|    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    +--- org.glassfish.jersey.core:jersey-server:2.25.1
-|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.25.1
-|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32
-|    |    |    |    |    +--- javax.inject:javax.inject:1
-|    |    |    |    |    +--- org.glassfish.hk2:hk2-utils:2.5.0-b32
-|    |    |    |    |    |    \--- javax.inject:javax.inject:1
-|    |    |    |    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |         +--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |         +--- org.glassfish.hk2:hk2-utils:2.5.0-b32 (*)
-|    |    |    |         \--- org.javassist:javassist:3.20.0-GA
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    +--- org.glassfish.jersey.media:jersey-media-jaxb:2.25.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
-|    |    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
+|    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
 |    |    |    \--- javax.validation:validation-api:1.1.0.Final
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    +--- org.glassfish.jersey.core:jersey-server:2.25.1 (*)
-|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-+--- com.fasterxml.jackson.core:jackson-databind:2.9.4
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.0
-|    \--- com.fasterxml.jackson.core:jackson-core:2.9.4
-+--- org.glassfish.jersey.media:jersey-media-json-jackson:2.26
-|    +--- org.glassfish.jersey.core:jersey-common:2.26 (*)
-|    +--- org.glassfish.jersey.ext:jersey-entity-filtering:2.26
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.1
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.4 -> 2.9.0
-|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-|    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.4
-|         +--- com.fasterxml.jackson.core:jackson-core:2.8.4 -> 2.9.4
-|         +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.9.0
-|         \--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-\--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.6
+|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.media:jersey-media-json-jackson:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    |    \--- com.fasterxml.jackson.core:jackson-databind:2.3.2
+|    |         +--- com.fasterxml.jackson.core:jackson-annotations:2.3.0 -> 2.3.2
+|    |         \--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.3.2
+|    |    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.3.2 (*)
+|    |    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.3.2
+|    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2
+|    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 (*)
+|    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2
++--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
++--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi-ban-custom-hk2-binding:2.9
+|    +--- org.glassfish.jersey.core:jersey-common:2.9 -> 2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.9 -> 2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0 -> 2.0.1
++--- javax.transaction:javax.transaction-api:1.2
+\--- javax.servlet:javax.servlet-api:3.0.1
 
 runtimeElements - Elements of runtime for main. (n)
 No dependencies
@@ -496,7 +541,6 @@ testCompile - Dependencies for source set 'test' (deprecated, use 'testImplement
 +--- org.apache.logging.log4j:log4j-api:2.10.0
 +--- org.apache.logging.log4j:log4j-core:2.10.0
 |    \--- org.apache.logging.log4j:log4j-api:2.10.0
-+--- javax.servlet:javax.servlet-api:3.0.1 -> 3.1.0
 +--- commons-io:commons-io:2.6
 +--- org.jsoup:jsoup:1.8.3
 +--- org.mongodb:mongo-java-driver:3.6.3
@@ -525,65 +569,75 @@ testCompile - Dependencies for source set 'test' (deprecated, use 'testImplement
 |    |    +--- com.google.oauth-client:google-oauth-client:1.23.0 (*)
 |    |    +--- com.google.http-client:google-http-client-jackson2:1.23.0
 |    |    |    +--- com.google.http-client:google-http-client:1.23.0 (*)
-|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.9.4
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.8.9
 |    |    \--- com.google.guava:guava-jdk5:17.0
-|    +--- javax.servlet:servlet-api:2.5
 |    \--- javax.jdo:jdo2-api:2.3-eb (*)
-+--- org.glassfish.jersey.containers:jersey-container-servlet:2.25.1
-|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.25.1
-|    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.1
++--- org.glassfish.jersey.core:jersey-common:2.14
+|    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- javax.annotation:javax.annotation-api:1.2
+|    +--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.14
+|    +--- org.glassfish.hk2:hk2-api:2.4.0-b06
+|    |    +--- javax.inject:javax.inject:1
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06
+|    |    |    \--- javax.inject:javax.inject:1
+|    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06 (*)
+|    |    \--- org.javassist:javassist:3.18.1-GA
+|    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
++--- org.glassfish.jersey.containers:jersey-container-servlet:2.14
+|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.14
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    +--- org.glassfish.jersey.core:jersey-server:2.14
+|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.14
+|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
+|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
 |    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b42
-|    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    +--- org.glassfish.jersey.core:jersey-server:2.25.1
-|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.25.1
-|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32
-|    |    |    |    |    +--- javax.inject:javax.inject:1
-|    |    |    |    |    +--- org.glassfish.hk2:hk2-utils:2.5.0-b32
-|    |    |    |    |    |    \--- javax.inject:javax.inject:1
-|    |    |    |    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |         +--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |         +--- org.glassfish.hk2:hk2-utils:2.5.0-b32 (*)
-|    |    |    |         \--- org.javassist:javassist:3.20.0-GA
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    +--- org.glassfish.jersey.media:jersey-media-jaxb:2.25.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
-|    |    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
+|    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
 |    |    |    \--- javax.validation:validation-api:1.1.0.Final
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    +--- org.glassfish.jersey.core:jersey-server:2.25.1 (*)
-|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-+--- com.fasterxml.jackson.core:jackson-databind:2.9.4
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.0
-|    \--- com.fasterxml.jackson.core:jackson-core:2.9.4
-+--- org.glassfish.jersey.media:jersey-media-json-jackson:2.26
-|    +--- org.glassfish.jersey.core:jersey-common:2.26 (*)
-|    +--- org.glassfish.jersey.ext:jersey-entity-filtering:2.26
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.1
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.4 -> 2.9.0
-|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-|    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.4
-|         +--- com.fasterxml.jackson.core:jackson-core:2.8.4 -> 2.9.4
-|         +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.9.0
-|         \--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-+--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.6
+|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.media:jersey-media-json-jackson:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2 -> 2.8.9
+|    |    \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 -> 2.8.9
+|    |         +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.8.9
+|    |         \--- com.fasterxml.jackson.core:jackson-core:2.8.9
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.3.2
+|    |    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2 -> 2.8.9
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.3.2 -> 2.8.9 (*)
+|    |    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.3.2
+|    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2 -> 2.8.9
+|    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 -> 2.8.9 (*)
+|    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2 -> 2.8.9
++--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
++--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi-ban-custom-hk2-binding:2.9
+|    +--- org.glassfish.jersey.core:jersey-common:2.9 -> 2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.9 -> 2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0 -> 2.0.1
++--- javax.transaction:javax.transaction-api:1.2
++--- javax.servlet:javax.servlet-api:3.0.1 -> 3.1.0
 +--- com.github.tomakehurst:wiremock:2.15.0
 |    +--- org.eclipse.jetty:jetty-server:9.2.22.v20170606
 |    |    +--- javax.servlet:javax.servlet-api:3.1.0
@@ -604,9 +658,9 @@ testCompile - Dependencies for source set 'test' (deprecated, use 'testImplement
 |    |    |    \--- org.eclipse.jetty:jetty-util:9.2.22.v20170606
 |    |    \--- org.eclipse.jetty:jetty-servlet:9.2.22.v20170606 (*)
 |    +--- com.google.guava:guava:20.0
-|    +--- com.fasterxml.jackson.core:jackson-core:2.8.9 -> 2.9.4
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.9 -> 2.9.0
-|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.9 -> 2.9.4 (*)
+|    +--- com.fasterxml.jackson.core:jackson-core:2.8.9
+|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.9
+|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.9 (*)
 |    +--- org.apache.httpcomponents:httpclient:4.5.3 (*)
 |    +--- org.xmlunit:xmlunit-core:2.3.0
 |    +--- org.xmlunit:xmlunit-legacy:2.3.0
@@ -623,8 +677,8 @@ testCompile - Dependencies for source set 'test' (deprecated, use 'testImplement
 |    +--- junit:junit:4.12 (*)
 |    +--- org.apache.commons:commons-lang3:3.6
 |    +--- com.flipkart.zjsonpatch:zjsonpatch:0.3.0
-|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5 -> 2.9.4 (*)
-|    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5 -> 2.9.4
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5 -> 2.8.9 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5 -> 2.8.9
 |    |    +--- com.google.guava:guava:18.0 -> 20.0
 |    |    \--- org.apache.commons:commons-collections4:4.1
 |    \--- com.github.jknack:handlebars:4.0.6
@@ -638,7 +692,6 @@ testCompileClasspath - Compile classpath for source set 'test'.
 +--- org.apache.logging.log4j:log4j-api:2.10.0
 +--- org.apache.logging.log4j:log4j-core:2.10.0
 |    \--- org.apache.logging.log4j:log4j-api:2.10.0
-+--- javax.servlet:javax.servlet-api:3.0.1 -> 3.1.0
 +--- commons-io:commons-io:2.6
 +--- org.jsoup:jsoup:1.8.3
 +--- org.mongodb:mongo-java-driver:3.6.3
@@ -667,65 +720,75 @@ testCompileClasspath - Compile classpath for source set 'test'.
 |    |    +--- com.google.oauth-client:google-oauth-client:1.23.0 (*)
 |    |    +--- com.google.http-client:google-http-client-jackson2:1.23.0
 |    |    |    +--- com.google.http-client:google-http-client:1.23.0 (*)
-|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.9.4
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.8.9
 |    |    \--- com.google.guava:guava-jdk5:17.0
-|    +--- javax.servlet:servlet-api:2.5
 |    \--- javax.jdo:jdo2-api:2.3-eb (*)
-+--- org.glassfish.jersey.containers:jersey-container-servlet:2.25.1
-|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.25.1
-|    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.1
++--- org.glassfish.jersey.core:jersey-common:2.14
+|    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- javax.annotation:javax.annotation-api:1.2
+|    +--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.14
+|    +--- org.glassfish.hk2:hk2-api:2.4.0-b06
+|    |    +--- javax.inject:javax.inject:1
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06
+|    |    |    \--- javax.inject:javax.inject:1
+|    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06 (*)
+|    |    \--- org.javassist:javassist:3.18.1-GA
+|    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
++--- org.glassfish.jersey.containers:jersey-container-servlet:2.14
+|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.14
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    +--- org.glassfish.jersey.core:jersey-server:2.14
+|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.14
+|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
+|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
 |    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b42
-|    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    +--- org.glassfish.jersey.core:jersey-server:2.25.1
-|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.25.1
-|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32
-|    |    |    |    |    +--- javax.inject:javax.inject:1
-|    |    |    |    |    +--- org.glassfish.hk2:hk2-utils:2.5.0-b32
-|    |    |    |    |    |    \--- javax.inject:javax.inject:1
-|    |    |    |    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |         +--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |         +--- org.glassfish.hk2:hk2-utils:2.5.0-b32 (*)
-|    |    |    |         \--- org.javassist:javassist:3.20.0-GA
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    +--- org.glassfish.jersey.media:jersey-media-jaxb:2.25.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
-|    |    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
+|    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
 |    |    |    \--- javax.validation:validation-api:1.1.0.Final
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    +--- org.glassfish.jersey.core:jersey-server:2.25.1 (*)
-|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-+--- com.fasterxml.jackson.core:jackson-databind:2.9.4
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.0
-|    \--- com.fasterxml.jackson.core:jackson-core:2.9.4
-+--- org.glassfish.jersey.media:jersey-media-json-jackson:2.26
-|    +--- org.glassfish.jersey.core:jersey-common:2.26 (*)
-|    +--- org.glassfish.jersey.ext:jersey-entity-filtering:2.26
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.1
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.4 -> 2.9.0
-|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-|    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.4
-|         +--- com.fasterxml.jackson.core:jackson-core:2.8.4 -> 2.9.4
-|         +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.9.0
-|         \--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-+--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.6
+|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.media:jersey-media-json-jackson:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2 -> 2.8.9
+|    |    \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 -> 2.8.9
+|    |         +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.8.9
+|    |         \--- com.fasterxml.jackson.core:jackson-core:2.8.9
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.3.2
+|    |    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2 -> 2.8.9
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.3.2 -> 2.8.9 (*)
+|    |    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.3.2
+|    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2 -> 2.8.9
+|    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 -> 2.8.9 (*)
+|    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2 -> 2.8.9
++--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
++--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi-ban-custom-hk2-binding:2.9
+|    +--- org.glassfish.jersey.core:jersey-common:2.9 -> 2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.9 -> 2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0 -> 2.0.1
++--- javax.transaction:javax.transaction-api:1.2
++--- javax.servlet:javax.servlet-api:3.0.1 -> 3.1.0
 +--- com.github.tomakehurst:wiremock:2.15.0
 |    +--- org.eclipse.jetty:jetty-server:9.2.22.v20170606
 |    |    +--- javax.servlet:javax.servlet-api:3.1.0
@@ -746,9 +809,9 @@ testCompileClasspath - Compile classpath for source set 'test'.
 |    |    |    \--- org.eclipse.jetty:jetty-util:9.2.22.v20170606
 |    |    \--- org.eclipse.jetty:jetty-servlet:9.2.22.v20170606 (*)
 |    +--- com.google.guava:guava:20.0
-|    +--- com.fasterxml.jackson.core:jackson-core:2.8.9 -> 2.9.4
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.9 -> 2.9.0
-|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.9 -> 2.9.4 (*)
+|    +--- com.fasterxml.jackson.core:jackson-core:2.8.9
+|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.9
+|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.9 (*)
 |    +--- org.apache.httpcomponents:httpclient:4.5.3 (*)
 |    +--- org.xmlunit:xmlunit-core:2.3.0
 |    +--- org.xmlunit:xmlunit-legacy:2.3.0
@@ -765,8 +828,8 @@ testCompileClasspath - Compile classpath for source set 'test'.
 |    +--- junit:junit:4.12 (*)
 |    +--- org.apache.commons:commons-lang3:3.6
 |    +--- com.flipkart.zjsonpatch:zjsonpatch:0.3.0
-|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5 -> 2.9.4 (*)
-|    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5 -> 2.9.4
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5 -> 2.8.9 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5 -> 2.8.9
 |    |    +--- com.google.guava:guava:18.0 -> 20.0
 |    |    \--- org.apache.commons:commons-collections4:4.1
 |    \--- com.github.jknack:handlebars:4.0.6
@@ -786,7 +849,6 @@ testRuntime - Runtime dependencies for source set 'test' (deprecated, use 'testR
 +--- org.apache.logging.log4j:log4j-api:2.10.0
 +--- org.apache.logging.log4j:log4j-core:2.10.0
 |    \--- org.apache.logging.log4j:log4j-api:2.10.0
-+--- javax.servlet:javax.servlet-api:3.0.1 -> 3.1.0
 +--- commons-io:commons-io:2.6
 +--- org.jsoup:jsoup:1.8.3
 +--- org.mongodb:mongo-java-driver:3.6.3
@@ -815,65 +877,75 @@ testRuntime - Runtime dependencies for source set 'test' (deprecated, use 'testR
 |    |    +--- com.google.oauth-client:google-oauth-client:1.23.0 (*)
 |    |    +--- com.google.http-client:google-http-client-jackson2:1.23.0
 |    |    |    +--- com.google.http-client:google-http-client:1.23.0 (*)
-|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.9.4
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.8.9
 |    |    \--- com.google.guava:guava-jdk5:17.0
-|    +--- javax.servlet:servlet-api:2.5
 |    \--- javax.jdo:jdo2-api:2.3-eb (*)
-+--- org.glassfish.jersey.containers:jersey-container-servlet:2.25.1
-|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.25.1
-|    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.1
++--- org.glassfish.jersey.core:jersey-common:2.14
+|    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- javax.annotation:javax.annotation-api:1.2
+|    +--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.14
+|    +--- org.glassfish.hk2:hk2-api:2.4.0-b06
+|    |    +--- javax.inject:javax.inject:1
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06
+|    |    |    \--- javax.inject:javax.inject:1
+|    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06 (*)
+|    |    \--- org.javassist:javassist:3.18.1-GA
+|    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
++--- org.glassfish.jersey.containers:jersey-container-servlet:2.14
+|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.14
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    +--- org.glassfish.jersey.core:jersey-server:2.14
+|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.14
+|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
+|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
 |    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b42
-|    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    +--- org.glassfish.jersey.core:jersey-server:2.25.1
-|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.25.1
-|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32
-|    |    |    |    |    +--- javax.inject:javax.inject:1
-|    |    |    |    |    +--- org.glassfish.hk2:hk2-utils:2.5.0-b32
-|    |    |    |    |    |    \--- javax.inject:javax.inject:1
-|    |    |    |    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |         +--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |         +--- org.glassfish.hk2:hk2-utils:2.5.0-b32 (*)
-|    |    |    |         \--- org.javassist:javassist:3.20.0-GA
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    +--- org.glassfish.jersey.media:jersey-media-jaxb:2.25.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
-|    |    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
+|    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
 |    |    |    \--- javax.validation:validation-api:1.1.0.Final
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    +--- org.glassfish.jersey.core:jersey-server:2.25.1 (*)
-|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-+--- com.fasterxml.jackson.core:jackson-databind:2.9.4
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.0
-|    \--- com.fasterxml.jackson.core:jackson-core:2.9.4
-+--- org.glassfish.jersey.media:jersey-media-json-jackson:2.26
-|    +--- org.glassfish.jersey.core:jersey-common:2.26 (*)
-|    +--- org.glassfish.jersey.ext:jersey-entity-filtering:2.26
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.1
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.4 -> 2.9.0
-|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-|    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.4
-|         +--- com.fasterxml.jackson.core:jackson-core:2.8.4 -> 2.9.4
-|         +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.9.0
-|         \--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-+--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.6
+|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.media:jersey-media-json-jackson:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2 -> 2.8.9
+|    |    \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 -> 2.8.9
+|    |         +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.8.9
+|    |         \--- com.fasterxml.jackson.core:jackson-core:2.8.9
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.3.2
+|    |    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2 -> 2.8.9
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.3.2 -> 2.8.9 (*)
+|    |    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.3.2
+|    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2 -> 2.8.9
+|    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 -> 2.8.9 (*)
+|    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2 -> 2.8.9
++--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
++--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi-ban-custom-hk2-binding:2.9
+|    +--- org.glassfish.jersey.core:jersey-common:2.9 -> 2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.9 -> 2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0 -> 2.0.1
++--- javax.transaction:javax.transaction-api:1.2
++--- javax.servlet:javax.servlet-api:3.0.1 -> 3.1.0
 +--- com.github.tomakehurst:wiremock:2.15.0
 |    +--- org.eclipse.jetty:jetty-server:9.2.22.v20170606
 |    |    +--- javax.servlet:javax.servlet-api:3.1.0
@@ -894,9 +966,9 @@ testRuntime - Runtime dependencies for source set 'test' (deprecated, use 'testR
 |    |    |    \--- org.eclipse.jetty:jetty-util:9.2.22.v20170606
 |    |    \--- org.eclipse.jetty:jetty-servlet:9.2.22.v20170606 (*)
 |    +--- com.google.guava:guava:20.0
-|    +--- com.fasterxml.jackson.core:jackson-core:2.8.9 -> 2.9.4
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.9 -> 2.9.0
-|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.9 -> 2.9.4 (*)
+|    +--- com.fasterxml.jackson.core:jackson-core:2.8.9
+|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.9
+|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.9 (*)
 |    +--- org.apache.httpcomponents:httpclient:4.5.3 (*)
 |    +--- org.xmlunit:xmlunit-core:2.3.0
 |    +--- org.xmlunit:xmlunit-legacy:2.3.0
@@ -913,8 +985,8 @@ testRuntime - Runtime dependencies for source set 'test' (deprecated, use 'testR
 |    +--- junit:junit:4.12 (*)
 |    +--- org.apache.commons:commons-lang3:3.6
 |    +--- com.flipkart.zjsonpatch:zjsonpatch:0.3.0
-|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5 -> 2.9.4 (*)
-|    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5 -> 2.9.4
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5 -> 2.8.9 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5 -> 2.8.9
 |    |    +--- com.google.guava:guava:18.0 -> 20.0
 |    |    \--- org.apache.commons:commons-collections4:4.1
 |    \--- com.github.jknack:handlebars:4.0.6
@@ -928,7 +1000,6 @@ testRuntimeClasspath - Runtime classpath of source set 'test'.
 +--- org.apache.logging.log4j:log4j-api:2.10.0
 +--- org.apache.logging.log4j:log4j-core:2.10.0
 |    \--- org.apache.logging.log4j:log4j-api:2.10.0
-+--- javax.servlet:javax.servlet-api:3.0.1 -> 3.1.0
 +--- commons-io:commons-io:2.6
 +--- org.jsoup:jsoup:1.8.3
 +--- org.mongodb:mongo-java-driver:3.6.3
@@ -957,65 +1028,75 @@ testRuntimeClasspath - Runtime classpath of source set 'test'.
 |    |    +--- com.google.oauth-client:google-oauth-client:1.23.0 (*)
 |    |    +--- com.google.http-client:google-http-client-jackson2:1.23.0
 |    |    |    +--- com.google.http-client:google-http-client:1.23.0 (*)
-|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.9.4
+|    |    |    \--- com.fasterxml.jackson.core:jackson-core:2.1.3 -> 2.8.9
 |    |    \--- com.google.guava:guava-jdk5:17.0
-|    +--- javax.servlet:servlet-api:2.5
 |    \--- javax.jdo:jdo2-api:2.3-eb (*)
-+--- org.glassfish.jersey.containers:jersey-container-servlet:2.25.1
-|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.25.1
-|    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.1
++--- org.glassfish.jersey.core:jersey-common:2.14
+|    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- javax.annotation:javax.annotation-api:1.2
+|    +--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.14
+|    +--- org.glassfish.hk2:hk2-api:2.4.0-b06
+|    |    +--- javax.inject:javax.inject:1
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06
+|    |    |    \--- javax.inject:javax.inject:1
+|    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06
+|    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    +--- org.glassfish.hk2:hk2-utils:2.4.0-b06 (*)
+|    |    \--- org.javassist:javassist:3.18.1-GA
+|    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
++--- org.glassfish.jersey.containers:jersey-container-servlet:2.14
+|    +--- org.glassfish.jersey.containers:jersey-container-servlet-core:2.14
+|    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    +--- org.glassfish.jersey.core:jersey-server:2.14
+|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.14
+|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
+|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1
 |    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b42
-|    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    +--- org.glassfish.jersey.core:jersey-server:2.25.1
-|    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    +--- org.glassfish.jersey.core:jersey-client:2.25.1
-|    |    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32
-|    |    |    |    |    +--- javax.inject:javax.inject:1
-|    |    |    |    |    +--- org.glassfish.hk2:hk2-utils:2.5.0-b32
-|    |    |    |    |    |    \--- javax.inject:javax.inject:1
-|    |    |    |    |    \--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    \--- org.glassfish.hk2:hk2-locator:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |         +--- org.glassfish.hk2.external:aopalliance-repackaged:2.5.0-b32
-|    |    |    |         +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |         +--- org.glassfish.hk2:hk2-utils:2.5.0-b32 (*)
-|    |    |    |         \--- org.javassist:javassist:3.20.0-GA
-|    |    |    +--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    |    |    +--- org.glassfish.jersey.media:jersey-media-jaxb:2.25.1
-|    |    |    |    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    |    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
-|    |    |    |    \--- org.glassfish.hk2:osgi-resource-locator:1.0.1
-|    |    |    +--- javax.annotation:javax.annotation-api:1.2
-|    |    |    +--- org.glassfish.hk2:hk2-api:2.5.0-b32 (*)
-|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.5.0-b32 -> 2.5.0-b42
-|    |    |    +--- org.glassfish.hk2:hk2-locator:2.5.0-b32 (*)
+|    |    |    +--- org.glassfish.hk2:hk2-api:2.4.0-b06 (*)
+|    |    |    +--- org.glassfish.hk2.external:javax.inject:2.4.0-b06
+|    |    |    +--- org.glassfish.hk2:hk2-locator:2.4.0-b06 (*)
 |    |    |    \--- javax.validation:validation-api:1.1.0.Final
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-|    +--- org.glassfish.jersey.core:jersey-common:2.25.1 -> 2.26 (*)
-|    +--- org.glassfish.jersey.core:jersey-server:2.25.1 (*)
-|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1 -> 2.1
-+--- com.fasterxml.jackson.core:jackson-databind:2.9.4
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.9.0
-|    \--- com.fasterxml.jackson.core:jackson-core:2.9.4
-+--- org.glassfish.jersey.media:jersey-media-json-jackson:2.26
-|    +--- org.glassfish.jersey.core:jersey-common:2.26 (*)
-|    +--- org.glassfish.jersey.ext:jersey-entity-filtering:2.26
-|    |    \--- javax.ws.rs:javax.ws.rs-api:2.1
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.4 -> 2.9.0
-|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-|    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.8.4
-|         +--- com.fasterxml.jackson.core:jackson-core:2.8.4 -> 2.9.4
-|         +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.9.0
-|         \--- com.fasterxml.jackson.core:jackson-databind:2.8.4 -> 2.9.4 (*)
-+--- org.glassfish.jersey.bundles.repackaged:jersey-guava:2.6
+|    |    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.media:jersey-media-json-jackson:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2 -> 2.8.9
+|    |    \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 -> 2.8.9
+|    |         +--- com.fasterxml.jackson.core:jackson-annotations:2.8.0 -> 2.8.9
+|    |         \--- com.fasterxml.jackson.core:jackson-core:2.8.9
+|    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.3.2
+|    |    +--- com.fasterxml.jackson.jaxrs:jackson-jaxrs-base:2.3.2 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.3.2 -> 2.8.9
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.3.2 -> 2.8.9 (*)
+|    |    \--- com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.3.2
+|    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2 -> 2.8.9
+|    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 -> 2.8.9 (*)
+|    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2 -> 2.8.9
++--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
++--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
+|    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0.1
++--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi-ban-custom-hk2-binding:2.9
+|    +--- org.glassfish.jersey.core:jersey-common:2.9 -> 2.14 (*)
+|    +--- org.glassfish.jersey.core:jersey-server:2.9 -> 2.14 (*)
+|    \--- javax.ws.rs:javax.ws.rs-api:2.0 -> 2.0.1
++--- javax.transaction:javax.transaction-api:1.2
++--- javax.servlet:javax.servlet-api:3.0.1 -> 3.1.0
 +--- com.github.tomakehurst:wiremock:2.15.0
 |    +--- org.eclipse.jetty:jetty-server:9.2.22.v20170606
 |    |    +--- javax.servlet:javax.servlet-api:3.1.0
@@ -1036,9 +1117,9 @@ testRuntimeClasspath - Runtime classpath of source set 'test'.
 |    |    |    \--- org.eclipse.jetty:jetty-util:9.2.22.v20170606
 |    |    \--- org.eclipse.jetty:jetty-servlet:9.2.22.v20170606 (*)
 |    +--- com.google.guava:guava:20.0
-|    +--- com.fasterxml.jackson.core:jackson-core:2.8.9 -> 2.9.4
-|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.9 -> 2.9.0
-|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.9 -> 2.9.4 (*)
+|    +--- com.fasterxml.jackson.core:jackson-core:2.8.9
+|    +--- com.fasterxml.jackson.core:jackson-annotations:2.8.9
+|    +--- com.fasterxml.jackson.core:jackson-databind:2.8.9 (*)
 |    +--- org.apache.httpcomponents:httpclient:4.5.3 (*)
 |    +--- org.xmlunit:xmlunit-core:2.3.0
 |    +--- org.xmlunit:xmlunit-legacy:2.3.0
@@ -1055,8 +1136,8 @@ testRuntimeClasspath - Runtime classpath of source set 'test'.
 |    +--- junit:junit:4.12 (*)
 |    +--- org.apache.commons:commons-lang3:3.6
 |    +--- com.flipkart.zjsonpatch:zjsonpatch:0.3.0
-|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5 -> 2.9.4 (*)
-|    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5 -> 2.9.4
+|    |    +--- com.fasterxml.jackson.core:jackson-databind:2.8.5 -> 2.8.9 (*)
+|    |    +--- com.fasterxml.jackson.core:jackson-core:2.8.5 -> 2.8.9
 |    |    +--- com.google.guava:guava:18.0 -> 20.0
 |    |    \--- org.apache.commons:commons-collections4:4.1
 |    \--- com.github.jknack:handlebars:4.0.6
