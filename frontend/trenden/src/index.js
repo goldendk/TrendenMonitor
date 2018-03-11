@@ -5,5 +5,13 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-ReactDOM.render(<App />, document.getElementById('root'));
+import {BrowserRouter} from 'react-router-dom'
+import Backend from './data/MockBackend'
+window.backend = new Backend();
+ReactDOM.render(
+
+    <BrowserRouter>
+    <App />
+    </BrowserRouter>
+    , document.getElementById('root'));
 registerServiceWorker();

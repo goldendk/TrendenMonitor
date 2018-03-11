@@ -1,6 +1,4 @@
-.App {
-  text-align: center;
-}
+
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -13,7 +11,9 @@
   padding: 20px;
   color: white;
 }
-
+.table thead tr th{
+  text-align: center;
+}
 .App-title {
   font-size: 1.5em;
 }
@@ -26,6 +26,6 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-.row > div{
-  border: 1px solid black
-}
+/*.row > div{*/
+  /*border: 1px solid black*/
+/*}*/
