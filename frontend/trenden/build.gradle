@@ -1,0 +1,94 @@
+buildscript {
+    repositories {
+     mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+//        classpath "org.hidetake:gradle-ssh-plugin:2.7.0"
+        classpath 'com.netflix.nebula:gradle-lint-plugin:7.1.0'
+//        classpath 'org.kordamp:markdown-gradle-plugin:1.0.0'
+//        classpath 'com.netflix.nebula:nebula-release-plugin:6.0.0'
+//        classpath group: 'org.ajoberstar', name: 'gradle-git', version: '1.7.0'
+        // classpath "com.moowork.gradle:gradle-node-plugin:1.1.1"
+        classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
+    }
+}
+
+apply plugin: "com.moowork.node"
+
+// configure gradle-node-plugin
+node {
+    version = '8.9.1'
+    npmVersion = '5.5.1'
+    download = true
+    workDir = file("${project.projectDir}/temp/node")
+    // Set the work directory for NPM
+//    npmWorkDir = file("${project.projectDir}/temp/npm")
+    nodeModulesDir = file("${project.projectDir}/")
+}
+
+task npmCacheConfig(type: NpmTask) {
+    description = "Configure the NPM cache"
+    def npmCacheDir = "${gradle.getGradleUserHomeDir()}/caches/npm"
+//    outputs.files file(npmCacheDir)
+    args = [ 'config', 'set', 'cache', npmCacheDir ]
+}
+
+//tasks.npm_install.dependsOn tasks.npmCacheConfig
+npmInstall.inputs.file(project.file("package.json"))
+npmInstall.inputs.file(project.file("package-lock.json"))
+npmInstall.outputs.files(project.fileTree("node_modules") {include '*/package.json'})
+
+// clean node/node_modules/dist
+task npmClean(type: Delete) {
+    final def webDir = "${rootDir}/frontend"
+    delete "${webDir}/node"
+    delete "${webDir}/node_modules"
+    delete "${webDir}/dist"
+    delete "${webDir}/coverage"
+}
+// clean node/node_modules/dist
+task webpackClean(type: Delete) {
+    final def webpackDir = "${buildDir}/dist"
+    delete "${webpackDir}"
+}
+
+// clean task for npm
+task clean {
+}
+clean.dependsOn(webpackClean)
+//clean.dependsOn(npmClean)
+
+
+task buildReact(type: NpmTask, dependsOn: webpackClean) {
+    inputs.files(project.fileTree("node_modules"))
+    inputs.files(project.fileTree("src"))
+   // inputs.file(project.file('tsconfig.json'))
+    inputs.file(project.file('package.json'))
+ //   inputs.file(project.file('webpack.config.js'))
+    outputs.files(project.fileTree('build/dist'))
+    args = ['run', 'build']
+    environment 'NODE_ENV': 'production'
+    environment 'APP_VERSION': "${project.version}"
+}
+
+// build task for npm
+buildReact.dependsOn(npmInstall)
+
+task build {}
+build.dependsOn(buildReact)
+
+
+// assemble task for npm
+task assemble {}
+assemble.dependsOn(build)
+
+// check task for npm
+task check {}
+check.dependsOn(npm_run_test)
+
+// run all task
+task runAll{}
+runAll.dependsOn(npm_run_start)

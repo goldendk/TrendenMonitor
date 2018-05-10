@@ -2,7 +2,6 @@ package org.goldenworkshop.trenden.model.impl;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -16,12 +15,11 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.goldenworkshop.trenden.Config;
+import org.goldenworkshop.trenden.model.Recommendation;
 import org.goldenworkshop.trenden.model.RecommendationPeriod;
 import org.goldenworkshop.trenden.model.RecommendationSyncDAO;
 import org.goldenworkshop.trenden.model.Signal;
 
-import javax.annotation.Priority;
-import javax.enterprise.inject.Default;
 import javax.xml.bind.DatatypeConverter;
 import java.math.BigDecimal;
 import java.util.*;
@@ -33,27 +31,17 @@ import static com.mongodb.client.model.Filters.eq;
  */
 
 public class MongoRecommendationDAO implements RecommendationSyncDAO {
-    private static final String FIELD_NAME_START_SIGNAL = "startSignal";
-    private static final String FIELD_NAME_END_SIGNAL = "endSignal";
-    private static final String FIELD_NAME_PERIOD_DAYS = "periodDays";
-    private static final String FIELD_NAME_START_DATE = "startDate";
-    private static final String FIELD_NAME_END_DATE = "endDate";
-    private static final String FIELD_NAME_START_VALUE = "startValue";
-    private static final String FIELD_NAME_END_VALUE = "endValue";
-    private static final String FIELD_NAME_CHANGE_PERCENT = "changePercent";
-    private static final String FIELD_NAME_CREATED = "created";
-    private static final String FIELD_NAME_UPDATED = "updated";
-    private static final String FIELD_NAME_LATEST_VALUE = "latestValue";
+  
     private static Logger logger = LogManager.getLogger(MongoRecommendationDAO.class);
 
     private static final Object FIELD_NAME_ID = "_id";
-
-    private static final String FIELD_NAME_NAME = "name";
-
+    public static final String FIELD_NAME_CREATED = "created";
+    public static final String FIELD_NAME_UPDATED = "updated";
 
     private MongoClient client;
     private MongoDatabase db;
     private MongoCollection<Document> recommendationPeriodCollection;
+    private MongoCollection<Document> recommendationCollection;
 
     @Override
     public void initialize() throws Exception {
@@ -62,10 +50,16 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
         String url = Config.get().getMongoConnectionUrl();
         client = new MongoClient(new MongoClientURI(url));
         db = client.getDatabase(Config.get().getTrendenDatabaseName());
+        loadRecommendationPeriodCollection();
         loadRecommendationCollection();
     }
 
     private void loadRecommendationCollection() {
+        recommendationCollection = db.getCollection(Config.get().getRecommendationCollectionName());
+
+    }
+
+    private void loadRecommendationPeriodCollection() {
         recommendationPeriodCollection = db.getCollection(Config.get().getRecommendationPeriodCollectionName());
     }
 
@@ -83,18 +77,18 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
     @Override
     public void upsert(RecommendationPeriod period) {
         Document theDocument = new Document()
-                .append(FIELD_NAME_NAME, period.getName())
-                .append(FIELD_NAME_START_SIGNAL, Converter.toString(period.getStartSignal()))
-                .append(FIELD_NAME_END_SIGNAL, Converter.toString(period.getEndSignal()))
+                .append(RecommendationPeriodFields.FIELD_NAME_NAME, period.getName())
+                .append(RecommendationPeriodFields.FIELD_NAME_START_SIGNAL, Converter.toString(period.getStartSignal()))
+                .append(RecommendationPeriodFields.FIELD_NAME_END_SIGNAL, Converter.toString(period.getEndSignal()))
                 .append(FIELD_NAME_CREATED, period.getCreated())
                 .append(FIELD_NAME_UPDATED, period.getUpdated())
-                .append(FIELD_NAME_START_DATE, period.getStartDate())
-                .append(FIELD_NAME_END_DATE, period.getEndDate())
-                .append(FIELD_NAME_CHANGE_PERCENT, period.getChangePercent())
-                .append(FIELD_NAME_START_VALUE, Converter.toString(period.getStartValue()))
-                .append(FIELD_NAME_END_VALUE, Converter.toString(period.getEndValue()))
-                .append(FIELD_NAME_LATEST_VALUE, Converter.toString(period.getLatestValue()))
-                .append(FIELD_NAME_PERIOD_DAYS, period.getPeriodDays());
+                .append(RecommendationPeriodFields.FIELD_NAME_START_DATE, period.getStartDate())
+                .append(RecommendationPeriodFields.FIELD_NAME_END_DATE, period.getEndDate())
+                .append(RecommendationPeriodFields.FIELD_NAME_CHANGE_PERCENT, period.getChangePercent())
+                .append(RecommendationPeriodFields.FIELD_NAME_START_VALUE, Converter.toString(period.getStartValue()))
+                .append(RecommendationPeriodFields.FIELD_NAME_END_VALUE, Converter.toString(period.getEndValue()))
+                .append(RecommendationPeriodFields.FIELD_NAME_LATEST_VALUE, Converter.toString(period.getLatestValue()))
+                .append(RecommendationPeriodFields.FIELD_NAME_PERIOD_DAYS, period.getPeriodDays());
 
         Bson update = new Document("$set",
                 theDocument
@@ -112,7 +106,7 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
 
     @Override
     public Map<String, RecommendationPeriod> loadOpenRecommendationPeriods() {
-        MongoCursor<Document> iterator = recommendationPeriodCollection.find(Filters.eq(FIELD_NAME_END_SIGNAL, null)).iterator();
+        MongoCursor<Document> iterator = recommendationPeriodCollection.find(Filters.eq(RecommendationPeriodFields.FIELD_NAME_END_SIGNAL, null)).iterator();
         Map<String, RecommendationPeriod> map = new HashMap<>();
         while(iterator.hasNext()){
             Document next = iterator.next();
@@ -130,7 +124,7 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
                 recommendationPeriodCollection.
                         // Find with given personID and in time interval
                                 find(
-                                eq(FIELD_NAME_NAME, companyCName)).
+                                eq(RecommendationPeriodFields.FIELD_NAME_NAME, companyCName)).
                         iterator();
         try {
             while (cursor.hasNext()) {
@@ -144,21 +138,35 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
         return returnList;
     }
 
+    @Override
+    public void saveRecommendation(Recommendation recommendation) {
+        Document doc = new Document()
+                .append(RecommendationFields.FIELD_NAME, recommendation.getName())
+                .append(RecommendationFields.FIELD_SIGNAL, recommendation.getSignal().toString())
+                .append(RecommendationFields.FIELD_VALUE, Converter.toString(recommendation.getLatestValue()))
+                .append(RecommendationFields.FIELD_SIGNAL_VALUE, Converter.toString(recommendation.getSignalValue()))
+                .append(FIELD_NAME_CREATED, new Date());
+
+        recommendationCollection.insertOne(doc);
+
+    }
+
+
     private RecommendationPeriod documentToPeriod(Document bson) {
         RecommendationPeriod period = new RecommendationPeriod();
         period.setId(bson.getObjectId(FIELD_NAME_ID).toString());
-        period.setStartSignal(Signal.fromString(bson.getString(FIELD_NAME_START_SIGNAL)));
-        period.setEndSignal(Signal.fromString(bson.getString(FIELD_NAME_END_SIGNAL)));
-        period.setPeriodDays(bson.getInteger(FIELD_NAME_PERIOD_DAYS));
-        period.setName(bson.getString(FIELD_NAME_NAME));
-        period.setStartDate(bson.getDate(FIELD_NAME_START_DATE));
-        period.setEndDate(bson.getDate(FIELD_NAME_END_DATE));
-        period.setStartValue(Converter.toBigDecimal(bson.getString(FIELD_NAME_START_VALUE)));
-        period.setEndValue(Converter.toBigDecimal(bson.getString(FIELD_NAME_END_VALUE)));
-        period.setChangePercent(bson.getString(FIELD_NAME_CHANGE_PERCENT));
+        period.setStartSignal(Signal.fromString(bson.getString(RecommendationPeriodFields.FIELD_NAME_START_SIGNAL)));
+        period.setEndSignal(Signal.fromString(bson.getString(RecommendationPeriodFields.FIELD_NAME_END_SIGNAL)));
+        period.setPeriodDays(bson.getInteger(RecommendationPeriodFields.FIELD_NAME_PERIOD_DAYS));
+        period.setName(bson.getString(RecommendationPeriodFields.FIELD_NAME_NAME));
+        period.setStartDate(bson.getDate(RecommendationPeriodFields.FIELD_NAME_START_DATE));
+        period.setEndDate(bson.getDate(RecommendationPeriodFields.FIELD_NAME_END_DATE));
+        period.setStartValue(Converter.toBigDecimal(bson.getString(RecommendationPeriodFields.FIELD_NAME_START_VALUE)));
+        period.setEndValue(Converter.toBigDecimal(bson.getString(RecommendationPeriodFields.FIELD_NAME_END_VALUE)));
+        period.setChangePercent(bson.getString(RecommendationPeriodFields.FIELD_NAME_CHANGE_PERCENT));
         period.setCreated(bson.getDate(FIELD_NAME_CREATED));
         period.setUpdated(bson.getDate(FIELD_NAME_UPDATED));
-        period.setLatestValue(Converter.toBigDecimal(bson.getString(FIELD_NAME_LATEST_VALUE)));
+        period.setLatestValue(Converter.toBigDecimal(bson.getString(RecommendationPeriodFields.FIELD_NAME_LATEST_VALUE)));
         return period;
     }
 
@@ -190,9 +198,14 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
      * //
      */
     public void dropTheDb(String secret) {
-        if (secret.equals("yes-i-am-testing")) {
+        final String realSecret = "yes-i-am-testing";
+        if (secret.equals(realSecret)) {
             recommendationPeriodCollection.drop();
-            loadRecommendationCollection();
+            recommendationCollection.drop();
+            loadRecommendationPeriodCollection();
+        }
+        else{
+            throw new IllegalArgumentException("Wrong secret: " + realSecret);
         }
     }
 //

@@ -23,7 +23,11 @@ public class RecommendationController {
         while (recommendationIterator.hasNext()) {
             logger.info("Recommendation count " + ++recommendationCount);
 
+
+
             Recommendation recommendation = recommendationIterator.next();
+            syncDao.saveRecommendation(recommendation);
+
             String name = recommendation.getName();
             RecommendationPeriod period = openRecommendations.get(name);
 

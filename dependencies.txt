@@ -98,7 +98,6 @@ compile - Dependencies for source set 'main' (deprecated, use 'implementation ' 
 |    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2
 |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 (*)
 |    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2
-+--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
 +--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
 +--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
 |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
@@ -200,7 +199,6 @@ compileClasspath - Compile classpath for source set 'main'.
 |    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2
 |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 (*)
 |    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2
-+--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
 +--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
 +--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
 |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
@@ -305,7 +303,6 @@ default - Configuration for default artifacts.
 |    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2
 |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 (*)
 |    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2
-+--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
 +--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
 +--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
 |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
@@ -416,7 +413,6 @@ runtime - Runtime dependencies for source set 'main' (deprecated, use 'runtimeOn
 |    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2
 |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 (*)
 |    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2
-+--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
 +--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
 +--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
 |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
@@ -518,7 +514,6 @@ runtimeClasspath - Runtime classpath of source set 'main'.
 |    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2
 |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 (*)
 |    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2
-+--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
 +--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
 +--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
 |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
@@ -626,7 +621,6 @@ testCompile - Dependencies for source set 'test' (deprecated, use 'testImplement
 |    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2 -> 2.8.9
 |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 -> 2.8.9 (*)
 |    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2 -> 2.8.9
-+--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
 +--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
 +--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
 |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
@@ -777,7 +771,6 @@ testCompileClasspath - Compile classpath for source set 'test'.
 |    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2 -> 2.8.9
 |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 -> 2.8.9 (*)
 |    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2 -> 2.8.9
-+--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
 +--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
 +--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
 |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
@@ -934,7 +927,6 @@ testRuntime - Runtime dependencies for source set 'test' (deprecated, use 'testR
 |    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2 -> 2.8.9
 |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 -> 2.8.9 (*)
 |    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2 -> 2.8.9
-+--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
 +--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
 +--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
 |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)
@@ -1085,7 +1077,6 @@ testRuntimeClasspath - Runtime classpath of source set 'test'.
 |    |         +--- com.fasterxml.jackson.core:jackson-core:2.3.2 -> 2.8.9
 |    |         \--- com.fasterxml.jackson.core:jackson-databind:2.3.2 -> 2.8.9 (*)
 |    \--- com.fasterxml.jackson.core:jackson-annotations:2.3.2 -> 2.8.9
-+--- org.glassfish.jersey.inject:jersey-hk2:2.14 FAILED
 +--- org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1
 +--- org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14
 |    +--- org.glassfish.jersey.core:jersey-common:2.14 (*)

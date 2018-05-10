@@ -8,6 +8,7 @@
         </descriptors>
         <webroots>
           <root url="file://D:\sandbox\workspaces\TrendenMonitor\src\main\webapp" relative="/" />
+          <root url="file://$MODULE_DIR$/../../frontend/trenden/build" relative="/." />
         </webroots>
       </configuration>
     </facet>
@@ -15,6 +16,7 @@
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/../../out/production/classes" />
     <exclude-output />
+    <content url="file://$MODULE_DIR$/../../frontend/trenden/build" />
     <content url="file://$MODULE_DIR$/../../src/main">
       <sourceFolder url="file://$MODULE_DIR$/../../src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../src/main/resources" type="java-resource" />
@@ -37,7 +39,7 @@
     <orderEntry type="library" name="Gradle: org.glassfish.jersey.core:jersey-server:2.14" level="project" />
     <orderEntry type="library" name="Gradle: org.glassfish.jersey.core:jersey-client:2.14" level="project" />
     <orderEntry type="library" name="Gradle: org.glassfish.jersey.core:jersey-common:2.14" level="project" />
-    <orderEntry type="library" name="Gradle: org.jboss.weld.servlet:weld-servlet:3.0.0.Alpha1" level="project" />
+    <orderEntry type="library" name="Gradle: org.jboss.weld.servlet:weld-servlet:2.4.7.Final" level="project" />
     <orderEntry type="library" name="Gradle: javax.transaction:javax.transaction-api:1.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Gradle: javax.servlet:javax.servlet-api:3.0.1" level="project" />
     <orderEntry type="library" name="Gradle: org.apache.commons:commons-lang3:3.3.2" level="project" />

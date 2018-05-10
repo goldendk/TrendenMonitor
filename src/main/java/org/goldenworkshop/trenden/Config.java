@@ -86,4 +86,8 @@ public class Config {
     public String getAuthenticationUrl() {
         return configuration.getString("authentication.url");
     }
+
+    public String getRecommendationCollectionName() {
+        return configuration.getString("trenden.collection.recommendation.name");
+    }
 }

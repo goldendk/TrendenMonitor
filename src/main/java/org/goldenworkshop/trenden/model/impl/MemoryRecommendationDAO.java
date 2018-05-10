@@ -1,5 +1,6 @@
 package org.goldenworkshop.trenden.model.impl;
 
+import org.goldenworkshop.trenden.model.Recommendation;
 import org.goldenworkshop.trenden.model.RecommendationPeriod;
 import org.goldenworkshop.trenden.model.RecommendationSyncDAO;
 
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 public class MemoryRecommendationDAO implements RecommendationSyncDAO {
 
     Set<RecommendationPeriod> periods = new LinkedHashSet<>();
+    Map<String, List<Recommendation>> recommendations = new HashMap<>();
     @Override
     public void upsert(RecommendationPeriod period) {
         periods.add(period);
@@ -27,6 +29,13 @@ public class MemoryRecommendationDAO implements RecommendationSyncDAO {
     @Override
     public List<RecommendationPeriod> loadPeriodsByName(String companyCName) {
         return periods.stream().filter(e->e.getName().equalsIgnoreCase(companyCName)).collect(Collectors.toList());
+    }
+
+    @Override
+    public void saveRecommendation(Recommendation recommendation) {
+        recommendations.putIfAbsent(recommendation.getName(), new ArrayList<>());
+
+        recommendations.get(recommendation.getName()).add(recommendation);
     }
 
     @Override

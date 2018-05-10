@@ -1,14 +1,22 @@
 import javax.annotation.Generated
 
-apply plugin: 'java'                              // standard Java tasks
-apply plugin: 'war'// standard Web Archive plugin
-apply plugin: 'idea'
 buildscript {    // Configuration for building
     repositories {
         jcenter()    // Bintray's repository - a fast Maven Central mirror & more
         mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
+
 }
+
+
+apply plugin: 'java'                              // standard Java tasks
+apply plugin: 'war'// standard Web Archive plugin
+apply plugin: 'idea'
+
+
 ext.jerseyVersion ="2.14"
 
 repositories {
@@ -51,8 +59,9 @@ dependencies {
 
     //CDI: Weld
     // https://mvnrepository.com/artifact/org.jboss.weld.servlet/weld-servlet
-    compile( group: 'org.jboss.weld.servlet', name: 'weld-servlet', version: '3.0.0.Alpha1'){
-        exclude(group: 'javax.servlet')
+    // https://mvnrepository.com/artifact/org.jboss.weld.servlet/weld-servlet
+    compile (group: 'org.jboss.weld.servlet', name: 'weld-servlet', version: '2.4.7.Final'){
+    exclude(group: 'javax.servlet')
     }
     //CDI bridge hk2 -> weld
     compile 'org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14'
@@ -82,6 +91,18 @@ idea {
         downloadSources = true
     }
 }
+task exploded(type: Sync){
+    into "$buildDir/exploded"
+    with war
+}
+war{
+    into("."){
+        from{
+            "frontend/trenden/build"
+        }
+    }
+}
+tasks.war.dependsOn(":frontend/trenden:buildReact")
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.5'

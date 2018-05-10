@@ -24,4 +24,6 @@ public interface RecommendationSyncDAO extends ExternalInterface{
      * @return
      */
     List<RecommendationPeriod> loadPeriodsByName(String companyCName);
+
+    void saveRecommendation(Recommendation recommendation);
 }
