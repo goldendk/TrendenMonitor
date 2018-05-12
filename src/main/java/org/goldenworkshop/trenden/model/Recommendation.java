@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class Recommendation {
-
+    private String id;
     private String name;//Navn;
     private Signal signal;//Signal
     private int days;//Dage
@@ -12,6 +12,7 @@ public class Recommendation {
     private BigDecimal signalValue; //Signalkurs
     private BigDecimal latestValue; //Seneste kurs
     private String change;//Ændring
+    private Date created;
 
     public String getName() {
         return name;
@@ -67,6 +68,22 @@ public class Recommendation {
 
     public void setChange(String change) {
         this.change = change;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

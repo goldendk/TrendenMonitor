@@ -7,6 +7,8 @@ import {Route} from 'react-router-dom'
 import OpenRecommendationsView from './components/OpenRecommendationsView'
 import HistoricPotentialView from './components/HistoricPotentialView'
 import {Grid, Row, Col} from 'react-bootstrap'
+import AuthView from "./components/authView"
+import {GoogleLogout} from 'react-google-login'
 class App extends Component {
     render() {
         return (
@@ -30,6 +32,11 @@ class App extends Component {
                             <Route exact path='/historic-potential-view' component={HistoricPotentialView}>
                                 this is in router.
                             </Route>
+
+                            <Route path='/' component={AuthView}>
+                                This is in router.
+                            </Route>
+
 
                             <section>
                                 <p className="App-intro">

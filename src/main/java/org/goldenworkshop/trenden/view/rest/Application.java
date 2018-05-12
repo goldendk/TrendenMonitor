@@ -4,6 +4,6 @@ import org.glassfish.jersey.server.ResourceConfig;
 
 public class Application extends ResourceConfig {
     public Application() {
-        packages("org.goldenworkshop.trenden.view.rest");
+        packages("org.goldenworkshop.trenden.view.rest", "io.swagger.jaxrs.listing");
     }
 }

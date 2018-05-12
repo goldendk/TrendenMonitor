@@ -12,6 +12,11 @@
 
 
 
+    <filter>
+        <filter-name>TokenAuthFilter</filter-name>
+        <filter-class>org.goldenworkshop.trenden.servlet.TokenAuthFilter</filter-class>
+    </filter>
+
 
     <filter>
         <filter-name>UserContextFilter</filter-name>
@@ -21,7 +26,13 @@
     <filter>
         <filter-name>AuthenticatedFilter</filter-name>
         <filter-class>org.goldenworkshop.trenden.servlet.AuthenticatedFilter</filter-class>
+        <init-param>
+            <param-name>excludeList</param-name>
+            <param-value>/rest/application/auth.*</param-value>
+        </init-param>
     </filter>
+
+
     <servlet>
         <servlet-name>GoogleAuthServlet</servlet-name>
         <servlet-class>org.goldenworkshop.trenden.servlet.GoogleAuthServlet</servlet-class>
@@ -57,6 +68,20 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <servlet>
+        <servlet-name>Jersey2Config</servlet-name>
+        <servlet-class>io.swagger.jersey.config.JerseyJaxrsConfig</servlet-class>
+        <init-param>
+            <param-name>api.version</param-name>
+            <param-value>1.0.0</param-value>
+        </init-param>
+        <init-param>
+            <param-name>swagger.api.basepath</param-name>
+            <param-value>http://localhost:8080/rest</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+
     <!-- /user/* -->
     <filter-mapping>
         <filter-name>UserContextFilter</filter-name>
@@ -67,13 +92,18 @@
         <url-pattern>/user/*</url-pattern>
     </filter-mapping>
 
-
+    <!-- authentication -->
     <filter-mapping>
         <filter-name>UserContextFilter</filter-name>
         <url-pattern>/GoogleAuth</url-pattern>
     </filter-mapping>
 
     <!-- rest -->
+    <filter-mapping>
+        <filter-name>TokenAuthFilter</filter-name>
+        <url-pattern>/rest/application/jobs/*</url-pattern>
+    </filter-mapping>
+
     <filter-mapping>
         <filter-name>UserContextFilter</filter-name>
         <url-pattern>/rest/*</url-pattern>

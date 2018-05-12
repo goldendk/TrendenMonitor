@@ -90,4 +90,8 @@ public class Config {
     public String getRecommendationCollectionName() {
         return configuration.getString("trenden.collection.recommendation.name");
     }
+
+    public String getTokenForUser(String userId) {
+        return configuration.getString("trenden.token."+ userId);
+    }
 }

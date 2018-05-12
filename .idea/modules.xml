@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TrendenMonitor.iml" filepath="$PROJECT_DIR$/TrendenMonitor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TrendenMonitor.iml" filepath="$PROJECT_DIR$/.idea/modules/TrendenMonitor.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/TrendenMonitor_main.iml" filepath="$PROJECT_DIR$/.idea/modules/TrendenMonitor_main.iml" group="TrendenMonitor" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/TrendenMonitor_test.iml" filepath="$PROJECT_DIR$/.idea/modules/TrendenMonitor_test.iml" group="TrendenMonitor" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/frontend_trenden.iml" filepath="$PROJECT_DIR$/.idea/modules/frontend_trenden.iml" group="frontend/trenden" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/frontend/trenden/frontend_trenden.iml" filepath="$PROJECT_DIR$/.idea/modules/frontend/trenden/frontend_trenden.iml" group="frontend/trenden" />
     </modules>
   </component>
 </project>

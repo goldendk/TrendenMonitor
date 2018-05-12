@@ -8,14 +8,16 @@ buildscript {    // Configuration for building
             url "https://plugins.gradle.org/m2/"
         }
     }
-
+    dependencies {
+        classpath 'com.bmuschko:gradle-cargo-plugin:2.3'
+    }
 }
 
 
 apply plugin: 'java'                              // standard Java tasks
 apply plugin: 'war'// standard Web Archive plugin
 apply plugin: 'idea'
-
+apply plugin: 'com.bmuschko.cargo'
 
 ext.jerseyVersion ="2.14"
 
@@ -23,6 +25,8 @@ repositories {
     jcenter()
     mavenCentral()
 }
+
+
 
 dependencies {
 
@@ -63,12 +67,13 @@ dependencies {
     compile (group: 'org.jboss.weld.servlet', name: 'weld-servlet', version: '2.4.7.Final'){
     exclude(group: 'javax.servlet')
     }
+
     //CDI bridge hk2 -> weld
     compile 'org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.14'
      compile group: 'org.glassfish.jersey.containers.glassfish', name: 'jersey-gf-cdi-ban-custom-hk2-binding', version: '2.9'
     compile group: 'javax.transaction', name: 'javax.transaction-api', version: '1.2'
 
-
+    compile 'io.swagger:swagger-jersey2-jaxrs:1.5.0'
 
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version:'3.0.1'
 
@@ -96,7 +101,8 @@ task exploded(type: Sync){
     with war
 }
 war{
-    into("."){
+    archiveName = 'ROOT.war'
+    into(""){
         from{
             "frontend/trenden/build"
         }
@@ -110,3 +116,22 @@ task wrapper(type: Wrapper) {
 task printDependencyToFile(type: DependencyReportTask){
     outputFile = project.file("dependencies.txt")
 }
+
+/**
+ * Remote deployment of artifact to Tomcat server.
+ */
+cargo {
+    containerId = 'tomcat8x'
+    port = 8080
+    deployable {
+        context = '/'
+    }
+    remote {
+        hostname = 'kjvj-droplet'
+        username = 'admin'
+        password = 'password'
+    }
+}
+
+tasks.cargoDeployRemote.dependsOn(tasks.war)
+tasks.cargoRedeployRemote.dependsOn(tasks.war)

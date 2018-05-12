@@ -13,17 +13,6 @@
           </set>
         </option>
       </GradleProjectSettings>
-      <GradleProjectSettings>
-        <option name="distributionType" value="LOCAL" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/frontend/trenden" />
-        <option name="gradleHome" value="$PROJECT_DIR$/../../gradle-4.5" />
-        <option name="modules">
-          <set>
-            <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/frontend/trenden" />
-          </set>
-        </option>
-      </GradleProjectSettings>
     </option>
   </component>
 </project>

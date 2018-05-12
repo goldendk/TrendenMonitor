@@ -1,8 +1,6 @@
 package org.goldenworkshop.trenden.model.impl;
 
-import org.goldenworkshop.trenden.model.Recommendation;
-import org.goldenworkshop.trenden.model.RecommendationPeriod;
-import org.goldenworkshop.trenden.model.RecommendationSyncDAO;
+import org.goldenworkshop.trenden.model.*;
 
 import javax.enterprise.inject.Alternative;
 import java.util.*;
@@ -36,6 +34,11 @@ public class MemoryRecommendationDAO implements RecommendationSyncDAO {
         recommendations.putIfAbsent(recommendation.getName(), new ArrayList<>());
 
         recommendations.get(recommendation.getName()).add(recommendation);
+    }
+
+    @Override
+    public PaginatedResult<Recommendation> loadRecommendationPage(RecommendationFilter filter) {
+        return null;
     }
 
     @Override

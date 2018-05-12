@@ -16,7 +16,9 @@ public class AuthContextFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        AuthContext.set(new ServletAuthContext((HttpServletRequest) request));
+        if(AuthContext.get() == null){
+            AuthContext.set(new ServletSessionAuthContext((HttpServletRequest) request));
+        }
         try {
             chain.doFilter(request, response);
         } finally {

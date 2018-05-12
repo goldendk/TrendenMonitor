@@ -51,6 +51,7 @@ public class RecommendationController {
         }
         for(RecommendationPeriod toClose : openRecommendations.values()){
             Recommendation closingRecommendation = new Recommendation();
+            closingRecommendation.setCreated(new Date());
             closingRecommendation.setLatestValue(toClose.getLatestValue());
             closingRecommendation.setSignal(Signal.MISSING);
             closingRecommendation.setSignalDate(new Date());

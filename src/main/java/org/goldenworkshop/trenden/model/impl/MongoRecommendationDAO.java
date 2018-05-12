@@ -2,11 +2,15 @@ package org.goldenworkshop.trenden.model.impl;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.IndexOptions;
+import com.mongodb.client.model.Indexes;
 import com.mongodb.client.model.UpdateOptions;
+import com.sun.xml.internal.ws.commons.xmlutil.Converter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.logging.log4j.LogManager;
@@ -15,10 +19,7 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.goldenworkshop.trenden.Config;
-import org.goldenworkshop.trenden.model.Recommendation;
-import org.goldenworkshop.trenden.model.RecommendationPeriod;
-import org.goldenworkshop.trenden.model.RecommendationSyncDAO;
-import org.goldenworkshop.trenden.model.Signal;
+import org.goldenworkshop.trenden.model.*;
 
 import javax.xml.bind.DatatypeConverter;
 import java.math.BigDecimal;
@@ -34,7 +35,7 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
   
     private static Logger logger = LogManager.getLogger(MongoRecommendationDAO.class);
 
-    private static final Object FIELD_NAME_ID = "_id";
+    private static final String FIELD_NAME_ID = "_id";
     public static final String FIELD_NAME_CREATED = "created";
     public static final String FIELD_NAME_UPDATED = "updated";
 
@@ -46,7 +47,6 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
     @Override
     public void initialize() throws Exception {
         logger.info("Initializing MongoDB client");
-
         String url = Config.get().getMongoConnectionUrl();
         client = new MongoClient(new MongoClientURI(url));
         db = client.getDatabase(Config.get().getTrendenDatabaseName());
@@ -56,7 +56,7 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
 
     private void loadRecommendationCollection() {
         recommendationCollection = db.getCollection(Config.get().getRecommendationCollectionName());
-
+        recommendationCollection.createIndex(Indexes.ascending(FIELD_NAME_CREATED));
     }
 
     private void loadRecommendationPeriodCollection() {
@@ -145,10 +145,54 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
                 .append(RecommendationFields.FIELD_SIGNAL, recommendation.getSignal().toString())
                 .append(RecommendationFields.FIELD_VALUE, Converter.toString(recommendation.getLatestValue()))
                 .append(RecommendationFields.FIELD_SIGNAL_VALUE, Converter.toString(recommendation.getSignalValue()))
-                .append(FIELD_NAME_CREATED, new Date());
+                .append(FIELD_NAME_CREATED, recommendation.getCreated());
 
         recommendationCollection.insertOne(doc);
 
+    }
+
+    @Override
+    public PaginatedResult<Recommendation> loadRecommendationPage(RecommendationFilter filter) {
+
+
+        List<Recommendation> recommendations = new ArrayList<>();
+        Bson fromFilter = null;
+        if(filter.getSinceId() != null){
+            fromFilter = Filters.gte(FIELD_NAME_ID,  new ObjectId(filter.getSinceId()));
+        }
+        else{
+            fromFilter = Filters.gte(FIELD_NAME_CREATED, filter.getSinceDate());
+        }
+
+        Bson andFilter = Filters.and(Filters.eq(RecommendationFields.FIELD_NAME, filter.getCompanyName()), fromFilter);
+        FindIterable<Document> mongoQuery = recommendationCollection.find(
+                andFilter
+        ).limit(filter.getPageSize());
+
+        MongoCursor<Document> cursor = mongoQuery.iterator();
+
+        long rowCount = recommendationCollection.count(andFilter);
+
+        while(cursor.hasNext()){
+            Document next = cursor.next();
+            Recommendation recommendation = documentToRecommendation(next);
+            recommendations.add(recommendation);
+        }
+
+        PaginatedResult<Recommendation> recommendationPaginatedResult = new PaginatedResult<>();
+        recommendationPaginatedResult.setDataList(recommendations);
+        recommendationPaginatedResult.setTotalRows((int) rowCount);
+
+        return recommendationPaginatedResult;
+    }
+
+    private Recommendation documentToRecommendation(Document doc) {
+        Recommendation r = new Recommendation();
+        r.setCreated(doc.getDate(FIELD_NAME_CREATED));
+        r.setName(doc.getString(RecommendationFields.FIELD_NAME));
+        r.setLatestValue(Converter.toBigDecimal(doc.getString(RecommendationFields.FIELD_VALUE)));
+        r.setId(doc.getObjectId(FIELD_NAME_ID).toString());
+        return r;
     }
 
 

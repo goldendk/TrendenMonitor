@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class EuroInvesterTrendenParser implements RecommendationSource {
                 String change = cellList.get(col++).text();
 
                 Recommendation recommendation = new Recommendation();
+                recommendation.setCreated(new Date());
                 recommendation.setName(name);
 
                 String buyValue = Config.get().getSignalValue(Signal.BUY);
