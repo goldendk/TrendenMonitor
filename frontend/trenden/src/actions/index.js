@@ -1,10 +1,25 @@
-export const AUTH_CHANGE_EVENT = "auth-change";
+//libraries
+import axios from 'axios';
 
-export function onAuthChange(loggedIn){
+export const USER_STATE_LOADED = "user-state-loaded";
+export const USER_STATE_LOGOUT = "user-state-logout";
+
+
+export function googleLoginAction(tokenId){
+    const request = axios.get("/rest/application/auth/google?idToken=" + tokenId, {
+        headers: {
+            'Accept': "application/json"
+        }
+        , withCredentials: true
+    });
 
     return {
-        type: AUTH_CHANGE_EVENT,
-        payload: loggedIn
+        type: USER_STATE_LOADED,
+        payload:  request
     }
-
+}
+export function googleLogoutAction(){
+    return {
+        type: USER_STATE_LOGOUT
+    }
 }

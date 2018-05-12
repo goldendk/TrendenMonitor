@@ -27,7 +27,7 @@
         <filter-name>AuthenticatedFilter</filter-name>
         <filter-class>org.goldenworkshop.trenden.servlet.AuthenticatedFilter</filter-class>
         <init-param>
-            <param-name>excludeList</param-name>
+            <param-name>excludes</param-name>
             <param-value>/rest/application/auth.*</param-value>
         </init-param>
     </filter>

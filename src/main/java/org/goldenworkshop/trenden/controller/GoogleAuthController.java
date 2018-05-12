@@ -4,6 +4,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import org.apache.commons.lang3.StringUtils;
 import org.goldenworkshop.trenden.model.User;
 
 import java.io.IOException;
@@ -30,6 +31,10 @@ public class GoogleAuthController {
         if (idToken != null) {
             GoogleIdToken.Payload payload = idToken.getPayload();
 
+            if(!StringUtils.equals(googleOAuth, (CharSequence) payload.get("aud"))){
+                throw new RuntimeException("aud field does not match this apps Google OAuth aud!");
+            }
+
             // Print user identifier
             String userId = payload.getSubject();
             System.out.println("User ID: " + userId);
@@ -46,11 +51,15 @@ public class GoogleAuthController {
 
 
             User user = new User();
-            user.setEmail(emailVerified);
+            user.setId(userId);
+            if(emailVerified){
+                user.setEmail(email);
+            }
             user.setUsername(name);
             user.setLocale(locale);
             user.setPictureUrl(pictureUrl);
-
+            user.setFirstName(givenName);
+            user.setLastName(familyName);
             AuthContext.get().setUser(user);
             return user;
 
