@@ -33,3 +33,5 @@ frontend/trenden/build/
 frontend/trenden/node_modules/
 frontend/trenden/package-lock.json
 frontend/trenden/yarn.lock
+frontend/trenden/.gradle
+frontend/trenden/temp
