@@ -15,6 +15,10 @@ class MenuView extends Component {
                     <NavItem eventKey={1} href="/historic-potential-view">
                         Historic potential
                     </NavItem>
+                    <NavItem eventKey={4} href="/daily-values-view">
+                        Daily values
+                    </NavItem>
+
                     <NavItem eventKey={2} href="#">
                         Link
                     </NavItem>

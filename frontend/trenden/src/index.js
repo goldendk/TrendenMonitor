@@ -8,7 +8,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
-import {BrowserRouter} from 'react-router-dom'
+import {BrowserRouter, HashRouter} from 'react-router-dom'
 import Backend from './data/MockBackend'
 
 import './index.css';
@@ -23,4 +23,6 @@ ReactDOM.render(
         </BrowserRouter>
     </Provider>
     , document.getElementById('root'));
+//FIXME: should this be enabled ?
+//https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#making-a-progressive-web-app
 registerServiceWorker();

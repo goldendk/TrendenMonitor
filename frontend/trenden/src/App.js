@@ -6,6 +6,7 @@ import MenuView from './components/MenuView'
 import {Route} from 'react-router-dom'
 import OpenRecommendationsView from './components/OpenRecommendationsView'
 import HistoricPotentialView from './components/HistoricPotentialView'
+import DailyValuesView from './components/DailyValuesView'
 import {Grid, Row, Col} from 'react-bootstrap'
 import AuthView from "./components/authView"
 import {GoogleLogout} from 'react-google-login'
@@ -24,25 +25,21 @@ class App extends Component {
                     <Row >
                         <Col  md={8} mdOffset={2}>
                             {/* Route to open recommenations*/}
-                            <Route exact path='/open-recommendations-view' component={OpenRecommendationsView}>
-                                this is in router.
-                            </Route>
+                            <Route exact path='/open-recommendations-view' component={OpenRecommendationsView}/>
+
 
                             {/* Route to display historic potential*/}
-                            <Route exact path='/historic-potential-view' component={HistoricPotentialView}>
-                                this is in router.
-                            </Route>
+                            <Route exact path='/historic-potential-view' component={HistoricPotentialView}/>
 
-                            <Route path='/' component={AuthView}>
-                                This is in router.
-                            </Route>
+                            <Route exact path="/daily-values-view" component={DailyValuesView}/>
 
+                            <Route exact path='/' component={AuthView}/>
 
-                            <section>
-                                <p className="App-intro">
-                                    To get started, edit <code>src/App.js</code> and save to reload.
-                                </p>
-                            </section>
+                            {/*<section>*/}
+                                {/*<p className="App-intro">*/}
+                                    {/*To get started, edit <code>src/App.js</code> and save to reload.*/}
+                                {/*</p>*/}
+                            {/*</section>*/}
                         </Col>
 
                     </Row>

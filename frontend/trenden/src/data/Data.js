@@ -45,6 +45,35 @@ class Data {
         "latestValue": 1241.00,
         "id": "5a9173c5a550831b70206663"
     }];
+    companies = [{name: "AA"},
+        {name: "BB"},
+        {name: "cc"},
+        {name: "dd"},
+        {name: "ee"},
+        {name: "ff"},
+        {name: "gg"},
+        {name: "hh"},
+        {name: "ii"},
+        {name: "jj"},
+        {name: "kk"},
+        {name: "ll"},
+        {name: "mm"},
+        {name: "nn"},
+        {name: "oo"},
+        {name: "pp"},
+        {name: "qq"},
+        {name: "rr"},
+        {name: "ss"},
+        {name: "tt"},
+        {name: "uu"},
+        {name: "vv"},
+        {name: "ww"},
+        {name: "xx"},
+        {name: "yy"},
+        {name: "zz"}
+        ];
+
+
 }
 
 export default Data;
