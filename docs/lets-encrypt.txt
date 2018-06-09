@@ -1,0 +1,92 @@
+Because I struggled for several days and I found a solution quite simple I would like to share it with others.
+
+I searched in forums a long time, I found some solutions but none was up to date or close to what I have done.
+
+So First of all I assume that your Tomcat is already installed (Tested with Tomcat 6/7).
+
+Then first thing is to install certbot, I’m working on Ubuntu, so the following how to should works on any Debian based release:
+
+1. sudo add-apt-repository ppa:certbot/certbot
+2. sudo apt-get update
+3. sudo apt-get install certbot
+Now keystore creation (exemple for tomcat 7):
+
+sudo keytool -genkey -alias tomcat -keyalg RSA -keystore /usr/share/tomcat/.keystore -keysize 2048
+
+/!\ Important /!\
+
+The common name has to be your FQDN, for instance : www.myexample.com 130
+
+once the private key created, make the CSR:
+
+sudo keytool -certreq -alias tomcat -file request.csr -keystore /usr/share/tomcat/.keystore
+
+Then we start the certificat creation process:
+
+First of all be sure that your website name is well resolved but any process using port 443 has to be shut :
+
+If your tomcat use explicitly port 443 :
+
+sudo service tomcat stop
+If as me, you redirect request for port 443 to 8443 (default ssl port for Tomcat) you’ll have to flush your iptables first, otherwise when certbot will test your connection, it’s request will be redirected to port 8443 :
+
+sudo iptables -F -t nat
+And then we launch the certficate build :
+
+sudo certbot certonly --csr request.csr (add --staging for testing purpose)
+Now you should have a file named 0000_chain.pem we will add it to the keystore:
+
+sudo keytool -import -trustcacerts -alias tomcat -file 0000_chain.pem -keystore /usr/share/tomcat7/.keystore
+
+2 things left, first modify the tomcat server.xml (/etc/tomcat7/server.xml for me):
+
+Find “<!-- Define a SSL HTTP/1.1 Connector on port 8443” you should find after this comment a commented connector :
+
+remove the comments ( before and after the connector) and make you connectore look like that:
+
+<Connector port="8443" protocol="HTTP/1.1" SSLEnabled="true"
+               maxThreads="150" scheme="https" secure="true"
+               clientAuth="false" sslProtocol="TLS" KeystoreFile="/usr/share/tomcat7/.keystore" KeystorePass="Password_you_have_set_at_key_creation" />
+Now restart services :
+
+sudo service tomcat start
+sudo iptables restore < /etc/iptables.rules (I assume you use this method to load your redirection rules : https://help.ubuntu.com/community/IptablesHowTo )
+Everything should be OK now, I think I did not forgot anything, if you have any comment or suggest tell me I’ll update this little tuto.
+
+Here a little bash script I did to automate this process (Also used in crontab to be called every 90 days) :
+
+#!/bin/bash
+echo " -- Cleaning -- "
+sudo rm request.csr
+sudo rm *.pem
+
+echo " -- Stop Services -- "
+sudo iptables -F -t nat
+sudo service tomcat7 stop
+
+echo " -- Delete Keystore -- "
+sudo rm /usr/share/tomcat7/.keystore
+
+echo " -- Recreate Keystore -- "
+sudo keytool -genkey -noprompt -alias tomcat -dname "CN=**"your_FQDN**", OU="**your_OU**", O="**your_organisation**", L="**your_town**", S="**your_region**", C="**your_contry_in_two_letter**" -keystore /usr/share/tomcat7/.keystore -storepass "**your_pass**" -KeySize 2048 -keypass "**your_pass**" -keyalg RSA
+sudo keytool -list -keystore /usr/share/tomcat7/.keystore -v -storepass "**your_pass**" > key.check
+
+echo " -- Build CSR -- "
+sudo keytool -certreq -alias tomcat -file request.csr -keystore /usr/share/tomcat7/.keystore -storepass "**your_pass**"
+
+echo " -- Request Certificate -- "
+sudo certbot certonly --csr ./request.csr --standalone
+
+echo " -- import Certificate -- "
+sudo keytool -import -trustcacerts -alias tomcat -file 0001_chain.pem -keystore /usr/share/tomcat7/.keystore -storepass "**your_pass**"
+
+echo " -- Restart services -- "
+sudo service tomcat7 start
+sudo iptables-restore < /etc/iptables.rules
+
+echo " -- Cleaning -- "
+sudo rm request.csr
+sudo mv *.pem ./Letsencrypt
+Bye,
+
+Proc.

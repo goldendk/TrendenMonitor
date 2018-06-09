@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Api("Recommendation")
 @Path("/recommendation")
@@ -39,18 +40,19 @@ public class RecommendationResource {
             value = {@ApiResponse(code = 200, message = "OK, data returned"),
                     @ApiResponse(code = 500, message = "Server error")
             })
-    public Response fetchDataPage(@QueryParam("companyName") String companyName,
+    public Response fetchDataPage(@QueryParam("companyNames") List<String> companyNames,
                                   @QueryParam("sinceId") String sinceId,
                                   @QueryParam("sinceDate") String sinceDate,
                                   @QueryParam("pageSize") int pageSize) throws ParseException {
-        Validate.notEmpty(companyName, "companyName must be filled out.");
+        Validate.notNull(companyNames, "companyName must be filled out.");
+        Validate.isFalse(companyNames.isEmpty() , "At least one company must be queried");
         Validate.isTrue(sinceId != null
                         || sinceDate != null
                 , "sinceId or sinceDate must be provided.");
 
         RecommendationFilter filter = new RecommendationFilter();
         filter.setPageSize(pageSize);
-        filter.setCompanyName(companyName);
+        filter.setCompanyNames(companyNames);
 
         if (sinceDate != null) {
             filter.setSinceDate(new SimpleDateFormat("yyyy-MM-dd").parse(sinceDate));

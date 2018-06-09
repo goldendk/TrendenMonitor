@@ -9,6 +9,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Indexes;
 import com.mongodb.client.model.UpdateOptions;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.apache.logging.log4j.LogManager;
@@ -30,7 +31,7 @@ import static com.mongodb.client.model.Filters.eq;
  */
 
 public class MongoRecommendationDAO implements RecommendationSyncDAO {
-  
+
     private static Logger logger = LogManager.getLogger(MongoRecommendationDAO.class);
 
     private static final String FIELD_NAME_ID = "_id";
@@ -41,6 +42,7 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
     private MongoDatabase db;
     private MongoCollection<Document> recommendationPeriodCollection;
     private MongoCollection<Document> recommendationCollection;
+    private MongoCollection<Document> companiesCollection;
 
     @Override
     public void initialize() throws Exception {
@@ -50,6 +52,11 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
         db = client.getDatabase(Config.get().getTrendenDatabaseName());
         loadRecommendationPeriodCollection();
         loadRecommendationCollection();
+        loadCompanyCollection();
+    }
+
+    private void loadCompanyCollection() {
+        companiesCollection = db.getCollection("companies");
     }
 
     private void loadRecommendationCollection() {
@@ -88,25 +95,14 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
                 .append(RecommendationPeriodFields.FIELD_NAME_LATEST_VALUE, Converter.toString(period.getLatestValue()))
                 .append(RecommendationPeriodFields.FIELD_NAME_PERIOD_DAYS, period.getPeriodDays());
 
-        Bson update = new Document("$set",
-                theDocument
-        );
-
-        if (StringUtils.isNotBlank(period.getId())) {
-            Bson filter = Filters.eq("_id", new ObjectId(period.getId()));
-            UpdateOptions options = new UpdateOptions().upsert(true);
-            recommendationPeriodCollection
-                    .updateOne(filter, update, options);
-        } else {
-            recommendationPeriodCollection.insertOne(theDocument);
-        }
+        upsertDocument(period.getId(), theDocument, recommendationPeriodCollection);
     }
 
     @Override
     public Map<String, RecommendationPeriod> loadOpenRecommendationPeriods() {
         MongoCursor<Document> iterator = recommendationPeriodCollection.find(Filters.eq(RecommendationPeriodFields.FIELD_NAME_END_SIGNAL, null)).iterator();
         Map<String, RecommendationPeriod> map = new HashMap<>();
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             Document next = iterator.next();
             RecommendationPeriod recommendationPeriod = documentToPeriod(next);
             map.put(recommendationPeriod.getName(), recommendationPeriod);
@@ -154,24 +150,27 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
 
 
         List<Recommendation> recommendations = new ArrayList<>();
-        Bson fromFilter = null;
-        if(filter.getSinceId() != null){
-            fromFilter = Filters.gte(FIELD_NAME_ID,  new ObjectId(filter.getSinceId()));
-        }
-        else{
-            fromFilter = Filters.gte(FIELD_NAME_CREATED, filter.getSinceDate());
+        Bson queryFilter = null;
+        if (filter.getSinceId() != null) {
+            queryFilter = Filters.gte(FIELD_NAME_ID, new ObjectId(filter.getSinceId()));
+        } else {
+            queryFilter = Filters.gte(FIELD_NAME_CREATED, filter.getSinceDate());
         }
 
-        Bson andFilter = Filters.and(Filters.eq(RecommendationFields.FIELD_NAME, filter.getCompanyName()), fromFilter);
+
+        if(CollectionUtils.isNotEmpty(filter.getCompanyNames())){
+            queryFilter = Filters.and(Filters.in(RecommendationFields.FIELD_NAME, filter.getCompanyNames()), queryFilter);
+        }
+
         FindIterable<Document> mongoQuery = recommendationCollection.find(
-                andFilter
+                queryFilter
         ).limit(filter.getPageSize());
 
         MongoCursor<Document> cursor = mongoQuery.iterator();
 
-        long rowCount = recommendationCollection.count(andFilter);
+        long rowCount = recommendationCollection.count(queryFilter);
 
-        while(cursor.hasNext()){
+        while (cursor.hasNext()) {
             Document next = cursor.next();
             Recommendation recommendation = documentToRecommendation(next);
             recommendations.add(recommendation);
@@ -183,6 +182,66 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
 
         return recommendationPaginatedResult;
     }
+
+    @Override
+    public List<Company> loadCompanies(String sinceId, int pageSize) {
+        FindIterable<Document> documents;
+        if (StringUtils.isNotBlank(sinceId)) {
+            documents = companiesCollection.find(Filters.gte(FIELD_NAME_ID, new ObjectId(sinceId)));
+        } else {
+            documents = companiesCollection.find();
+        }
+
+        List<Company> result = new ArrayList<>();
+        MongoCursor<Document> iterator = documents.limit(pageSize).iterator();
+        while (iterator.hasNext()) {
+            Document doc = iterator.next();
+
+            result.add(docToCompany(doc));
+        }
+
+
+        return result;
+    }
+
+    private Company docToCompany(Document doc) {
+
+        Company company = new Company(doc.getObjectId(FIELD_NAME_ID).toString(),
+                doc.getString(CompanyFields.FIELD_NAME));
+        return company;
+    }
+
+    @Override
+    public Company getCompany(String companyName) {
+        MongoCursor<Document> iterator = companiesCollection.find(Filters.eq(CompanyFields.FIELD_NAME, companyName)).iterator();
+
+        if(iterator.hasNext()){
+            return docToCompany(iterator.next());
+        }
+
+        return null;
+    }
+
+    @Override
+    public void saveCompany(Company company) {
+        Document document = new Document().append(CompanyFields.FIELD_NAME, company.getName());
+        upsertDocument(company.getId(), document, companiesCollection);
+    }
+
+    private void upsertDocument(String id, Document document, MongoCollection<Document> collection) {
+        Bson update = new Document("$set",
+                document
+        );
+        if (StringUtils.isNotBlank(id)) {
+            Bson filter = Filters.eq("_id", new ObjectId(id));
+            UpdateOptions options = new UpdateOptions().upsert(true);
+            recommendationPeriodCollection
+                    .updateOne(filter, update, options);
+        } else {
+            collection.insertOne(document);
+        }
+    }
+
 
     private Recommendation documentToRecommendation(Document doc) {
         Recommendation r = new Recommendation();
@@ -245,8 +304,7 @@ public class MongoRecommendationDAO implements RecommendationSyncDAO {
             recommendationPeriodCollection.drop();
             recommendationCollection.drop();
             loadRecommendationPeriodCollection();
-        }
-        else{
+        } else {
             throw new IllegalArgumentException("Wrong secret: " + realSecret);
         }
     }

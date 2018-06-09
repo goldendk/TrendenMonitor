@@ -9,10 +9,17 @@ export default class {
 
    loadCompanies(callback){
 
-       var data = new Data()
+       var data = new Data();
        callback.call(this, {
            data: data.companies
        });
+
+   }
+
+   loadDailyValues(selectedCompanies, callback){
+
+       var data = new Data();
+       callback(data.dailyValues);
 
    }
 

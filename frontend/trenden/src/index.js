@@ -9,13 +9,13 @@ import registerServiceWorker from './registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import {BrowserRouter, HashRouter} from 'react-router-dom'
-import Backend from './data/MockBackend'
+import MockBackend from './data/MockBackend'
 
 import './index.css';
 
 const createStoreWithMiddleware = applyMiddleware(reduxPromise)(createStore);
 
-window.backend = new Backend();
+window.backend = new MockBackend();
 ReactDOM.render(
     <Provider store={createStoreWithMiddleware(reducers)}>
         <BrowserRouter>

@@ -28,4 +28,8 @@ public interface RecommendationSyncDAO extends ExternalInterface{
     void saveRecommendation(Recommendation recommendation);
 
     PaginatedResult<Recommendation> loadRecommendationPage(RecommendationFilter filter);
+
+    List<Company> loadCompanies(String sinceId, int pageSize);
+    Company getCompany(String companyName);
+    void saveCompany(Company company);
 }

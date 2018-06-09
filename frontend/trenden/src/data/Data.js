@@ -45,35 +45,61 @@ class Data {
         "latestValue": 1241.00,
         "id": "5a9173c5a550831b70206663"
     }];
-    companies = [{name: "AA"},
-        {name: "BB"},
-        {name: "cc"},
-        {name: "dd"},
-        {name: "ee"},
-        {name: "ff"},
-        {name: "gg"},
-        {name: "hh"},
-        {name: "ii"},
-        {name: "jj"},
-        {name: "kk"},
-        {name: "ll"},
-        {name: "mm"},
-        {name: "nn"},
-        {name: "oo"},
-        {name: "pp"},
-        {name: "qq"},
-        {name: "rr"},
-        {name: "ss"},
-        {name: "tt"},
-        {name: "uu"},
-        {name: "vv"},
-        {name: "ww"},
-        {name: "xx"},
-        {name: "yy"},
-        {name: "zz"}
+    companies =
+        [{name: "AA"},
+            {name: "BB"},
+            {name: "cc"},
+            {name: "dd"},
+            {name: "ee"},
+            {name: "ff"},
+            {name: "gg"},
+            {name: "hh"},
+            {name: "ii"},
+            {name: "jj"},
+            {name: "kk"},
+            {name: "ll"},
+            {name: "mm"},
+            {name: "nn"},
+            {name: "oo"},
+            {name: "pp"},
+            {name: "qq"},
+            {name: "rr"},
+            {name: "ss"},
+            {name: "tt"},
+            {name: "uu"},
+            {name: "vv"},
+            {name: "ww"},
+            {name: "xx"},
+            {name: "yy"},
+            {name: "zz"}
         ];
+    dailyValues = {
+        "AA": [{
+            "name": "AA",
+            "created": 1518562800000,
+            "latestValue": 215.00,
+            "id": "5a9173c6a550831b70206664"
+        },
+            {
+                "name": "AA",
+                "created": 1518562900000,
+                "latestValue": 300.00,
+                "id": "5a9173c6a550831b70206664"
+            }
+        ],
+        "BB": [{
+            "name": "BB",
+            "created": 1518562800000,
+            "latestValue": 400.00,
+            "id": "5a9173c6a550831b70206664"
+        },{
+                "name": "BB",
+                "created": 1518562900000,
+                "latestValue": 350.00,
+                "id": "5a9173c6a550831b70206664"
+            }]
 
-
+    };
 }
 
 export default Data;

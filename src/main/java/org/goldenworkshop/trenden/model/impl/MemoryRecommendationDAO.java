@@ -42,6 +42,21 @@ public class MemoryRecommendationDAO implements RecommendationSyncDAO {
     }
 
     @Override
+    public List<Company> loadCompanies(String sinceId, int pageSize) {
+        return null;
+    }
+
+    @Override
+    public Company getCompany(String companyName) {
+        return null;
+    }
+
+    @Override
+    public void saveCompany(Company company) {
+
+    }
+
+    @Override
     public void initialize() throws Exception {
         //nothing.
     }

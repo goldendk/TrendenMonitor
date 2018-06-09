@@ -27,6 +27,11 @@ public class RecommendationController {
 
             Recommendation recommendation = recommendationIterator.next();
             syncDao.saveRecommendation(recommendation);
+            Company company = syncDao.getCompany(recommendation.getName());
+            if(company == null){
+                syncDao.saveCompany(new Company(recommendation.getName()));
+            }
+
 
             String name = recommendation.getName();
             RecommendationPeriod period = openRecommendations.get(name);
