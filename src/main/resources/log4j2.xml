@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
+    <Properties>
+        <Property name="fileName">${sys:catalina.home}/logs/application.log</Property>
+        <Property name="fileNamePattern">${sys:catalina.home}/logs/application-%d{dd-MM-yyyy}-%i.log</Property>
+        <Property name="logPattern">%d{dd-MM-yyyy HH:mm:ss,SSS} [%t] %-5p %c - %m%n</Property>
+    </Properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="${logPattern}"/>
         </Console>
-        <RollingFile name="RollingFile" fileName="logs/application.log"
-                     filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
-            <PatternLayout>
-                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
-            </PatternLayout>
+        <RollingFile name="MyRollingFile" fileName="${fileName}" filePattern="${fileNamePattern}">
+            <PatternLayout pattern="${logPattern}"/>
             <Policies>
-                <TimeBasedTriggeringPolicy />
-                <SizeBasedTriggeringPolicy size="100 MB"/>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="20MB"/>
             </Policies>
+            <DefaultRolloverStrategy max="10"/>
         </RollingFile>
     </Appenders>
     <Loggers>
-
-        <Logger name="com.foo.Bar" level="info">
-            <AppenderRef ref="Console"/>
-        </Logger>
         <Root level="info">
-            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="MyRollingFile"/>
         </Root>
     </Loggers>
 </Configuration>

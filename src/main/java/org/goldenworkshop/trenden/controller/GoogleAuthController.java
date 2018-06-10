@@ -5,6 +5,8 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.goldenworkshop.trenden.model.User;
 
 import java.io.IOException;
@@ -13,6 +15,7 @@ import java.util.Collections;
 
 public class GoogleAuthController {
     private static String googleOAuth = "1069165987697-c8c4rvl7nc0jpbbuoom8uodjtn4n0nua.apps.googleusercontent.com";
+    private static Logger logger = LogManager.getLogger();
     private static final JacksonFactory jacksonFactory = new JacksonFactory();
     public User authenticate(String idTokenString) throws IOException {
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new ApacheHttpTransport(), jacksonFactory)
@@ -26,18 +29,20 @@ public class GoogleAuthController {
         try {
             idToken = verifier.verify(idTokenString);
         } catch (GeneralSecurityException e) {
+            logger.warn("Could not verify token: " + idTokenString);
             throw new RuntimeException(e);
         }
         if (idToken != null) {
             GoogleIdToken.Payload payload = idToken.getPayload();
-
+            logger.info("Token verified: " + idTokenString);
             if(!StringUtils.equals(googleOAuth, (CharSequence) payload.get("aud"))){
                 throw new RuntimeException("aud field does not match this apps Google OAuth aud!");
             }
 
             // Print user identifier
             String userId = payload.getSubject();
-            System.out.println("User ID: " + userId);
+
+            logger.info("User ID: " + userId);
 
             // Get profile information from payload
             String email = payload.getEmail();
@@ -61,6 +66,7 @@ public class GoogleAuthController {
             user.setFirstName(givenName);
             user.setLastName(familyName);
             AuthContext.get().setUser(user);
+            logger.info("User authenticated: " + user.toString() );
             return user;
 
         } else {

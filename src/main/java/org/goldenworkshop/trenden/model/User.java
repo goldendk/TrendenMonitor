@@ -68,4 +68,17 @@ public class User {
     public String getLastName() {
         return lastName;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", locale='" + locale + '\'' +
+                ", pictureUrl='" + pictureUrl + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }
