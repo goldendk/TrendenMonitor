@@ -1,6 +1,14 @@
 package org.goldenworkshop.trenden.view.rest;
 
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.info.License;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.servers.Server;
+import io.swagger.v3.oas.annotations.servers.ServerVariable;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.goldenworkshop.trenden.controller.GoogleAuthController;
 import org.goldenworkshop.trenden.model.JobFactory;
 import org.goldenworkshop.trenden.model.TrendenJob;
@@ -13,8 +21,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
 
-@Api("Application")
+
 @Path("/application")
+@Tag(name = "ApplicationResource", description = "The API for application level features <strong>HTML here </strong>")
 public class ApplicationResource {
 
 

@@ -50,37 +50,8 @@
         <url-pattern>/user/logout</url-pattern>
     </servlet-mapping>
 
-    <servlet>
 
-        <servlet-name>Jersey REST Service</servlet-name>
-        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
 
-        <init-param>
-            <param-name>javax.ws.rs.Application</param-name>
-            <param-value>org.goldenworkshop.trenden.view.rest.Application</param-value>
-
-        </init-param>
-        <!-- Register resources and providers under com.vogella.jersey.first package. -->
-        <init-param>
-            <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>org.goldenworkshop.trenden.view.rest</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
-    <servlet>
-        <servlet-name>Jersey2Config</servlet-name>
-        <servlet-class>io.swagger.jersey.config.JerseyJaxrsConfig</servlet-class>
-        <init-param>
-            <param-name>api.version</param-name>
-            <param-value>1.0.0</param-value>
-        </init-param>
-        <init-param>
-            <param-name>swagger.api.basepath</param-name>
-            <param-value>http://localhost:8080/rest</param-value>
-        </init-param>
-        <load-on-startup>2</load-on-startup>
-    </servlet>
 
     <!-- /user/* -->
     <filter-mapping>
@@ -112,16 +83,13 @@
         <filter-name>AuthenticatedFilter</filter-name>
         <url-pattern>/rest/*</url-pattern>
     </filter-mapping>
-    <servlet-mapping>
-        <servlet-name>Jersey REST Service</servlet-name>
-        <url-pattern>/rest/*</url-pattern>
-    </servlet-mapping>
 
 
-    <error-page>
-        <error-code>404</error-code>
-        <location>/index.html</location>
-    </error-page>
+
+    <!--<error-page>-->
+        <!--<error-code>404</error-code>-->
+        <!--<location>/index.html</location>-->
+    <!--</error-page>-->
 
     <welcome-file-list>
         <welcome-file>/index.html</welcome-file>

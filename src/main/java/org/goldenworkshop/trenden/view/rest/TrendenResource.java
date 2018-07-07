@@ -1,9 +1,6 @@
 package org.goldenworkshop.trenden.view.rest;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.goldenworkshop.trenden.cdi.GlobalProducer;
 import org.goldenworkshop.trenden.model.Company;
 import org.goldenworkshop.trenden.model.RecommendationSyncDAO;
@@ -22,8 +19,9 @@ import java.util.stream.Collectors;
 /**
  *
  */
-@Api("Trenden")
+
 @Path("trenden")
+@Tag(name = "Trenden Resource", description = "API for querying shared entities in the Trenden application.")
 public class TrendenResource {
     @Inject
     @GlobalProducer
@@ -32,13 +30,13 @@ public class TrendenResource {
     @GET
     @Path(value = "/paging")
     @Produces(MediaType.APPLICATION_JSON)
-    @ApiOperation(value = "Loads a list of companies in the system.",
-            response = CompanyDTO.class,
-            responseContainer = "List")
-    @ApiResponses(
-            value = {@ApiResponse(code = 200, message = "OK, data returned"),
-                    @ApiResponse(code = 500, message = "Server error")
-            })
+//    @ApiOperation(value = "Loads a list of companies in the system.",
+//            response = CompanyDTO.class,
+//            responseContainer = "List")
+//    @ApiResponses(
+//            value = {@ApiResponse(code = 200, message = "OK, data returned"),
+//                    @ApiResponse(code = 500, message = "Server error")
+//            })
     public Response fetchCompanies(@QueryParam("sinceId") String sinceId,
                                    @QueryParam("pageSize") int pageSize) {
         List<Company> companies = dao.loadCompanies(sinceId, pageSize);

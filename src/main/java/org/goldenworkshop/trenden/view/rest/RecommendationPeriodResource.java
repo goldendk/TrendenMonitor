@@ -1,6 +1,9 @@
 package org.goldenworkshop.trenden.view.rest;
 
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.ExternalDocumentation;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.goldenworkshop.trenden.cdi.GlobalProducer;
 import org.goldenworkshop.trenden.model.RecommendationPeriod;
 import org.goldenworkshop.trenden.model.RecommendationSyncDAO;
@@ -11,8 +14,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import java.util.Map;
-@Api("RecommendationPeriod")
+
+
 @Path("/recommendation-period")
+@Tag(name = "Recommendation Resource")
 public class RecommendationPeriodResource {
 
     @Inject @GlobalProducer
