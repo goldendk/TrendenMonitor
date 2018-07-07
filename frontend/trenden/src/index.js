@@ -15,7 +15,7 @@ import './index.css';
 
 const createStoreWithMiddleware = applyMiddleware(reduxPromise)(createStore);
 
-window.backend = new MockBackend();
+
 ReactDOM.render(
     <Provider store={createStoreWithMiddleware(reducers)}>
         <BrowserRouter>

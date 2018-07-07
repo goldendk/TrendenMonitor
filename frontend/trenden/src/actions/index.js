@@ -23,3 +23,15 @@ export function googleLogoutAction(){
         type: USER_STATE_LOGOUT
     }
 }
+export function fetchCurrentSession(){
+    const request = axios.get("/rest/application/session", {
+        headers: {
+            'Accept': "application/json"
+        }, withCredentials: true
+    });
+
+    return {
+        type: USER_STATE_LOADED,
+        payload: request
+    }
+}

@@ -17,7 +17,7 @@ public class GoogleAuthController {
     private static String googleOAuth = "1069165987697-c8c4rvl7nc0jpbbuoom8uodjtn4n0nua.apps.googleusercontent.com";
     private static Logger logger = LogManager.getLogger();
     private static final JacksonFactory jacksonFactory = new JacksonFactory();
-    public User authenticate(String idTokenString) throws IOException {
+    public void authenticate(String idTokenString) throws IOException {
         GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new ApacheHttpTransport(), jacksonFactory)
                 .setAudience(Collections.singletonList(googleOAuth))
                 // Or, if multiple clients access the backend:
@@ -67,13 +67,11 @@ public class GoogleAuthController {
             user.setLastName(familyName);
             AuthContext.get().setUser(user);
             logger.info("User authenticated: " + user.toString() );
-            return user;
 
         } else {
             AuthContext.get().setUser(null);
         }
 
-        return null;
     }
 }
 

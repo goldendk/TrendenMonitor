@@ -31,8 +31,9 @@ public class GoogleAuthServlet extends HttpServlet {
 
         String idTokenString = req.getParameter("idToken");
         GoogleAuthController controller = new GoogleAuthController();
-        User authenticate = controller.authenticate(idTokenString);
-        if(authenticate != null){
+        controller.authenticate(idTokenString);
+        User user = AuthContext.get().getUser();
+        if(user != null){
             resp.sendRedirect("/user/protected.html");
         } else {
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

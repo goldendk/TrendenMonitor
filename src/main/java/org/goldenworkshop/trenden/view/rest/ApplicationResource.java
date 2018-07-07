@@ -9,6 +9,9 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.annotations.servers.ServerVariable;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.goldenworkshop.trenden.controller.AuthContext;
 import org.goldenworkshop.trenden.controller.GoogleAuthController;
 import org.goldenworkshop.trenden.model.JobFactory;
 import org.goldenworkshop.trenden.model.TrendenJob;
@@ -25,7 +28,7 @@ import java.io.IOException;
 @Path("/application")
 @Tag(name = "ApplicationResource", description = "The API for application level features <strong>HTML here </strong>")
 public class ApplicationResource {
-
+    private static Logger logger = LogManager.getLogger(ApplicationResource.class);
 
     @GET
     @Path("/jobs/{jobKey}")
@@ -46,14 +49,28 @@ public class ApplicationResource {
     public Response authenticateByGoogle(@QueryParam("idToken") String idToken) throws IOException {
         Validate.notNull(idToken, "idToken must be provided.");
         GoogleAuthController controller = new GoogleAuthController();
-        User authenticate = controller.authenticate(idToken);
-
-        if (authenticate == null) {
+        controller.authenticate(idToken);
+        User user = AuthContext.get().getUser();
+        if (user == null) {
             return Response.status(Response.Status.FORBIDDEN).build();
         } else {
-            return Response.ok().entity(authenticate).build();
+            return Response.ok().entity(user).build();
         }
 
+    }
+
+    @GET
+    @Path("/session")
+    @Consumes("*/*")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response loadSessionData() {
+        User user = AuthContext.get().getUser();
+        logger.info("Session requested for user: " + user );
+        if (user == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        } else {
+            return Response.ok().entity(user).build();
+        }
     }
 
 }

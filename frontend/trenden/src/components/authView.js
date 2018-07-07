@@ -1,6 +1,6 @@
 import React from 'react';
 import {GoogleLogin, GoogleLogout} from 'react-google-login';
-import {googleLoginAction, googleLogoutAction} from '../actions/index';
+import {googleLoginAction, googleLogoutAction, fetchCurrentSession} from '../actions/index';
 
 // redux stuff.
 import {connect} from 'react-redux';
@@ -22,12 +22,21 @@ class AuthView extends React.Component {
         alert('Google login failure: ' + data);
     }
 
+    componentDidMount(){
+        this.props.fetchCurrentSession();
+    }
+
     onLogoutSuccess(){
         console.log("Google logout success");
         this.props.googleLogoutAction();
     }
 
     render() {
+
+        if(this.props.authenticated === undefined){
+            return (<div>Waiting for server reply...</div>)
+        }
+
         const authenticated = this.props.authenticated;
 
         if (!authenticated) {
@@ -72,4 +81,4 @@ function mapStateToProps({userState}, ownProps) {
     }
 }
 
-export default connect(mapStateToProps, {googleLoginAction, googleLogoutAction})(AuthView);
+export default connect(mapStateToProps, {googleLoginAction, googleLogoutAction, fetchCurrentSession})(AuthView);
