@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 import Route from 'react-router-dom';
 import {Table, Grid} from 'react-bootstrap';
+import {load} from '../actions/index';
 
 
 class OpenRecommendationsView extends Component {

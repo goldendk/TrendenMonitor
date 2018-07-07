@@ -3,6 +3,8 @@ import {Form, Checkbox, FormGroup, FormControl, Grid, Col, Row} from 'react-boot
 import axios from 'axios';
 import {Line} from 'react-chartjs-2'
 
+import {loadCompanyNames} from '/actions/index'
+
 //redux
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';

@@ -35,3 +35,7 @@ export function fetchCurrentSession(){
         payload: request
     }
 }
+
+export function loadCompanyNames(){
+    const request = axios.get("/rest/")
+}

@@ -4,7 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import MenuView from './components/MenuView'
 import {Route} from 'react-router-dom'
-import OpenRecommendationsView from './components/OpenRecommendationsView'
+import OpenRecommendationsView from './containers/OpenRecommendationsView'
 import HistoricPotentialView from './components/HistoricPotentialView'
 import DailyValuesView from './components/DailyValuesView'
 import {Grid, Row, Col} from 'react-bootstrap'
