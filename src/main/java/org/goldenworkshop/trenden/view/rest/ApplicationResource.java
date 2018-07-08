@@ -2,6 +2,7 @@ package org.goldenworkshop.trenden.view.rest;
 
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
@@ -30,7 +31,25 @@ import java.io.IOException;
 public class ApplicationResource {
     private static Logger logger = LogManager.getLogger(ApplicationResource.class);
 
+
+
+
+
     @GET
+    @Path("/jobs")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(
+            description = "Loads a list of job types in the system",
+            summary = "This is a summary"
+    )
+    public Response loadJobs() {
+
+        String[] jobList = JobFactory.JOB_KEY_LIST;
+
+        return Response.ok().entity(jobList).build();
+    }
+
+    @POST
     @Path("/jobs/{jobKey}")
     @Consumes("*/*")
     @Produces(MediaType.APPLICATION_JSON)
