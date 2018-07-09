@@ -4,6 +4,7 @@ import axios from 'axios';
 import {Line} from 'react-chartjs-2'
 
 import {loadCompanyNames, loadDailyValues} from '../actions/index'
+import {unselectCompany, selectCompany} from '../actions/dailyValuesActions'
 
 //redux
 import {connect} from 'react-redux';
@@ -14,10 +15,6 @@ class DailyValuesView extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            selectedCompanies: [],
-            chartData: {}
-        }
         this.COLORS = [
             'rgb(255, 99, 132)',
             'rgb(255, 159, 64)',
@@ -38,14 +35,22 @@ class DailyValuesView extends React.Component {
         this.props.loadCompanyNames();
     }
 
+    shouldComponentUpdate(nextProps, nextState){
+        if(nextProps.selectedCompanies.length > this.props.selectedCompanies.length){
+            return false;
+        }
+        return true;
+    }
     onCbClick(event) {
-        var allSelected = this.state.selectedCompanies.concat([event.target.value]);
-        console.log('cbclick', event.target.value);
-        this.setState({
-            selectedCompanies: allSelected
-        });
-
-        this.props.loadDailyValues(allSelected);
+        var companyName = event.target.value;
+        if(!event.target.checked){
+            this.props.unselectCompany(companyName);
+        }
+        else{
+            this.props.selectCompany(companyName);
+            console.log('cbclick', event.target.value);
+            this.props.loadDailyValues([companyName]);
+        }
     }
 
 
@@ -75,30 +80,30 @@ class DailyValuesView extends React.Component {
                                          title={company.name}>{company.name}</Checkbox>));
         });
 
-        var names = {};
-
         const lineData = {
             datasets: []
         };
         console.log("DailyValues: " + this.props.dailyValues);
-        this.props.dailyValues.map((dailyRecord) => {
-            if (names[dailyRecord.name] == null) {
-                var idx = lineData.datasets.length;
-                 lineData.datasets.push(
-                    {
-                        label: dailyRecord.name,
-                        backgroundColor: this.fetchColor(idx),
-                        borderColor: this.fetchColor(idx),
-                        fill: false,
-                        data: []
-                    });
-                names[dailyRecord.name] = idx;
-            }
+        Object.entries(this.props.dailyValues).map((keyAndValuesArray) => {
+           var idx = lineData.datasets.length;
+            lineData.datasets.push(
+                {
+                    label: keyAndValuesArray[0],
+                    backgroundColor: this.fetchColor(idx),
+                    borderColor: this.fetchColor(idx),
+                    fill: false,
+                    data: []
+                });
 
-            lineData.datasets[names[dailyRecord.name]].data.push({
-                x: new Date(dailyRecord.created),
-                y: dailyRecord.latestValue
+
+            keyAndValuesArray[1].map((dailyRecord)=>{
+                lineData.datasets[idx].data.push({
+                    x: new Date(dailyRecord.created),
+                    y: dailyRecord.latestValue
+                });
             });
+
+
 
 
         });
@@ -151,7 +156,7 @@ class DailyValuesView extends React.Component {
 
 
                 <div>
-                    <Line data={lineData} options={lineOptions}/>
+                    <Line data={lineData} options={lineOptions} redraw={lineData.datasets.length === 0 ? null : true} />
                 </div>
 
 
@@ -168,4 +173,4 @@ function mapStateToProps({chartData}, ownProps) {
     }
 }
 
-export default connect(mapStateToProps, {loadCompanyNames, loadDailyValues})(DailyValuesView);
+export default connect(mapStateToProps, {loadCompanyNames, loadDailyValues, unselectCompany, selectCompany})(DailyValuesView);

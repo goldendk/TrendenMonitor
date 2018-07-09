@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {createStore, applyMiddleware} from 'redux';
+import { createStore, applyMiddleware, compose } from 'redux';
 import reduxPromise from 'redux-promise'
 import reducers from './reducers';
 import App from './App';
@@ -13,11 +13,17 @@ import MockBackend from './data/MockBackend'
 
 import './index.css';
 
-const createStoreWithMiddleware = applyMiddleware(reduxPromise)(createStore);
+
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const createStoreWithMiddleware  = createStore(reducers, /* preloadedState, */ composeEnhancers(
+    applyMiddleware(reduxPromise)
+));
+//const createStoreWithMiddleware = applyMiddleware(reduxPromise)(createStore);
 
 
 ReactDOM.render(
-    <Provider store={createStoreWithMiddleware(reducers)}>
+    <Provider store={createStoreWithMiddleware}>
         <BrowserRouter>
             <App/>
         </BrowserRouter>
