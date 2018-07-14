@@ -6,8 +6,8 @@ import org.goldenworkshop.trenden.model.*;
 
 import java.util.*;
 
-public class RecommendationController {
-    private static Logger logger = LogManager.getLogger(RecommendationController.class);
+public class TrendenSyncController {
+    private static Logger logger = LogManager.getLogger(TrendenSyncController.class);
 
     private RecommendationSource recommendationSource;
     private RecommendationSyncDAO syncDao;

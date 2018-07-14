@@ -32,4 +32,16 @@ public class RecommendationPeriodResource {
         return Response.ok().entity(stringRecommendationPeriodMap.values()).build();
     }
 
+
+
+    @GET
+    @Produces(value = {"application/json"})
+    @Path("/open-list")
+    public Response loadPeriodPage(
+
+    ){
+        return null;
+    }
+
+
 }

@@ -24,10 +24,10 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class RecommendationControllerTest {
+public class TrendenSyncControllerTest {
 
     @Spy
-    private RecommendationController controllerSpy;
+    private TrendenSyncController controllerSpy;
     @Spy
     private MemoryRecommendationDAO recommendationDAOSpy;
     @Mock
