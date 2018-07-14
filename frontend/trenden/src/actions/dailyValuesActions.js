@@ -1,16 +1,19 @@
-
+import {loadDailyValues} from './index'
 export const CHART_DAILY_UNSELECT_COMPANY = "chart-daily-company-unselected";
 export const CHART_DAILY_SELECT_COMPANY = "chart-daily-company-selected";
 
-export function unselectCompany(nameOfCompany){
+export function unselectCompany(companyName){
     return {
         type: CHART_DAILY_UNSELECT_COMPANY,
-        payload: nameOfCompany
+        payload: companyName,
     }
 }
-export function selectCompany(nameOfCompany){
+export function selectCompany(companyName){
+    var event = loadDailyValues([companyName]);
+
     return {
         type: CHART_DAILY_SELECT_COMPANY,
-        payload: nameOfCompany
+        payload: event.payload,
+        meta: {companyName}
     }
 }

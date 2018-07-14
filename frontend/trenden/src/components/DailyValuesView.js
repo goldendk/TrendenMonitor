@@ -35,12 +35,6 @@ class DailyValuesView extends React.Component {
         this.props.loadCompanyNames();
     }
 
-    shouldComponentUpdate(nextProps, nextState){
-        if(nextProps.selectedCompanies.length > this.props.selectedCompanies.length){
-            return false;
-        }
-        return true;
-    }
     onCbClick(event) {
         var companyName = event.target.value;
         if(!event.target.checked){
@@ -48,8 +42,6 @@ class DailyValuesView extends React.Component {
         }
         else{
             this.props.selectCompany(companyName);
-            console.log('cbclick', event.target.value);
-            this.props.loadDailyValues([companyName]);
         }
     }
 
@@ -113,7 +105,7 @@ class DailyValuesView extends React.Component {
             responsive: true,
             title: {
                 display: true,
-                text: 'Chart.js Time Point Data'
+                text: 'Daily values'
             },
             scales: {
                 xAxes: [{
@@ -126,7 +118,7 @@ class DailyValuesView extends React.Component {
                     ticks: {
                         major: {
                             fontStyle: 'bold',
-                            fontColor: '#FF0000'
+                            fontColor: '#323334'
                         }
                     }
                 }],

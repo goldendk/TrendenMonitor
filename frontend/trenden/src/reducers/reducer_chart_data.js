@@ -2,6 +2,10 @@ import {CHART_COMPANIES_LOADED, CHART_DAILY_LOADED } from "../actions";
 import {CHART_DAILY_UNSELECT_COMPANY, CHART_DAILY_SELECT_COMPANY } from "../actions/dailyValuesActions";
 
 export default function (state = {dailyValues: {}, selectedCompanies:[] }, action) {
+
+
+
+
     switch (action.type) {
         case CHART_COMPANIES_LOADED:
             var companies = null;
@@ -17,22 +21,19 @@ export default function (state = {dailyValues: {}, selectedCompanies:[] }, actio
                 companies: companies
             };
 
-        case CHART_DAILY_LOADED:
+        case CHART_DAILY_SELECT_COMPANY:
+            var newState = {...state};
+
             var dailyValues = {...state.dailyValues};
             if(action.payload.status === 200){
                 action.payload.data.dataList.map((e) => {
-                     dailyValues[e.name]  = dailyValues[e.name] || [];
-                     dailyValues[e.name].push(e);
+                    dailyValues[e.name]  = dailyValues[e.name] || [];
+                    dailyValues[e.name].push(e);
                 });
             }
-            var newState = {
-                ...state,
-                dailyValues : dailyValues
-            };
-             return newState;
-        case CHART_DAILY_SELECT_COMPANY:
-            var newState = {...state};
-            newState.selectedCompanies = [...newState.selectedCompanies,action.payload];
+
+            newState.selectedCompanies = [...newState.selectedCompanies,action.meta.companyName];
+            newState.dailyValues = dailyValues;
             return newState;
 
         case CHART_DAILY_UNSELECT_COMPANY:
@@ -45,4 +46,8 @@ export default function (state = {dailyValues: {}, selectedCompanies:[] }, actio
         default:
             return state;
     }
+
+
+
+
 }

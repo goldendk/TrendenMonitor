@@ -38,6 +38,7 @@
           <element id="library" level="project" name="Gradle: org.jboss.weld.servlet:weld-servlet:2.4.7.Final" />
           <element id="library" level="project" name="Gradle: javax.transaction:javax.transaction-api:1.2" />
           <element id="library" level="project" name="Gradle: io.swagger.core.v3:swagger-jaxrs2:2.0.2" />
+          <element id="library" level="project" name="Gradle: io.swagger.core.v3:swagger-jaxrs2-servlet-initializer:2.0.0" />
           <element id="library" level="project" name="Gradle: io.swagger.core.v3:swagger-integration:2.0.2" />
           <element id="library" level="project" name="Gradle: io.swagger.core.v3:swagger-core:2.0.2" />
           <element id="library" level="project" name="Gradle: org.slf4j:slf4j-api:1.8.0-alpha2" />
@@ -82,7 +83,6 @@
           <element id="library" level="project" name="Gradle: org.glassfish.hk2:hk2-utils:2.4.0-b06" />
           <element id="library" level="project" name="Gradle: org.glassfish.hk2.external:aopalliance-repackaged:2.4.0-b06" />
           <element id="library" level="project" name="Gradle: javax.inject:javax.inject:1" />
-          <element id="file-copy" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.swagger.core.v3/swagger-jaxrs2-servlet-initializer/2.0.0/9a72b7269f809eeff9866f1e1b1cc7b30120addd/swagger-jaxrs2-servlet-initializer-2.0.0.jar" />
         </element>
       </element>
     </root>
