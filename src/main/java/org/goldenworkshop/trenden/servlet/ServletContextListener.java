@@ -20,6 +20,10 @@ public class ServletContextListener implements javax.servlet.ServletContextListe
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        dao.shutdown();
+        try {
+            dao.shutdown();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

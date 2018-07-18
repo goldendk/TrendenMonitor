@@ -36,7 +36,7 @@ public class RecommendationPeriodResource {
 
     @GET
     @Produces(value = {"application/json"})
-    @Path("/open-list")
+    @Path("/")
     public Response loadPeriodPage(
 
     ){
