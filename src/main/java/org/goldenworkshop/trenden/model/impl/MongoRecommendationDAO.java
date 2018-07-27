@@ -14,12 +14,10 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.goldenworkshop.trenden.Config;
+import org.goldenworkshop.trenden.dao.RecommendationPeriodDAO;
 import org.goldenworkshop.trenden.model.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -27,7 +25,7 @@ import static com.mongodb.client.model.Filters.eq;
  * Mongo implementation of DAO for trenden recommendation.
  */
 
-public class MongoRecommendationDAO extends AbstractMongoDAO implements RecommendationSyncDAO {
+public class MongoRecommendationDAO extends AbstractMongoDAO implements RecommendationSyncDAO, RecommendationPeriodDAO {
 
     private static Logger logger = LogManager.getLogger(MongoRecommendationDAO.class);
 
@@ -236,6 +234,28 @@ public class MongoRecommendationDAO extends AbstractMongoDAO implements Recommen
         } else {
             throw new IllegalArgumentException("Wrong secret: " + realSecret);
         }
+    }
+
+    @Override
+    public Collection<RecommendationPeriod> loadPeriodWindow(Date sinceDate, Date toDate) {
+        Bson eq = Filters.gte(RecommendationPeriodFields.FIELD_NAME_START_DATE, sinceDate);
+
+
+        Bson lte = Filters.lte(RecommendationPeriodFields.FIELD_NAME_START_DATE, toDate);
+
+
+        Bson and = Filters.and(eq, lte);
+
+        MongoCursor<Document> iterator = recommendationPeriodCollection.find(and).iterator();
+        Collection<RecommendationPeriod> result = new ArrayList<>();
+        while(iterator.hasNext()){
+            Document next = iterator.next();
+
+            RecommendationPeriod recommendationPeriod = MongoDAOHelper.documentToPeriod(next);
+            result.add(recommendationPeriod);
+        }
+
+        return result;
     }
 //
 //

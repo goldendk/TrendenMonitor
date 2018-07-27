@@ -12,10 +12,12 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 public class MongoRecommendationDAOTest extends BaseTest {
@@ -92,7 +94,11 @@ public class MongoRecommendationDAOTest extends BaseTest {
     }
 
     @Test
-    public void loadPeriodsByName() {
-
+    public void loadPeriodWindow(){
+        Calendar instance = Calendar.getInstance();
+        instance.add(Calendar.DATE, -90);
+        Calendar to = Calendar.getInstance();
+        Collection<RecommendationPeriod> recommendationPeriods = syncDAO.loadPeriodWindow(instance.getTime(), to.getTime());
+        assertNotNull("Should have an object", recommendationPeriods);
     }
 }

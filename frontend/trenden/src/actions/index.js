@@ -1,20 +1,12 @@
 //libraries
 import axios from 'axios';
+import {buildGet} from "./AxiosHelper";
 
 export const USER_STATE_LOADED = "user-state-loaded";
 export const USER_STATE_LOGOUT = "user-state-logout";
 export const CHART_COMPANIES_LOADED = "chart-companies-loaded";
 export const CHART_DAILY_LOADED = "chart-daily-loaded";
 
-function buildGet(url, withCredentials){
-    const request = axios.get(url, {
-        headers: {
-            'Accept': "application/json"
-        }
-        , withCredentials:  withCredentials | false
-    });
-    return request;
-}
 
 
 export function googleLoginAction(tokenId){
