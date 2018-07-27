@@ -1,6 +1,6 @@
 import {RECOMMENDATION_PERIODS_LOADED } from "../actions/periodsActions";
 
-export default function (state = {recommendationPeriods: [] }, action) {
+export default function (state = {historicPotential: { records: []} }, action) {
 
 
 
@@ -10,7 +10,7 @@ export default function (state = {recommendationPeriods: [] }, action) {
             var success = (action.payload.status === 200);
 
             if(success){
-                return {...state, recommendationPeriods: action.payload.data}
+                return {...state, historicPotential: action.payload.data}
             }
             else{
                 return state;

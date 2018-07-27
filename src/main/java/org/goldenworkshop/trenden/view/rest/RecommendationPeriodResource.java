@@ -4,10 +4,12 @@ import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.goldenworkshop.trenden.Config;
 import org.goldenworkshop.trenden.cdi.GlobalProducer;
 import org.goldenworkshop.trenden.dao.RecommendationPeriodDAO;
 import org.goldenworkshop.trenden.model.RecommendationPeriod;
 import org.goldenworkshop.trenden.model.RecommendationSyncDAO;
+import org.goldenworkshop.trenden.view.model.PotentialDTO;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -16,6 +18,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
 
@@ -47,8 +50,12 @@ public class RecommendationPeriodResource {
     @Path("/")
     public Response loadPeriodPage(
             @QueryParam("fromDate") Date fromDate,
-            @QueryParam("pageSizeDays") Integer days
+            @QueryParam("pageSizeDays") Integer days,
+            @QueryParam("investment") Integer investment
     ) {
+        if(investment == null){
+            investment = Config.get().getDefaultInvestmentSize();
+        }
         if (days == null) {
             days = 90;
         }
@@ -63,7 +70,10 @@ public class RecommendationPeriodResource {
         toDate.setTime(fromDate);
         toDate.add(Calendar.DATE, days);
 
-        return Response.ok().entity(periodDao.loadPeriodWindow(fromDate, toDate.getTime())).build();
+        Collection<RecommendationPeriod> window = periodDao.loadPeriodWindow(fromDate, toDate.getTime());
+        TrendenMarshaller marshaller = new TrendenMarshaller();
+        PotentialDTO potentialDTO = marshaller.toDto(window, investment);
+        return Response.ok().entity(potentialDTO).build();
     }
 
 

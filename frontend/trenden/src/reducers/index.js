@@ -6,7 +6,7 @@ import RecommendationPeriodReducer from './reducer_recommendation_period';
 const rootReducer = combineReducers({
     userState: UserStateReducer,
     chartData: ChartDataReducer,
-    recommendationPeriods: RecommendationPeriodReducer
+    historicPotential: RecommendationPeriodReducer
 });
 
 export default rootReducer;

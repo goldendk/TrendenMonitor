@@ -11,4 +11,8 @@ public enum Signal {
         }
         return null;
     }
+
+    public static String safeToString(Signal endSignal) {
+        return endSignal == null ? null : endSignal.toString();
+    }
 }

@@ -94,4 +94,7 @@ public class Config {
     public String getTokenForUser(String userId) {
         return configuration.getString("trenden.token."+ userId);
     }
+    public int getDefaultInvestmentSize(){
+        return Integer.valueOf(configuration.getString("investment.default_size"));
+    }
 }

@@ -10,6 +10,8 @@ public class User {
     private String email;
     private String id;
 
+    private UserPreferences preferences;
+
     public User() {
     }
 
@@ -80,5 +82,13 @@ public class User {
                 ", email='" + email + '\'' +
                 ", id='" + id + '\'' +
                 '}';
+    }
+
+    public UserPreferences getPreferences() {
+        return preferences;
+    }
+
+    public void setPreferences(UserPreferences preferences) {
+        this.preferences = preferences;
     }
 }

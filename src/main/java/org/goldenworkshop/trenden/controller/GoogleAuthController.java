@@ -7,7 +7,9 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.goldenworkshop.trenden.Config;
 import org.goldenworkshop.trenden.model.User;
+import org.goldenworkshop.trenden.model.UserPreferences;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -65,7 +67,11 @@ public class GoogleAuthController {
             user.setPictureUrl(pictureUrl);
             user.setFirstName(givenName);
             user.setLastName(familyName);
+            UserPreferences preferences = new UserPreferences();
+            preferences.setInvestmentSize(Config.get().getDefaultInvestmentSize());
+            user.setPreferences(preferences);
             AuthContext.get().setUser(user);
+
             logger.info("User authenticated: " + user.toString() );
 
         } else {
