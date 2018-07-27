@@ -20,9 +20,9 @@ public class TrendenMarshaller {
         for(RecommendationPeriod p : period){
             PotentialRecordDTO e = toDto(p, investment);
             if(e.getPotential().compareTo(BigDecimal.ZERO) > 0){
-                dto.getPotentialEarnings().add(e.getPotential());
+                dto.setPotentialEarnings(dto.getPotentialEarnings().add(e.getPotential()));
             }else{
-                dto.getPotentialLoss().add(e.getPotential());
+               dto.setPotentialLoss(dto.getPotentialLoss().add(e.getPotential()));
             }
             dto.getRecords().add(e);
         }
