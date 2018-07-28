@@ -4,13 +4,25 @@ import {bindActionCreators} from 'redux';
 import {loadRecommendationPeriods} from '../actions/periodsActions'
 import Route from 'react-router-dom';
 import {Table} from 'react-bootstrap';
-
-
+import PotentialFilterForm from '../components/PotentialFilterForm'
 class HistoricPotentialView extends Component {
+    constructor(props, context){
+        super(props, context);
+    }
 
     componentDidMount() {
         console.log("HistoricPotentialView.js - loading recommendation periods");
         this.props.loadRecommendationPeriods();
+    }
+
+    onFormSubmit(event){
+
+
+        this.props.loadRecommendationPeriods(event);
+
+        console.log("Submitting");
+        return false;
+
     }
 
     render() {
@@ -22,6 +34,11 @@ class HistoricPotentialView extends Component {
 
         return (
             <div>
+
+                <PotentialFilterForm formId={"potentialFilterForm"} submitFunction={(e)=>{
+                    e.preventDefault();
+                    this.props.loadRecommendationPeriods(e);}} />
+
                 <div>Potential earnings: {this.props.historicPotential.potentialEarnings}</div>
                 <div>Potential losses: {this.props.historicPotential.potentialLoss}</div>
 
