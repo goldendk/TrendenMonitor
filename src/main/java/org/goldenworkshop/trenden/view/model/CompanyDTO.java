@@ -1,4 +1,4 @@
-package org.goldenworkshop.trenden.model.dto;
+package org.goldenworkshop.trenden.view.model;
 
 public class CompanyDTO {
     private String name;

@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.goldenworkshop.trenden.Config;
 import org.goldenworkshop.trenden.cdi.GlobalProducer;
+import org.goldenworkshop.trenden.dao.PeriodFilter;
 import org.goldenworkshop.trenden.dao.RecommendationPeriodDAO;
 import org.goldenworkshop.trenden.model.RecommendationPeriod;
 import org.goldenworkshop.trenden.model.RecommendationSyncDAO;
@@ -51,7 +52,11 @@ public class RecommendationPeriodResource {
     public Response loadPeriodPage(
             @QueryParam("fromDate") Date fromDate,
             @QueryParam("pageSizeDays") Integer days,
-            @QueryParam("investment") Integer investment
+            @QueryParam("investment") Integer investment,
+            @QueryParam("maxStockPrice") Integer maxStockPrice,
+            @QueryParam("feePercentage") Double feePercentage,
+            @QueryParam("feeMinimum") Integer feeMinimum,
+            @QueryParam("excludeShorting") Boolean excludeShorting
     ) {
         if(investment == null){
             investment = Config.get().getDefaultInvestmentSize();
@@ -70,7 +75,15 @@ public class RecommendationPeriodResource {
         toDate.setTime(fromDate);
         toDate.add(Calendar.DATE, days);
 
-        Collection<RecommendationPeriod> window = periodDao.loadPeriodWindow(fromDate, toDate.getTime());
+        PeriodFilter periodFilter = new PeriodFilter();
+        periodFilter.setMaxStockPrice(maxStockPrice);
+        periodFilter.setFeePercentage(feePercentage);
+        periodFilter.setFeeMinimum(feeMinimum);
+        periodFilter.setExcludeShorting(excludeShorting);
+        periodFilter.setFromDate(fromDate);
+        periodFilter.setToDate(toDate);
+
+        Collection<RecommendationPeriod> window = periodDao.loadPeriodWindow(periodFilter);
         TrendenMarshaller marshaller = new TrendenMarshaller();
         PotentialDTO potentialDTO = marshaller.toDto(window, investment);
         return Response.ok().entity(potentialDTO).build();

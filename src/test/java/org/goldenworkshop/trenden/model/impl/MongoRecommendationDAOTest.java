@@ -2,6 +2,7 @@ package org.goldenworkshop.trenden.model.impl;
 
 import org.goldenworkshop.trenden.BaseTest;
 import org.goldenworkshop.trenden.TestHelper;
+import org.goldenworkshop.trenden.dao.PeriodFilter;
 import org.goldenworkshop.trenden.model.Recommendation;
 import org.goldenworkshop.trenden.model.RecommendationPeriod;
 import org.goldenworkshop.trenden.model.RecommendationSyncDAO;
@@ -43,6 +44,21 @@ public class MongoRecommendationDAOTest extends BaseTest {
     @Test
     public void shouldConnect() throws Exception {
         syncDAO.loadPeriodsByName("foo");
+    }
+
+    @Test
+    public void loadPeriodsByFilter(){
+        PeriodFilter filter = new PeriodFilter();
+        Calendar instance = Calendar.getInstance();
+        filter.setToDate(instance);
+
+        Calendar instance1 = Calendar.getInstance();
+        instance1.add(Calendar.DATE, -90);
+        filter.setFromDate(instance1.getTime());
+        filter.setMaxStockPrice(2000);
+        filter.setExcludeShorting(true);
+
+        syncDAO.loadPeriodWindow(filter);
     }
 
     @Test
@@ -93,12 +109,4 @@ public class MongoRecommendationDAOTest extends BaseTest {
 
     }
 
-    @Test
-    public void loadPeriodWindow(){
-        Calendar instance = Calendar.getInstance();
-        instance.add(Calendar.DATE, -90);
-        Calendar to = Calendar.getInstance();
-        Collection<RecommendationPeriod> recommendationPeriods = syncDAO.loadPeriodWindow(instance.getTime(), to.getTime());
-        assertNotNull("Should have an object", recommendationPeriods);
-    }
 }

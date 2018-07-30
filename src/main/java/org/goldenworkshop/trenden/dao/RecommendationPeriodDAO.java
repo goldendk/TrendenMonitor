@@ -6,5 +6,5 @@ import java.util.Collection;
 import java.util.Date;
 
 public interface RecommendationPeriodDAO {
-    Collection<RecommendationPeriod> loadPeriodWindow(Date sinceDate, Date toDate);
+    Collection<RecommendationPeriod> loadPeriodWindow(PeriodFilter periodFilter);
 }

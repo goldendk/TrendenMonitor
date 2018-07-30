@@ -10,13 +10,17 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.util.Assert;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.goldenworkshop.trenden.Config;
+import org.goldenworkshop.trenden.dao.PeriodFilter;
 import org.goldenworkshop.trenden.dao.RecommendationPeriodDAO;
 import org.goldenworkshop.trenden.model.*;
+import org.jsoup.helper.Validate;
 
+import java.math.BigInteger;
 import java.util.*;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -237,14 +241,26 @@ public class MongoRecommendationDAO extends AbstractMongoDAO implements Recommen
     }
 
     @Override
-    public Collection<RecommendationPeriod> loadPeriodWindow(Date sinceDate, Date toDate) {
-        Bson eq = Filters.gte(RecommendationPeriodFields.FIELD_NAME_START_DATE, sinceDate);
+    public Collection<RecommendationPeriod> loadPeriodWindow(PeriodFilter filter) {
+        Validate.notNull(filter.getFromDate());
+        Validate.notNull(filter.getToDate());
+
+        List<Bson> filters = new ArrayList<>();
+
+        filters.add(Filters.gte(RecommendationPeriodFields.FIELD_NAME_START_DATE, filter.getFromDate()));
+        filters.add(Filters.lte(RecommendationPeriodFields.FIELD_NAME_START_DATE, filter.getToDate().getTime()));
 
 
-        Bson lte = Filters.lte(RecommendationPeriodFields.FIELD_NAME_START_DATE, toDate);
+        if(filter.getMaxStockPrice() != null && filter.getMaxStockPrice() > 0){
+            filters.add(Filters.expr(
+                    RecommendationPeriodFields.FIELD_NAME_START_VALUE + " < " +
+                            filter.getMaxStockPrice().toString()));
+        }
+        if(filter.getExcludeShorting()){
+            filters.add(Filters.eq(RecommendationPeriodFields.FIELD_NAME_START_SIGNAL, Signal.BUY.toString()));
+        }
 
-
-        Bson and = Filters.and(eq, lte);
+        Bson and = Filters.and(filters.toArray(new Bson[0]));
 
         MongoCursor<Document> iterator = recommendationPeriodCollection.find(and).iterator();
         Collection<RecommendationPeriod> result = new ArrayList<>();

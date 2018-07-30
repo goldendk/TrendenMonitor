@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.goldenworkshop.trenden.cdi.GlobalProducer;
 import org.goldenworkshop.trenden.model.*;
-import org.goldenworkshop.trenden.model.dto.CompanyDTO;
+import org.goldenworkshop.trenden.view.model.CompanyDTO;
 import org.jsoup.helper.Validate;
 
 import javax.inject.Inject;
