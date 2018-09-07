@@ -11,6 +11,7 @@ public class PotentialDTO {
     private BigDecimal potentialLoss = BigDecimal.ZERO;
 
     private Collection<PotentialRecordDTO> records = new ArrayList<>();
+    private BigDecimal fee = BigDecimal.ZERO;
 
     public BigDecimal getPotentialEarnings() {
         return potentialEarnings;
@@ -34,5 +35,13 @@ public class PotentialDTO {
 
     public void setRecords(Collection<PotentialRecordDTO> records) {
         this.records = records;
+    }
+
+    public void setFee(BigDecimal fee) {
+        this.fee = fee;
+    }
+
+    public BigDecimal getFee() {
+        return fee;
     }
 }

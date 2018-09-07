@@ -11,6 +11,9 @@ class PotentialFilterForm extends Component {
         return (<form id={this.props.formId} name={this.props.formId} method={"GET"}
                       onSubmit={this.props.submitFunction}>
 
+
+
+
             <FormGroup md={6}>
                 <ControlLabel>Maximum stock price</ControlLabel>
                 <FormControl type="text"

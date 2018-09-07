@@ -1,5 +1,6 @@
 package org.goldenworkshop.trenden.view.rest;
 
+import org.goldenworkshop.trenden.model.PotentialEarning;
 import org.goldenworkshop.trenden.model.RecommendationPeriod;
 import org.goldenworkshop.trenden.model.Signal;
 import org.goldenworkshop.trenden.view.model.PotentialDTO;
@@ -14,47 +15,35 @@ import java.util.Date;
 public class TrendenMarshaller {
 
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-    public PotentialDTO toDto(Collection<RecommendationPeriod> period, int investment){
+    public PotentialDTO toDto(Collection<PotentialEarning<RecommendationPeriod>> earnings){
         PotentialDTO dto = new PotentialDTO();
 
-        for(RecommendationPeriod p : period){
-            PotentialRecordDTO e = toDto(p, investment);
+        for(PotentialEarning<RecommendationPeriod> pot : earnings){
+            PotentialRecordDTO e = toDto(pot);
             if(e.getPotential().compareTo(BigDecimal.ZERO) > 0){
                 dto.setPotentialEarnings(dto.getPotentialEarnings().add(e.getPotential()));
+                dto.setFee(dto.getFee().add((pot.getFee())));
             }else{
                dto.setPotentialLoss(dto.getPotentialLoss().add(e.getPotential()));
             }
             dto.getRecords().add(e);
         }
-
         return dto;
 
     }
 
-    private PotentialRecordDTO toDto(RecommendationPeriod p, int investment) {
+    private PotentialRecordDTO toDto(PotentialEarning<RecommendationPeriod> p) {
         PotentialRecordDTO dto = new PotentialRecordDTO();
 
-        BigDecimal divide = BigDecimal.valueOf(investment).divide(p.getStartValue(), RoundingMode.HALF_UP);
-        BigDecimal stocks = divide.setScale(0, RoundingMode.FLOOR);
-
-
-        if(p.getStartSignal() == Signal.BUY){
-            BigDecimal potential = p.getLatestValue().subtract(p.getStartValue()).multiply(stocks).setScale(2, RoundingMode.HALF_UP);
-            dto.setPotential(potential);
-        }
-        else{
-            dto.setPotential(BigDecimal.ZERO);
-        }
-        dto.setId( p.getId());
-        dto.setName(p.getName());
-        dto.setDays(p.getPeriodDays());
-        dto.setEndSignal(Signal.safeToString(p.getEndSignal()));
-        dto.setStartSignal(Signal.safeToString(p.getStartSignal()));
-        dto.setStartValue(p.getStartValue());
-        dto.setEndValue(p.getLatestValue());
-        dto.setStartDate(safeDateToString(p.getStartDate()));
-        dto.setEndDate(safeDateToString(p.getEndDate()));
-
+        dto.setId( p.getMeasurement().getId());
+        dto.setName(p.getMeasurement().getName());
+        dto.setDays(p.getMeasurement().getPeriodDays());
+        dto.setEndSignal(Signal.safeToString(p.getMeasurement().getEndSignal()));
+        dto.setStartSignal(Signal.safeToString(p.getMeasurement().getStartSignal()));
+        dto.setStartValue(p.getMeasurement().getStartValue());
+        dto.setEndValue(p.getMeasurement().getLatestValue());
+        dto.setStartDate(safeDateToString(p.getMeasurement().getStartDate()));
+        dto.setEndDate(safeDateToString(p.getMeasurement().getEndDate()));
         return dto;
     }
 
@@ -62,9 +51,7 @@ public class TrendenMarshaller {
         if (endDate == null){
             return null;
         }
-
         return simpleDateFormat.format(endDate);
-
     }
 
 

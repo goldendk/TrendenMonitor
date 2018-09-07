@@ -10,6 +10,7 @@ public class PeriodFilter {
     private Boolean excludeShorting;
     private Calendar toDate;
     private Date fromDate;
+    private int investment;
 
     public void setMaxStockPrice(Integer maxStockPrice) {
         this.maxStockPrice = maxStockPrice;
@@ -58,5 +59,13 @@ public class PeriodFilter {
 
     public Date getFromDate() {
         return fromDate;
+    }
+
+    public void setInvestment(int investment) {
+        this.investment = investment;
+    }
+
+    public int getInvestment() {
+        return investment;
     }
 }
