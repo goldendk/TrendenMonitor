@@ -50,6 +50,14 @@ public class MongoRecommendationDAO extends AbstractMongoDAO implements Recommen
         loadCompanyCollection();
     }
 
+    @Override
+    protected List<MongoCollection> handleReset() {
+        recommendationPeriodCollection.drop();
+        recommendationCollection.drop();
+        loadRecommendationPeriodCollection();
+        return null;
+    }
+
     private void loadCompanyCollection() {
         companiesCollection = db.getCollection("companies");
     }
@@ -207,39 +215,6 @@ public class MongoRecommendationDAO extends AbstractMongoDAO implements Recommen
         upsertDocument(company.getId(), document, companiesCollection);
     }
 
-    private void upsertDocument(String id, Document document, MongoCollection<Document> collection) {
-        Bson update = new Document("$set",
-                document
-        );
-        if (StringUtils.isNotBlank(id)) {
-            Bson filter = Filters.eq("_id", new ObjectId(id));
-            UpdateOptions options = new UpdateOptions().upsert(true);
-            recommendationPeriodCollection
-                    .updateOne(filter, update, options);
-        } else {
-            collection.insertOne(document);
-        }
-    }
-
-
-    /**
-     * Never-ever use this, it will drop the collection!
-     * //     *
-     * //     * @param secret must be set to the secret password
-     * //     * to do the actual dropping of the collection.
-     * //
-     */
-    public void dropTheDb(String secret) {
-        final String realSecret = "yes-i-am-testing";
-        if (secret.equals(realSecret)) {
-            recommendationPeriodCollection.drop();
-            recommendationCollection.drop();
-            loadRecommendationPeriodCollection();
-        } else {
-            throw new IllegalArgumentException("Wrong secret: " + realSecret);
-        }
-    }
-
     @Override
     public Collection<RecommendationPeriod> loadPeriodWindow(PeriodFilter filter) {
         Validate.notNull(filter.getFromDate());
@@ -365,7 +340,7 @@ public class MongoRecommendationDAO extends AbstractMongoDAO implements Recommen
 //     * @param secret must be set to the secret password
 //     * to do the actual dropping of the collection.
 //     */
-//    public void dropTheDb(String secret) {
+//    public void resetTheDb(String secret) {
 //        if (secret.equals("yes-i-am-testing")) {
 //            collection.drop();
 //        }

@@ -3,17 +3,13 @@ package org.goldenworkshop.trenden.model.impl;
 import org.goldenworkshop.trenden.BaseTest;
 import org.goldenworkshop.trenden.TestHelper;
 import org.goldenworkshop.trenden.dao.PeriodFilter;
-import org.goldenworkshop.trenden.model.Recommendation;
 import org.goldenworkshop.trenden.model.RecommendationPeriod;
-import org.goldenworkshop.trenden.model.RecommendationSyncDAO;
 import org.goldenworkshop.trenden.model.Signal;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.math.BigDecimal;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +26,7 @@ public class MongoRecommendationDAOTest extends BaseTest {
     public void setUp() throws Exception {
         syncDAO = new MongoRecommendationDAO();
         syncDAO.initialize();
-        syncDAO.dropTheDb("yes-i-am-testing");
+        syncDAO.resetTheDb("yes-i-am-testing");
 
         twoDaysAgo =Calendar.getInstance();
         twoDaysAgo.add(Calendar.DATE, -2);

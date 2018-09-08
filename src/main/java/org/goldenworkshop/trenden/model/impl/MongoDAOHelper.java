@@ -2,6 +2,7 @@ package org.goldenworkshop.trenden.model.impl;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.bson.Document;
+import org.goldenworkshop.necromunda.underhive.TacticCard;
 import org.goldenworkshop.trenden.model.Company;
 import org.goldenworkshop.trenden.model.Recommendation;
 import org.goldenworkshop.trenden.model.RecommendationPeriod;
@@ -50,6 +51,13 @@ public class MongoDAOHelper {
         period.setUpdated(bson.getDate(FIELD_NAME_UPDATED));
         period.setLatestValue(Converter.toBigDecimal(bson.getString(RecommendationPeriodFields.FIELD_NAME_LATEST_VALUE)));
         return period;
+    }
+
+    public static RecommendationPeriod documentToPOJO(Document bson, Class tacticCardClass) {
+
+        return null;
+
+
     }
 
 

@@ -1,14 +1,36 @@
 package org.goldenworkshop.trenden.model.impl;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.UpdateOptions;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.bson.BsonReader;
+import org.bson.BsonWriter;
+import org.bson.Document;
+import org.bson.codecs.Codec;
+import org.bson.codecs.DecoderContext;
+import org.bson.codecs.EncoderContext;
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.*;
+import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
+import org.goldenworkshop.necromunda.underhive.TacticCard;
 import org.goldenworkshop.trenden.Config;
 import org.goldenworkshop.trenden.model.ExternalInterface;
 
-public class AbstractMongoDAO implements ExternalInterface {
+import java.util.Collection;
+import java.util.List;
+
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+
+public abstract class  AbstractMongoDAO implements ExternalInterface {
     private Logger logger = LogManager.getLogger();
     protected MongoClient client;
     protected MongoDatabase db;
@@ -17,9 +39,33 @@ public class AbstractMongoDAO implements ExternalInterface {
     public void initialize() throws Exception {
         logger.info("Initializing MongoDB client");
         String url = Config.get().getMongoConnectionUrl();
+
+        ClassModel<TacticCard> classModel = ClassModel.builder(TacticCard.class).enableDiscriminator(true).getProperty("id").codec(new StringToObjectIdCodec()).build();
+
+        CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
+                fromProviders(PojoCodecProvider.builder().automatic(true).register(classModel).build()));
         client = new MongoClient(new MongoClientURI(url));
         db = client.getDatabase(Config.get().getTrendenDatabaseName());
+        db = db.withCodecRegistry(pojoCodecRegistry);
 
+    }
+
+    public static class StringToObjectIdCodec implements Codec<String> {
+
+        @Override
+        public void encode(final BsonWriter writer, final String value, final EncoderContext encoderContext) {
+            writer.writeObjectId(new ObjectId(value));
+        }
+
+        @Override
+        public Class<String> getEncoderClass() {
+            return String.class;
+        }
+
+        @Override
+        public String decode(final BsonReader reader, final DecoderContext decoderContext) {
+            return reader.readObjectId().toHexString();
+        }
     }
 
     @Override
@@ -32,5 +78,35 @@ public class AbstractMongoDAO implements ExternalInterface {
         }
     }
 
+
+    protected void upsertDocument(String id, Document document, MongoCollection<Document> collection) {
+        Bson update = new Document("$set",
+                document
+        );
+        if (StringUtils.isNotBlank(id)) {
+            Bson filter = Filters.eq("_id", new ObjectId(id));
+            UpdateOptions options = new UpdateOptions().upsert(true);
+            collection
+                    .updateOne(filter, update, options);
+        } else {
+            collection.insertOne(document);
+        }
+    }
+
+    protected abstract List<MongoCollection> handleReset();
+    /**
+     * Never-ever use this, it will drop the collection!
+     * //     *
+     * //     * @param secret must be set to the secret password
+     * //     * to do the actual dropping of the collection.
+     * //
+     */
+    public void resetTheDb(String secret) {
+        final String realSecret = "yes-i-am-testing";
+        if (secret.equals(realSecret)) {
+        } else {
+            throw new IllegalArgumentException("Wrong secret: " + realSecret);
+        }
+    }
 
 }

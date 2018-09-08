@@ -20,15 +20,19 @@ apply plugin: 'idea'
 apply plugin: 'com.bmuschko.cargo'
 
 ext.jerseyVersion ="2.14"
-
+compileJava.options.encoding = 'UTF-8'
 repositories {
     jcenter()
     mavenCentral()
+    mavenLocal()
 }
 
 
 
 dependencies {
+
+    //internal projects
+    compile ('org.goldenworkshop:necromunda-underhive-tactics:1.1')
 
     // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.10.0'

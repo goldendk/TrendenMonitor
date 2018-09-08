@@ -35,7 +35,7 @@ import javax.ws.rs.ApplicationPath;
 public class Application extends ResourceConfig {
 
     public Application() {
-        packages("org.goldenworkshop.trenden.view.rest", "io.swagger.jaxrs.listing");
+        packages("org.goldenworkshop.trenden.view.rest", "io.swagger.jaxrs.listing", "org.goldenworkshop.warhammer.view.rest");
 
             OpenApiResource openApiResource = new OpenApiResource();
             register(openApiResource);
