@@ -23,6 +23,7 @@ import org.bson.types.ObjectId;
 import org.goldenworkshop.necromunda.underhive.TacticCard;
 import org.goldenworkshop.trenden.Config;
 import org.goldenworkshop.trenden.model.ExternalInterface;
+import org.goldenworkshop.warhammer.underhive.dao.StringToObjectIdCodec;
 
 import java.util.Collection;
 import java.util.List;
@@ -30,7 +31,7 @@ import java.util.List;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
-public abstract class  AbstractMongoDAO implements ExternalInterface {
+public abstract class AbstractMongoDAO implements ExternalInterface {
     private Logger logger = LogManager.getLogger();
     protected MongoClient client;
     protected MongoDatabase db;
@@ -40,33 +41,19 @@ public abstract class  AbstractMongoDAO implements ExternalInterface {
         logger.info("Initializing MongoDB client");
         String url = Config.get().getMongoConnectionUrl();
 
-        ClassModel<TacticCard> classModel = ClassModel.builder(TacticCard.class).enableDiscriminator(true).getProperty("id").codec(new StringToObjectIdCodec()).build();
+        ClassModelBuilder<TacticCard> tacticCardClassModelBuilder = ClassModel.builder(TacticCard.class).enableDiscriminator(true);
+        PropertyModelBuilder<String> id = (PropertyModelBuilder<String>) tacticCardClassModelBuilder.getProperty("id");
+        id.codec(new StringToObjectIdCodec());
 
+        ClassModel<TacticCard> build = tacticCardClassModelBuilder.build();
         CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
-                fromProviders(PojoCodecProvider.builder().automatic(true).register(classModel).build()));
+                fromProviders(PojoCodecProvider.builder().automatic(true).register(build).build()));
         client = new MongoClient(new MongoClientURI(url));
         db = client.getDatabase(Config.get().getTrendenDatabaseName());
         db = db.withCodecRegistry(pojoCodecRegistry);
 
     }
 
-    public static class StringToObjectIdCodec implements Codec<String> {
-
-        @Override
-        public void encode(final BsonWriter writer, final String value, final EncoderContext encoderContext) {
-            writer.writeObjectId(new ObjectId(value));
-        }
-
-        @Override
-        public Class<String> getEncoderClass() {
-            return String.class;
-        }
-
-        @Override
-        public String decode(final BsonReader reader, final DecoderContext decoderContext) {
-            return reader.readObjectId().toHexString();
-        }
-    }
 
     @Override
     public void shutdown() throws Exception {
@@ -94,6 +81,7 @@ public abstract class  AbstractMongoDAO implements ExternalInterface {
     }
 
     protected abstract List<MongoCollection> handleReset();
+
     /**
      * Never-ever use this, it will drop the collection!
      * //     *
@@ -104,6 +92,7 @@ public abstract class  AbstractMongoDAO implements ExternalInterface {
     public void resetTheDb(String secret) {
         final String realSecret = "yes-i-am-testing";
         if (secret.equals(realSecret)) {
+            handleReset();
         } else {
             throw new IllegalArgumentException("Wrong secret: " + realSecret);
         }

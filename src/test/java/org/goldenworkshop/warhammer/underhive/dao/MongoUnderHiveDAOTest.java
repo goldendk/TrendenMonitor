@@ -40,6 +40,7 @@ public class MongoUnderHiveDAOTest extends BaseTest {
         Collection<TacticCard> tacticCards = mongoUnderHiveDAO.loadValidCards();
 
         System.out.println(tacticCards);
+        System.out.println(tacticCards.size());
 
     }
 }
