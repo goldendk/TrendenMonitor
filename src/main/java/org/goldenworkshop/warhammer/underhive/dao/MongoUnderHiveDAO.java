@@ -1,30 +1,24 @@
 package org.goldenworkshop.warhammer.underhive.dao;
 
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
-import com.mongodb.client.model.Indexes;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.model.Sorts;
 import org.apache.commons.collections4.IteratorUtils;
-import org.bson.Document;
-import org.bson.codecs.pojo.PojoCodecProvider;
 import org.goldenworkshop.necromunda.underhive.TacticCard;
 import org.goldenworkshop.necromunda.underhive.deck.CardDeck;
 import org.goldenworkshop.necromunda.underhive.deck.CardDraw;
 import org.goldenworkshop.necromunda.underhive.deck.TacticCardDAO;
-import org.goldenworkshop.trenden.Config;
-import org.goldenworkshop.trenden.model.RecommendationPeriod;
 import org.goldenworkshop.trenden.model.impl.AbstractMongoDAO;
-import org.goldenworkshop.trenden.model.impl.MongoDAOHelper;
 
-
-import javax.naming.NameParser;
 import java.util.Collection;
 import java.util.List;
 
 public class MongoUnderHiveDAO extends AbstractMongoDAO implements TacticCardDAO {
 
     protected MongoCollection<TacticCard> cardCollection;
-    private MongoCollection<Document> deckCollection;
+    private MongoCollection<CardDeck> deckCollection;
+
     @Override
     public void initialize() throws Exception {
         super.initialize();
@@ -43,7 +37,7 @@ public class MongoUnderHiveDAO extends AbstractMongoDAO implements TacticCardDAO
     }
 
     private void loadDeckCollection() {
-        deckCollection = db.getCollection("underhive-tactic-decks");
+        deckCollection = db.getCollection("underhive-tactic-decks", CardDeck.class);
     }
 
     private void loadCardCollection() {
@@ -52,7 +46,10 @@ public class MongoUnderHiveDAO extends AbstractMongoDAO implements TacticCardDAO
 
     @Override
     public CardDeck loadActiveDeck(String userId) {
-        return null;
+        CardDeck first = deckCollection.find(
+                Filters.and(Filters.eq("user", userId),
+                        Filters.eq("active", true))).first();
+        return first;
     }
 
     @Override
@@ -65,15 +62,25 @@ public class MongoUnderHiveDAO extends AbstractMongoDAO implements TacticCardDAO
     @Override
     public void save(CardDeck cardDeck) {
 
+        if (cardDeck.getId() == null) {
+            deckCollection.insertOne(cardDeck);
+        } else {
+            upsertDocument(cardDeck.getId(), cardDeck, deckCollection);
+        }
+
     }
 
     @Override
     public void insertDraw(String id, CardDraw draw) {
-
+        CardDeck id1 = deckCollection.find(Filters.eq("_id", id)).first();
+        id1.getDraws().add(draw);
+        save(id1);
     }
 
     @Override
     public List<CardDeck> loadLastNDecks(String userId, int count) {
-        return null;
+        MongoCursor<CardDeck> iterator = deckCollection.find(Filters.eq("user", userId)).limit(count).sort(Sorts.descending("_id")).iterator();
+        List<CardDeck> cardDecks = IteratorUtils.toList(iterator);
+        return cardDecks;
     }
 }

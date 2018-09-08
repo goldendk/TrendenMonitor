@@ -21,6 +21,7 @@ import org.bson.codecs.pojo.*;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.goldenworkshop.necromunda.underhive.TacticCard;
+import org.goldenworkshop.necromunda.underhive.deck.CardDeck;
 import org.goldenworkshop.trenden.Config;
 import org.goldenworkshop.trenden.model.ExternalInterface;
 import org.goldenworkshop.warhammer.underhive.dao.StringToObjectIdCodec;
@@ -45,9 +46,17 @@ public abstract class AbstractMongoDAO implements ExternalInterface {
         PropertyModelBuilder<String> id = (PropertyModelBuilder<String>) tacticCardClassModelBuilder.getProperty("id");
         id.codec(new StringToObjectIdCodec());
 
+        ClassModelBuilder<CardDeck> deckClassModelBuilder = ClassModel.builder(CardDeck.class).enableDiscriminator(true);
+        PropertyModelBuilder<String> cardDeckIdPropertyBuilder = (PropertyModelBuilder<String>) tacticCardClassModelBuilder.getProperty("id");
+        cardDeckIdPropertyBuilder.codec(new StringToObjectIdCodec());
+
+
         ClassModel<TacticCard> build = tacticCardClassModelBuilder.build();
+        ClassModel<CardDeck> cardDeckClassModel = deckClassModelBuilder.build();
+
+
         CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
-                fromProviders(PojoCodecProvider.builder().automatic(true).register(build).build()));
+                fromProviders(PojoCodecProvider.builder().automatic(true).register(build).register(cardDeckClassModel).build()));
         client = new MongoClient(new MongoClientURI(url));
         db = client.getDatabase(Config.get().getTrendenDatabaseName());
         db = db.withCodecRegistry(pojoCodecRegistry);
@@ -66,7 +75,7 @@ public abstract class AbstractMongoDAO implements ExternalInterface {
     }
 
 
-    protected void upsertDocument(String id, Document document, MongoCollection<Document> collection) {
+    protected  <T> void upsertDocument(String id, T document, MongoCollection<T> collection) {
         Bson update = new Document("$set",
                 document
         );
