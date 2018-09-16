@@ -22,7 +22,7 @@ class SelectTacticCardsView extends Component {
     }
 
     componentDidMount() {
-        this.props.loadTacticCardList();
+        this.props.loadTacticCardList(true);
         this.props.loadUnderHiveMeta();
         this.toggleTacticCard = this.toggleTacticCard.bind(this);
         this.renderCardRows = this.renderCardRows.bind(this);

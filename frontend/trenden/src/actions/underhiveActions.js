@@ -91,8 +91,8 @@ export function archiveDeck(deckId) {
     }
 }
 
-export function loadTacticCardList() {
-    var url = REST_PATH + "/tacticcard/list";
+export function loadTacticCardList(filterUsed) {
+    var url = REST_PATH + "/deck/cards?filterUsed="+filterUsed;
     let promise = buildGet(url, true);
 
     return {

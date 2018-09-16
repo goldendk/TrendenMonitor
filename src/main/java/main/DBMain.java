@@ -17,12 +17,12 @@ public class DBMain {
 
         Collection<TacticCard> tacticCards = dao.loadValidCards();
         System.out.println(tacticCards.size());
-
-        DeckController controller = new DeckController(()->dao);
-        String userId = "12345678900";
-     //   controller.draw(userId, 2, true, null);
-
-        CardDeck cardDeck = dao.loadActiveDeck(userId);
-        System.out.println(cardDeck.getDeck().size());
+//
+//        DeckController controller = new DeckController(()->dao);
+//        String userId = "12345678900";
+//     //   controller.draw(userId, 2, true, null);
+//
+//        CardDeck cardDeck = dao.loadActiveDeck(userId);
+//        System.out.println(cardDeck.getDeck().size());
     }
 }

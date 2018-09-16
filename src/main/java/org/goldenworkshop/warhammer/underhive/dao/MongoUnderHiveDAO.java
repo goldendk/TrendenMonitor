@@ -45,7 +45,7 @@ public class MongoUnderHiveDAO extends AbstractMongoDAO implements TacticCardDAO
     }
 
     private void loadCardCollection() {
-        cardCollection = db.getCollection("people", TacticCard.class);
+        cardCollection = db.getCollection("underhive-tactic-cards", TacticCard.class);
     }
 
     @Override

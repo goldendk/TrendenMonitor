@@ -466,13 +466,13 @@
   {
     "name": "Not so Easy...",
     "activation": "Play at the start of any round after the opposing gang has bottled out.",
-    "description": "When making Nerve tests for opposing fighters to see if they flee, subtract 2 from the result if they are within 3’’ of a fighter from this gang. Put Them Down !",
+    "description": "When making Nerve tests for opposing fighters to see if they flee, subtract 2 from the result if they are within 3’’ of a fighter from this gang.",
     "zoneMortalisOnly": false,
     "sourceDeck": "E",
     "gangAffiliation": "E"
   },
   {
-    "name": "",
+    "name": "Put Them Down !",
     "activation": " Play at the end of any Action phase.",
     "description": "Any Seriously Injured enemy fighters that are within 2’’ of an Active fighter from this gang are immediately taken Out of Action.",
     "zoneMortalisOnly": false,

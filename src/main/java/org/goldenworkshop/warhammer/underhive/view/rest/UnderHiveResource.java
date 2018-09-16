@@ -41,15 +41,15 @@ public class UnderHiveResource implements Serializable {
 
 
 
-        @GET
-    @Path("/tacticcard/list")
+    @GET
+    @Path("/deck/cards")
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(
             description = "Loads the list of tactic cards currently in the system",
             summary = "Loads all tactic cards."
     )
-    public Response loadCardList(@QueryParam("first") int first, @QueryParam("pageSize") int pageSize){
-        List<TacticCard> cardList = new ArrayList<>(deckControllerBean.getDeckController().loadActiveCards());
+    public Response loadDeckCardList(@QueryParam("first") int first, @QueryParam("pageSize") int pageSize, @QueryParam("filterUsed") boolean filterUsed){
+        List<TacticCard> cardList = new ArrayList<>(deckControllerBean.getDeckController().loadDeckCards(AuthContext.get().getUser().getId(), filterUsed));
 
         return Response.ok().entity(cardList).build();
     }

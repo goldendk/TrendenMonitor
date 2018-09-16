@@ -16,7 +16,7 @@ public class LoadTacticCards {
 
     public static void main(String... args) throws Exception {
 
-        System.setProperty("APPENV", "local");
+        System.setProperty("APPENV", "prod");
 
         Config.get();//initialize.
 
