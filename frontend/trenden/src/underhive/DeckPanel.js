@@ -29,7 +29,11 @@ class DeckPanel extends Component {
                 </Panel.Heading>
                 <Panel.Body>
                     {this.props.deck.draws.map((drawObj, idx) => {
-                        return <CardDrawPanel onUndoDraw={this.props.onUndoDraw} key={idx} idxVal={idx} deckId={this.props.deck.id} cardDraw={drawObj}/>
+                        return <CardDrawPanel onUndoDraw={this.props.onUndoDraw}
+                                              toggleCardUse={this.props.toggleCardUse}
+                                              key={idx} idxVal={idx}
+                                              deckId={this.props.deck.id}
+                                              cardDraw={drawObj}/>
                     })}
                 </Panel.Body>
             </Panel>

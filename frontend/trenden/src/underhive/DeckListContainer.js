@@ -27,7 +27,9 @@ class DeckListContainer extends Component {
         }
         return (<div>
 
-            {this.props.decks.map(deck=>{return <DeckPanel onArchiveDeck={this.props.onArchiveDeck} onUndoDraw={this.props.onUndoDraw} key={deck.id} deck={deck} />}) }
+            {this.props.decks.map(deck=>{return <DeckPanel onArchiveDeck={this.props.onArchiveDeck}
+                                                           toggleCardUse={this.props.toggleCardUse}
+                                                           onUndoDraw={this.props.onUndoDraw} key={deck.id} deck={deck} />}) }
 
 
         </div>)

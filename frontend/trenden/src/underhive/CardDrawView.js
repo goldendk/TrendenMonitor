@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
-import {loadCardDeckList, loadUnderHiveMeta, drawRandomCards, archiveDeck, undoDraw} from '../actions/underhiveActions'
+import {loadCardDeckList, loadUnderHiveMeta, drawRandomCards, archiveDeck, undoDraw, toggleTacticCardUsage} from '../actions/underhiveActions'
 import {
     Table,
     Panel,
@@ -78,7 +78,10 @@ class CardDrawView extends Component {
             </div>
 
             {(this.props.decks != null && this.props.decks.length === 0) ? (<div>Draw some cards...</div>) :
-                <DeckListContainer onArchiveDeck={this.props.archiveDeck} onUndoDraw={this.props.undoDraw}/>}
+
+
+
+                <DeckListContainer onArchiveDeck={this.props.archiveDeck} onUndoDraw={this.props.undoDraw} toggleCardUse={this.props.toggleTacticCardUsage}/>}
 
         </div>)
     }
@@ -97,7 +100,8 @@ export default connect(mapStateToProps, {
     loadUnderHiveMeta,
     drawRandomCards,
     undoDraw,
-    archiveDeck
+    archiveDeck,
+    toggleTacticCardUsage
 })(CardDrawView);
 
 

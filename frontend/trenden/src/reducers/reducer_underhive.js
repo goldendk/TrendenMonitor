@@ -4,7 +4,7 @@ import {
     CARD_DRAW_EVENT,
     TACTIC_CARD_LIST_LOADED,
     TACTIC_CARD_SELECTED,
-    CARD_DRAW_SELECTED, CARD_DRAW_UNDO
+    CARD_DRAW_SELECTED, CARD_DRAW_UNDO, USE_TACTIC_CARD_UNDO, USE_TACTIC_CARD
 } from "../actions/underhiveActions";
 
 export default function (state = {selectedTacticCards: {}}, action) {
@@ -30,16 +30,7 @@ export default function (state = {selectedTacticCards: {}}, action) {
         case CARD_DRAW_EVENT:
             const okDraw = (action.payload.status === 200);
             console.log("reducer_underhive.js, HTTP status: " + ok);
-            var currentDecks = [...state.decks];
-            if (currentDecks == null) {
-                currentDecks = [];
-            }
-            if (currentDecks.length == 0) {
-                currentDecks.push(action.payload.data);
-            }
-            else {
-                currentDecks[0] = action.payload.data;
-            }
+            var currentDecks =replaceDeck(state.decks, action.payload.data);
             return {
                 ...state, decks: currentDecks
             };
@@ -90,7 +81,27 @@ export default function (state = {selectedTacticCards: {}}, action) {
             return {
                 ...state,decks: removed
             };
+        case USE_TACTIC_CARD:
+        case USE_TACTIC_CARD_UNDO:
+            var currentDecks = replaceDeck(state.decks, action.payload);
+            return{
+                ...state, decks: currentDecks
+            };
         default:
             return state;
+    }
+
+    function replaceDeck(decks, newDeck){
+        var currentDecks = [...decks];
+        if (currentDecks == null) {
+            currentDecks = [];
+        }
+        if (currentDecks.length == 0) {
+            currentDecks.push(newDeck);
+        }
+        else {
+            currentDecks[0] = newDeck;
+        }
+        return currentDecks;
     }
 }

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Panel, Glyphicon} from 'react-bootstrap'
-import TacticCardPanel from "./TactiCardPanel";
+import TacticCardPanel from "./TacticCardPanel";
 
 class CardDrawPanel extends Component {
 
@@ -29,7 +29,9 @@ class CardDrawPanel extends Component {
                 </Panel.Heading>
                 <Panel.Body>
                     {this.props.cardDraw.cards.map((cardObj, idx) => {
-                        return <TacticCardPanel key={idx} card={cardObj}/>
+                        return <TacticCardPanel key={idx} card={cardObj} toggleCardUse={(cardId, newState, okCb, errCb)=>
+                            this.props.toggleCardUse(this.props.deckId, this.props.idxVal, cardId, newState, okCb, errCb)}
+                                                used={this.props.cardDraw.usedCards.includes(cardObj.id)}/>
                     })}
                 </Panel.Body>
             </Panel>

@@ -85,6 +85,32 @@ public class UnderHiveResource implements Serializable {
     }
 
     @POST
+    @Path("/deck/draw/use-card")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(
+            description = "Marks a card as used.",
+            summary = "Use a card"
+    )
+    public Response undoUseCard(@QueryParam("deckId") String deckId, @QueryParam("drawIdx") int drawIdx,
+                                       @QueryParam("cardId") String cardId){
+        CardDeck cardDeck = deckControllerBean.getDeckController().markCardAsUsed(deckId, drawIdx, cardId);
+        return Response.ok().entity(cardDeck).build();
+    }
+
+    @DELETE
+    @Path("/deck/draw/use-card")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Operation(
+            description = "Marks a card as used.",
+            summary = "Use a card"
+    )
+    public Response useCard(@QueryParam("deckId") String deckId, @QueryParam("drawIdx") int drawIdx,
+                                       @QueryParam("cardId") String cardId){
+        CardDeck cardDeck = deckControllerBean.getDeckController().markCardAsNotUsed(deckId, drawIdx, cardId);
+        return Response.ok().entity(cardDeck).build();
+    }
+
+    @POST
     @Path("/deck/draw/selected")
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(
@@ -104,6 +130,8 @@ public class UnderHiveResource implements Serializable {
         deckControllerBean.getDeckController().undoDraw(deckId, drawIdx);
         return Response.ok().entity(deckControllerBean.getDeckController().loadDeck(deckId)).build();
     }
+
+
 
     @POST
     @Path("/deck/archive")

@@ -7,6 +7,8 @@ export const UNDERHIVE_META_LOADED = "underhive-meta-loaded";
 export const TACTIC_CARD_SELECTED = "underhive-TACTIC_CARD_SELECTED";
 export const CARD_DRAW_SELECTED = "underhive-CARD_DRAW_SELECTED";
 export const CARD_DRAW_UNDO = "underhive-CARD_DRAW_UNDO";
+export const USE_TACTIC_CARD = "underhive-USE_TACTIC_CARD";
+export const USE_TACTIC_CARD_UNDO = "underhive-USE_TACTIC_CARD_UNDO";
 
 export const CARD_DRAW_EVENT = "underhive-card-draw-event";
 const REST_PATH = '/rest/warhammer/underhive';
@@ -128,5 +130,34 @@ export function drawSelectedTacticCards(selectedCards, successCallback, errorCal
             }
         });
     };
+
+}
+
+export function toggleTacticCardUsage(deckId, drawIdx, cardId, newState, successCb, errorCb){
+
+    var url = REST_PATH + "/deck/draw/use-card?deckId=" + deckId + "&drawIdx="+drawIdx + "&cardId="+ cardId;
+
+
+    let promise = newState ? buildPost(url) : buildDelete(url);
+
+    return (dispatch) =>{
+        promise.then((response) =>{
+            if(response.status === 200){
+                if(successCb != null){
+                    successCb();
+                }
+                dispatch({
+                    type: newState ? USE_TACTIC_CARD : USE_TACTIC_CARD_UNDO,
+                    payload: response.data
+                });
+            }
+            else{
+                console.log("could not toggle tactic card!")
+                if(errorCb){
+                    errorCb();
+                }
+            }
+        });
+    }
 
 }
