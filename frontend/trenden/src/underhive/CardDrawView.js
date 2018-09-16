@@ -45,7 +45,7 @@ class CardDrawView extends Component {
                     <FormGroup md={6}>
                         <ControlLabel>Gangs</ControlLabel>
                         {this.props.meta.gangs.map(
-                            gang => <Checkbox key={gang.gangSymbol} name="affilationFilter"
+                            gang => <Checkbox key={gang.gangSymbol} name="affiliationFilter"
                                               value={gang.gangSymbol}>{gang.label}</Checkbox>
                         )}
                     </FormGroup>

@@ -78,7 +78,7 @@ public class UnderHiveResource implements Serializable {
             summary = "This is a summary"
     )
     public Response drawFromDeckRandom(@QueryParam("cardCount") int cardCount, @QueryParam("excludeDraws") boolean excludeDraws,
-                                 @QueryParam("affiliation")
+                                 @QueryParam("affiliationFilter")
                                  Set<String> affilationFilter){
         CardDeck draw = deckControllerBean.getDeckController().drawRandom(AuthContext.get().getUser().getId(), cardCount, excludeDraws, affilationFilter);
         return Response.ok().entity(draw).build();
