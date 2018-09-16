@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import reduxPromise from 'redux-promise'
+import thunk from 'redux-thunk';
 import reducers from './reducers';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
@@ -17,7 +18,7 @@ import './index.css';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const createStoreWithMiddleware  = createStore(reducers, /* preloadedState, */ composeEnhancers(
-    applyMiddleware(reduxPromise)
+    applyMiddleware(thunk, reduxPromise)
 ));
 //const createStoreWithMiddleware = applyMiddleware(reduxPromise)(createStore);
 

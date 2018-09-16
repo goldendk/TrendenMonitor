@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Properties>
-        <Property name="fileName">${sys:catalina.home}/logs/application.log</Property>
-        <Property name="fileNamePattern">${sys:catalina.home}/logs/application-%d{yyyy-MM-dd}-%i.log</Property>
-        <Property name="logPattern">%d{dd-MM-yyyy HH:mm:ss,SSS} [%t] %-5p %c - %m%n</Property>
+        <Property label="fileName">${sys:catalina.home}/logs/application.log</Property>
+        <Property label="fileNamePattern">${sys:catalina.home}/logs/application-%d{yyyy-MM-dd}-%i.log</Property>
+        <Property label="logPattern">%d{dd-MM-yyyy HH:mm:ss,SSS} [%t] %-5p %c - %m%n</Property>
     </Properties>
     <Appenders>
-        <Console name="Console" target="SYSTEM_OUT">
+        <Console label="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${logPattern}"/>
         </Console>
-        <RollingFile name="MyRollingFile" fileName="${fileName}" filePattern="${fileNamePattern}">
+        <RollingFile label="MyRollingFile" fileName="${fileName}" filePattern="${fileNamePattern}">
             <PatternLayout pattern="${logPattern}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy/>

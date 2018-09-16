@@ -3,3 +3,8 @@ package manager: yarn
 Add package
 yarn add react-router-dom
 
+#Development
+
+gradlew --no-daemon npm_run_start
+
+

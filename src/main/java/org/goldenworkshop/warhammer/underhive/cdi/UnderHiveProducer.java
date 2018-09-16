@@ -1,13 +1,17 @@
 package org.goldenworkshop.warhammer.underhive.cdi;
 
+import org.goldenworkshop.necromunda.underhive.deck.DeckController;
 import org.goldenworkshop.necromunda.underhive.deck.TacticCardDAO;
 import org.goldenworkshop.trenden.cdi.GlobalProducer;
 import org.goldenworkshop.trenden.servlet.ServletContextListener;
-import org.goldenworkshop.trenden.view.rest.Application;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Produces;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class UnderHiveProducer {
 
     @Produces
@@ -16,7 +20,6 @@ public class UnderHiveProducer {
     public TacticCardDAO createDAO(){
         return ServletContextListener.underHiveDAO;
     }
-
 
 
 }

@@ -15,7 +15,7 @@ sudo keytool -genkey -alias tomcat -keyalg RSA -keystore /usr/share/tomcat/.keys
 
 /!\ Important /!\
 
-The common name has to be your FQDN, for instance : www.myexample.com 130
+The common label has to be your FQDN, for instance : www.myexample.com 130
 
 once the private key created, make the CSR:
 
@@ -23,7 +23,7 @@ sudo keytool -certreq -alias tomcat -file request.csr -keystore /usr/share/tomca
 
 Then we start the certificat creation process:
 
-First of all be sure that your website name is well resolved but any process using port 443 has to be shut :
+First of all be sure that your website label is well resolved but any process using port 443 has to be shut :
 
 If your tomcat use explicitly port 443 :
 

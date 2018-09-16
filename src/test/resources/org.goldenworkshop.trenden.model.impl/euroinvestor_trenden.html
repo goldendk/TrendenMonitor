@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head id="ctl00_Head1"><title>
     Euroinvestor Trenden - Få købs- og salgssignaler på dine aktier
-</title><meta content="initial-scale=1.0, width=device-width" name="viewport" /><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><meta id="ctl00_metacopyright" name="copyright" content="Copyright (C) 1995-2018, EuroInvestor.com A/S" /><link href="/httpcombiner.ashx?s=set_css&amp;t=text/css&amp;v=LiveBranchBuild_20180209.1" type="text/css" rel="stylesheet" />
+</title><meta content="initial-scale=1.0, width=device-width" label="viewport" /><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><meta id="ctl00_metacopyright" label="copyright" content="Copyright (C) 1995-2018, EuroInvestor.com A/S" /><link href="/httpcombiner.ashx?s=set_css&amp;t=text/css&amp;v=LiveBranchBuild_20180209.1" type="text/css" rel="stylesheet" />
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 
@@ -371,9 +371,9 @@
     }
 
 
-    function getParameterByName(name) {
-        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
+    function getParameterByName(label) {
+        label = label.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + label + '=([^&#]*)'),
             results = regex.exec(location.search);
         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
@@ -414,11 +414,11 @@
     });
 
     function loadVisibleAds(divSlots){
-        var divSlots = $('div[data-cu-name]'), isForumPage = false
+        var divSlots = $('div[data-cu-label]'), isForumPage = false
         var checkVisibility = function(){
             var adsLoaded = false;
             divSlots.each(function(){
-                var slotName = $(this).data('cu-name');
+                var slotName = $(this).data('cu-label');
                 var elem = null;
 
                 if($(this).attr('id').endsWith('101') && $('.top_banner_placeholder').length > 0){
@@ -511,7 +511,7 @@
                         'event': '_addItem',
                         'transactionId': array[1],
                         'sku': array[2],
-                        'name': array[3],
+                        'label': array[3],
                         'category': array[4],
                         'price': array[5],
                         'quantity': '1'
@@ -524,7 +524,7 @@
             }
         }
     </script>
-    <meta name="description" content="Med Euronvestor trenden får du på baggrund af teknisk analyse købs- og salgssignaler på dine aktier som du kan bruge til administration af din aktieportefølje." /><meta name="keywords" content="Trenden, kurser, afkast, hitliste, aktieanbefalinger, købssignaler, salgsignaler, aktieportefølje" /></head>
+    <meta label="description" content="Med Euronvestor trenden får du på baggrund af teknisk analyse købs- og salgssignaler på dine aktier som du kan bruge til administration af din aktieportefølje." /><meta label="keywords" content="Trenden, kurser, afkast, hitliste, aktieanbefalinger, købssignaler, salgsignaler, aktieportefølje" /></head>
 
 <body id="ctl00_masterbody" class="top-sky-sticky">
 
@@ -551,17 +551,17 @@
 
 
 
-<form name="aspnetForm" method="post" action="./?marketcode=dk&amp;indexid=303" id="aspnetForm">
-    <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="" />
+<form label="aspnetForm" method="post" action="./?marketcode=dk&amp;indexid=303" id="aspnetForm">
+    <input type="hidden" label="__VIEWSTATE" id="__VIEWSTATE" value="" />
 
-    <input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="PCN3NB6LuR8Le0Vh1pZjBydkqGBURPSJU/AnLNuNwVEmcJw9eRT0QGW/TY/VRApd35xQVeleCIDyKZu4kzDp+WzqxPqta4xWaF/V9YgMeJRRvxeiRuDPfTcPl1QwCp1bkLvfkVW81m93CMdv7IXiaA==" />
+    <input type="hidden" label="__EVENTVALIDATION" id="__EVENTVALIDATION" value="PCN3NB6LuR8Le0Vh1pZjBydkqGBURPSJU/AnLNuNwVEmcJw9eRT0QGW/TY/VRApd35xQVeleCIDyKZu4kzDp+WzqxPqta4xWaF/V9YgMeJRRvxeiRuDPfTcPl1QwCp1bkLvfkVW81m93CMdv7IXiaA==" />
     <div id="ctl00_BannerContainerTop" class="top_banner_placeholder collapsable" style="text-align: center; line-height: 0px;">
         <div class="top_banner_div">
 
 
             <!-- PlacementId: 101<br/>SiteID: 1<br/>Content unit: 476<br/>Top1-930x180<br/>/Top1-930x180 -->
 
-            <div id="div-gpt-ad-1-101" data-cu-name="/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Top1-930x180">
+            <div id="div-gpt-ad-1-101" data-cu-label="/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Top1-930x180">
                 <script type="text/javascript">
                     googletag.cmd.push(function() {
                         googletag.display('div-gpt-ad-1-101');
@@ -592,8 +592,8 @@
                         <div id="ctl00_multipleAutoComplete_auto_complete">
 
 
-                            <input name="ctl00$multipleAutoComplete$textbox" type="text" id="ctl00_multipleAutoComplete_textbox" matchcontains="true" rightaligndropdown="true" placeholder="Søg efter aktier og nyheder" width="196px" class="ac_input" searchmode="true" selectfirst="false" style="float:right; margin-top:-5px; width:220px" size="40" spellcheck="false" excludenews="false" mode="4" matchsubset="false" limit="10" />
-                            <input type="hidden" name="ctl00$multipleAutoComplete$hiddenValue" id="ctl00_multipleAutoComplete_hiddenValue" />
+                            <input label="ctl00$multipleAutoComplete$textbox" type="text" id="ctl00_multipleAutoComplete_textbox" matchcontains="true" rightaligndropdown="true" placeholder="Søg efter aktier og nyheder" width="196px" class="ac_input" searchmode="true" selectfirst="false" style="float:right; margin-top:-5px; width:220px" size="40" spellcheck="false" excludenews="false" mode="4" matchsubset="false" limit="10" />
+                            <input type="hidden" label="ctl00$multipleAutoComplete$hiddenValue" id="ctl00_multipleAutoComplete_hiddenValue" />
                             <div id="ctl00_multipleAutoComplete_divOutput"></div>
                         </div>
 
@@ -670,7 +670,7 @@
 
                     <!-- PlacementId: 103<br/>SiteID: 1<br/>Content unit: 478<br/>Top2-728x90<br/>/Top2-728x90 -->
 
-                    <div id="div-gpt-ad-1-103" data-cu-name="/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Top2-728x90">
+                    <div id="div-gpt-ad-1-103" data-cu-label="/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Top2-728x90">
                         <script type="text/javascript">
                             googletag.cmd.push(function() {
                                 googletag.display('div-gpt-ad-1-103');
@@ -767,7 +767,7 @@
 
                             <!-- PlacementId: 111<br/>SiteID: 1<br/>Content unit: 486<br/>Knap1-150x90<br/>/Knap1-150x90 -->
 
-                            <div id="div-gpt-ad-1-111" data-cu-name="/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Knap1-150x90">
+                            <div id="div-gpt-ad-1-111" data-cu-label="/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Knap1-150x90">
                                 <script type="text/javascript">
                                     googletag.cmd.push(function() {
                                         googletag.display('div-gpt-ad-1-111');
@@ -854,7 +854,7 @@
 
                             <!-- PlacementId: 112<br/>SiteID: 1<br/>Content unit: 487<br/>Knap2-150x90<br/>/Knap2-150x90 -->
 
-                            <div id="div-gpt-ad-1-112" data-cu-name="/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Knap2-150x90">
+                            <div id="div-gpt-ad-1-112" data-cu-label="/56163043/Euroinvestor_network/Euroinvestor.dk/Undersider/ATF/Knap2-150x90">
                                 <script type="text/javascript">
                                     googletag.cmd.push(function() {
                                         googletag.display('div-gpt-ad-1-112');

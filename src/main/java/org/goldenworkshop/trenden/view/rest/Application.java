@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
 import io.swagger.v3.oas.annotations.servers.ServerVariable;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.goldenworkshop.necromunda.underhive.GangEnum;
 
 import javax.ws.rs.ApplicationPath;
 
@@ -35,7 +36,7 @@ import javax.ws.rs.ApplicationPath;
 public class Application extends ResourceConfig {
 
     public Application() {
-        packages("org.goldenworkshop.trenden.view.rest", "io.swagger.jaxrs.listing", "org.goldenworkshop.warhammer.view.rest");
+        packages("org.goldenworkshop.trenden.view.rest", "io.swagger.jaxrs.listing", "org.goldenworkshop.warhammer.underhive.view.rest");
 
             OpenApiResource openApiResource = new OpenApiResource();
             register(openApiResource);

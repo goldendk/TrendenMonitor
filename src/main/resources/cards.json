@@ -1,0 +1,794 @@
+[
+  {
+    "name": "...Click",
+    "activation": " Play this card after an enemy fighter\ncompletes an attack with a ranged weapon.",
+    "description": "The weapon immediately runs Out of Ammo, as if it had failed an\nAmmo check.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "B",
+    "gangAffiliation": null
+  },
+  {
+    "name": "A Good Day",
+    "activation": " Play at the start of the game after both sides\nhave set up.",
+    "description": "Choose a Champion or Leader model in your crew. Tuck this card\nunder that fighter’s card. For the duration of the game, Cool checks for\nother fighters from your gang have a +2 modifier if they are within 3\"\nof the chosen Champion or Leader.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Adrenaline Surge",
+    "activation": " Play when activating a fighter.",
+    "description": "The fighter can make one additional action this turn.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Battle Madness",
+    "activation": " Play instead of activating a fighter.",
+    "description": "Choose a Broken Fighter from either gang. They immediately make a\nranged attack against the closest fighter they can see, friend or foe. If\nthey are in base contact with another fighter, they make close combat\nattacks instead.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Beast Lure",
+    "activation": " A fighter can spend an action to play this\ncard.",
+    "description": "Place the Beast’s Lair marker within 3’’ of this fighter. Then, they can\nmove up to D6’’. If they end the action within 6’’ of the lair, there is a\nchance they will be attacked as normal.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Blackout",
+    "activation": " Play this card at the start of any round.",
+    "description": "For the duration of this round, ranged attacks have an additional -1\nmodifier if made against targets between 6’’ and 12’’ away, or a -2\nmodifier if made against targets more than 12’’ away. Attackers using\nan infra-scope or photo-goggles, or targeting a fighter with a Blaze\nmarker, ignore these penalties.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Blazing Fury",
+    "activation": " Play this card when activating a fighter.",
+    "description": "For the duration of this fighter\u0027s turn, the Shoot action is treated as\nSimple rather than Basic.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Blood Debt",
+    "activation": " Play this card when one of your fighters is\ntaken Out of Action by an enemy fighter\u0027s\nattack.",
+    "description": "For the rest of the battle, add 1 to the result of any hit rolls for fighters\nfrom your gang when they target the attacker. Tuck this card under the\nattacker’s Fighter card as a reminder.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "B",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Burst of Courage",
+    "activation": " Play this card when making a Cool check\nfor a fighter.",
+    "description": "The fighter automatically passes the check, and any more Cool checks\nthey are required to make until the end of the round.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Chain Attacks",
+    "activation": " Play when a fighter takes an enemy Out of\nAction with a Melee attack.",
+    "description": "The activating fighter can move up to D6’’ and make a Fight Basic\naction. Their activation then immediately ends.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Combat Drugs",
+    "activation": " Play when a fighter makes a melee attack.",
+    "description": "For the duration of this turn, the fighter gains D3 additional attacks.\nHowever, should the fighter gain the full 3 additional attacks, they will\nautomatically suffer a Flesh Wound at the end of their activation.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Crossfire",
+    "activation": " Play this card when a fighter makes a\nranged attack against a target who has\nalready been shot at by a friendly fighter.",
+    "description": "The hit roll succeeds automatically.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Dangerous Footing",
+    "activation": " Play when your opponent activates a\nfighter.",
+    "description": "Immediately place a Pitfall Crater marker beneath the fighter. The\nfighter must take an Initiative test. If the test is passed, the fighter\nmakes a Move action to safety and their activation continues. If the\nInitiative test is failed, the fighter falls into the crater and is\nimmediately taken Out of Action. The pitfall Crater remains in place\nfor the duration of the battle.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Deadlock",
+    "activation": " Play this card at the start of any round.",
+    "description": "Note: Zone Mortalis only.\nChoose a closed door anywhere on the board. For the duration of this\nround, the door cannot be opened in any way.",
+    "zoneMortalisOnly": true,
+    "sourceDeck": "G",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Desperate Effort",
+    "activation": " Play when it is your turn to activate a\nfighter, but none of your fighters have\nReady markers.",
+    "description": "Pick one of your fighters and activate them as though they had a\nReady marker. At the end of the action, they are Pinned.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Distraction",
+    "activation": " Play when your opponent activates a\nfighter.",
+    "description": "The opposite player must make a Willpower check for the fighter. If\nthe check is failed, the fighter can only make one action this turn,\ninstead of two.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Double-Fisted",
+    "activation": " Play when a fighter makes a ranged attack.",
+    "description": "For the duration of the ranged attack, the fighter can attack with two\nranged weapons, resolving a full attack with each, one after the other.\nBoth must be made against the same target.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Emergency Seal",
+    "activation": " Play instead of activating a fighter.",
+    "description": "Note: Zone Mortalis only.\nDuctways cannot be used for the duration of this round – they are\ntreated as not being on the board at all.",
+    "zoneMortalisOnly": true,
+    "sourceDeck": "G",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Fall Back",
+    "activation": " Play this card when activating a fighter.",
+    "description": "This fighter may immediately make a Retreat [Basic] action without\nhaving to make an Initiative check. Additionally, each enemy fighter\nthat was Engaging them is unable to make any Reaction attacks.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Fearsome Reputation",
+    "activation": " Play after one of your fighters puts an\nenemy Out of Action.",
+    "description": "For the rest of the game, any nerve checks made for enemy fighters\nwithin 8” of them have a -2 modifier.\n172\nName Condition Description",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Fire Discipline",
+    "activation": " Play this card at the start of the battle, after\nsetting up your gang.",
+    "description": "For the duration of the battle, ranged attacks made by your fighters\nonly trigger an Ammo check if the Firepower dice rolls an Ammo\nsymbol and the hit roll is a success.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Frag Trap",
+    "activation": " Play this at the start of the battle, when\nsetting up your gang.",
+    "description": "Pick any of your fighters to carry the frag trap, and put this card under\ntheir Fighter card. Once during the game, the fighter, as long as they\nare Active, can make this action:\nSet Frag Trap [Double] – Place a Frag Trap marker within 1’’ of the\nfighter. Then they can move up to D6’’.\nIf the fighter goes Out of Action before making this action, roll a D6.\nOn a 1, the trap triggered (centred on the fighter\u0027s base). On a 2-3,\nplace a Frag Trap marker where the fighter stood. On a 4+, discard this\ncard.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "B",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Group Tactics",
+    "activation": " Play this card when it is your turn, before\nactivating any fighters.",
+    "description": "Instead of activating one fighter, activate up to three fighters (in the\nsame way as making a Group activation).",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "B",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Having a Bad Day",
+    "activation": " Play at the start of the game after both sides\nhave set up.",
+    "description": "Choose a Champion or Leader model in your opponent’s crew. For the\nduration of the game, Cool checks for other fighters from the opposing\ngang have a -2 modifier while that fighter is within 3’’ of the chosen\nChampion or Leader.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Healthy Paranoia",
+    "activation": " Play when activating a fighter.",
+    "description": "For the rest of the battle, the fighter have 360° vision arc.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Hidden Passage",
+    "activation": " Play this card at the start of your turn,\nimmediately before activating a fighter.",
+    "description": "Note: Zone Mortalis only, see page 126.\nPlace an unused Ductway marker anywhere on the board, following\nthe normal rules for placing a ductway.",
+    "zoneMortalisOnly": true,
+    "sourceDeck": "B",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Hive Tremors",
+    "activation": " Play at the start of any round.",
+    "description": "Every Active fighter on the table must make an Initiative test – any\nwho fail are Pinned. After all fighters have tested, place D3 additional\nloot caskets anywhere on the table not within 6’’ of a fighter.\nFinally, if the game uses a Zone Mortalis scenario, place D3 spare\nductways across any walls of your choice. If the game uses a Sector\nMechanicus scenario, remove D3 ladders of your choice.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "W",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Just Add Nails",
+    "activation": " Play when making an attack with a frag\ngrenade, before rolling to hit.",
+    "description": "The grenade’s Blast [3\"] trait becomes Blast [5\"].",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Last Gasp",
+    "activation": " Play this card when one of your active\nfighters is taken Out of Action.",
+    "description": "Before the fighter is removed from play, they can immediately make\nan attack. This is a close combat attack if they are Engaged, otherwise\nit is a ranged attack. If they are equipped with a grenade that has the\nBlast trait, and the Blast marker is centred on them, it will not scatter.\nAs soon as the attack has been resolved, the fighter is removed from\nplay.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "B",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Lucky Find",
+    "activation": " Play this card when activating a fighter with\na weapon that is Out of Ammo.",
+    "description": "One of the fighter\u0027s weapons is automatically reloaded at the cost of\none action – no Ammo check is required.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "B",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Lucky Lho-stick Case",
+    "activation": " Play this card when a friendly fighter fails\nan armour save.",
+    "description": "The fighter can re-roll the armour save, ignoring any negative\nmodifiers\n(including Armour Penetration).",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Makeshift Armour",
+    "activation": " One of your fighters can spend an action to\nplay this card.",
+    "description": "Tuck this card under the fighter\u0027s card; while it is there, their armour\nsave is treated as one point better than it is. If any save roll for the\nfighter is a 1 (before modifiers), discard this card after resolving the\nattack(s).",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "B",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Master Switch",
+    "activation": " Play this card instead of activating a fighter.",
+    "description": "Note: Zone Mortalis only.\nEvery door on the board that does not have a door terminal either\nopens or closes. They must all do the same, i.e., this card cannot be\nused to open some doors and close others.",
+    "zoneMortalisOnly": true,
+    "sourceDeck": "O",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Melta Trap",
+    "activation": " Play this at the start of the battle, when\nsetting up your gang.",
+    "description": "Pick any of your fighters to carry the frag trap, and put this card under\ntheir Fighter card. Once during the game, the fighter, as long as they\nare Active, can make this action:\nSet Melta Trap [Double] – Place a Melta Trap marker within 1’’ of\nthe fighter. Then they can move up to D6’’.\nIf the fighter goes Out of Action before making this action, roll a D6.\nOn a 1, the trap triggered (centred on the fighter\u0027s base). On a 2-3,\nplace a Melta Trap marker where the fighter stood. On a 4+, discard\nthis card.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "B",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Nerves of Steel",
+    "activation": " Play when a fighter makes a ranged attack.",
+    "description": "The fighter may ignore normal Target Priority rules and may instead\ntarget any eligible enemy fighter they wish without having to pass a\nCool check.\n173\nName Condition Description",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Point-Blank Shot",
+    "activation": " Play this card when a fighter makes a Fight\naction or a Charge action.",
+    "description": "Pick one of the fighter’s ranged weapons that does not have the Blast\ntrait or Template trait. For the duration of this turn, that weapon can be\nused in close combat in the same way as a pistol.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Proper Preparation",
+    "activation": " Play this card before setting up the gang at\nthe start of the battle.",
+    "description": "Pick one of your fighters and put this card under their Fighter\u0027s card.\nFor the duration of the battle, this fighter\u0027s weapons gain the Plentiful\ntrait unless they already have the Scarce trait, in which case their\nweapons are counted as not being Scarce.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Rapid Fire",
+    "activation": " Play this card when activating a fighter.",
+    "description": "This turn, the fighter may make two Fire [Basic] actions, provide they\nuse the same weapon for both and make no other actions for any\nreason. However, at the end of their activation, the weapon counts as\nautomatically having failed an Ammo check.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Reaction Fire",
+    "activation": " Play when an enemy fighters is activated,\nbefore they make their first action.",
+    "description": "Pick a fighter from your gang – that fighter can immediately make a\nShoot [Basic] action against the activating enemy model, as long as\nthey are in range and line of sight.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Ricochet",
+    "activation": " Play this card after making an unsuccessful\nhit roll for a ranged attack that does not\nhave the Blast or Template trait.",
+    "description": "Pick another fighter within 5’’ of the target, even if they are not visible\nto the attacker, and roll to hit against them. Do not roll the Firepower\ndice again.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Rigged Door",
+    "activation": " Play this card immediately after an enemy\nfighter makes an action.",
+    "description": "Note: Zone Mortalis only, see page 126.\nPick any door on the board and either close or open it. If closing a\ndoor and there is a fighter standing in the doorway, they must test to\nsee whether they avoid closing door as normal.",
+    "zoneMortalisOnly": true,
+    "sourceDeck": "B",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Secret Cache",
+    "activation": " Play this card instead of activating a fighter.",
+    "description": "Set up an ammo cache anywhere on the battlefield.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Seize the Initiative",
+    "activation": " Play this card at the beginning of any\nround, before rolling for Priority.",
+    "description": "You immediately take Priority this turn without any dice being rolled.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Slippery",
+    "activation": " Play this card when activating a fighter.",
+    "description": "Put this card under the active fighter\u0027s Fighter card. Until the end of\nthe battle, this fighter treats the Crawl Through action as [Basic] rather\nthan [Double].",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Steel Fury",
+    "activation": " Play this card at the start of any round.",
+    "description": "For the duration of this round, fighters from this gang count the Fight\n[Basic] action as a Fight [Simple] action.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Sterner Stuff",
+    "activation": " Play this card instead of activating a fighter.",
+    "description": "Make a Rally check for each Broken fighter in your gang, as though it\nwas the End phase.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Sump Slump",
+    "activation": " Play at the start of any turn.",
+    "description": "Immediately remove D3 Barricades of your choice from anywhere on\nthe board.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Suppressing Fire",
+    "activation": " Play this card after making an unsuccessful\nhit roll for a ranged weapon.",
+    "description": "The target is Pinned, even though they were not hit by the attacks.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Tech Override",
+    "activation": " Play this card when a friendly fighter makes\nan Access Terminal action or Bypass Lock\naction, or when rolling to see if a friendly\nfighter triggers a booby trap.",
+    "description": "If making an Access Terminal action or Bypass Lock action, the\nintelligence check is passed automatically. If rolling to see whether a\nbooby trap is triggered, you can choose the result instead of rolling.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": null
+  },
+  {
+    "name": "They’re Everywhere !",
+    "activation": " Play this card instead of activating a fighter.",
+    "description": "Each enemy fighter who is within 4’’ of two or more fighters from\nyour gang must make a Cool check. If the check is failed, the enemy\nfighter is Pinned.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Thundering Charge",
+    "activation": " Play when a fighter makes a Charge action,\nbefore they move.",
+    "description": "Double the fighter’s Move instead of adding D3”.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Trusty Backup",
+    "activation": " Play this card when activating a fighter.",
+    "description": "Put this card under the active fighter’s Fighter card. Until the end of\nthe battle, this fighter has an additional stub gun.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": null
+  },
+  {
+    "name": "Violent-Minded",
+    "activation": " Play this card when activating a fighter.",
+    "description": "This turn, the fighter can make an additional action (usually three\nrather than two), as long as at least one of their actions is Shoot or\nFight.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": null
+  },
+  {
+    "name": "What’s a few Teeth ?",
+    "activation": " Play this when a friendly fighter suffers a\nFlesh Wound.",
+    "description": "The Flesh Wound is ignored. Any other effects of the injury still apply.\nYou’re coming with Me !",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": null
+  },
+  {
+    "name": "",
+    "activation": "\nPlay when a fighter is taken Out of Action\nby a close combat attack.",
+    "description": "The chosen fighter may make a single close combat attack against the\nenemy that took them Out of Action. They are then removed from play\nas normal.\n174\nEscher Tactics\nName Condition Description",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": null
+  },
+  {
+    "name": "A New Strain",
+    "activation": " Play immediately before rolling to\nwound with a Gas weapon.",
+    "description": "Add 2 to the result of the dice roll to determine whether the target succumbs to the\ngas.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": "E"
+  },
+  {
+    "name": "Counter-Charge",
+    "activation": " Play this card when an enemy\nfighter makes a Charge action,\nafter they move but before they\nmake their attacks.",
+    "description": "Pick a Readied fighter from your gang. They can make a Standard Move (adding D3’’\nto the distance they can move, as though they were charging) towards the enemy\nfighter who charged.\nThe counter-charging fighter cannot make any attacks, but they can make Reaction\nattacks and grant assists/interference as normal.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "B",
+    "gangAffiliation": "E"
+  },
+  {
+    "name": "Gas Trap",
+    "activation": " Play this at the start of the battle\nwhen setting up your gang.",
+    "description": "Pick any of your fighters to carry the frag trap, and put this card under their Fighter\ncard. Once during the game, the fighter, as long as they are Active, can make this\naction:\nSet Gas Trap [Double] – Place a Gas Trap marker within 1’’ of the fighter. Then they\ncan move up to D6’’.\nIf the fighter goes Out of Action before making this action, roll a D6. On a 1, the trap\ntriggered (centred on the fighter\u0027s base). On a 2-3, place a Gas Trap marker where the\nfighter stood. On a 4+, discard this card.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "B",
+    "gangAffiliation": "E"
+  },
+  {
+    "name": "Not so Easy...",
+    "activation": " Play at the start of any round after\nthe opposing gang has bottled out.",
+    "description": "When making Nerve tests for opposing fighters to see if they flee, subtract 2 from the\nresult if they are within 3’’ of a fighter from this gang.\nPut Them Down !",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": "E"
+  },
+  {
+    "name": "",
+    "activation": "\nPlay at the end of any Action\nphase.",
+    "description": "Any Seriously Injured enemy fighters that are within 2’’ of an Active fighter from this\ngang are immediately taken Out of Action.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": "E"
+  },
+  {
+    "name": "Scrag",
+    "activation": " Play this card after one of your\nfighters puts an enemy out of\naction in close combat.",
+    "description": "Enemy fighters must make a Nerve test if they are within 9’’ rather than 3’’ (they\nmust still be visible). In addition, subtract 2 from the result of any Nerve tests made\nfor fighters within 3’’.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "B",
+    "gangAffiliation": "E"
+  },
+  {
+    "name": "Side by Side",
+    "activation": " Play instead of activating a fighter.",
+    "description": "Until the end of this round, any assists that are granted by fighters from this gang\ngrant a +2 bonus to the hit roll (instead of +1).",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": "E"
+  },
+  {
+    "name": "Siren Howls",
+    "activation": " Play at the start of any End phase.",
+    "description": "Until the start of the next End phase, add 1 to the result of any Bottle tests made for\nthe enemy gang. In addition, Broken enemy fighters cannot rally.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": "E"
+  },
+  {
+    "name": "Stealthy Advance",
+    "activation": " Play this card after both gangs\nhave been set up at the start of the\nbattle, before the first round\nbegins.",
+    "description": "Up to half of the fighters in your crew (rounding up) can immediately make a\nStandard Move.\nThree-Point",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "B",
+    "gangAffiliation": "E"
+  },
+  {
+    "name": "Landing",
+    "activation": "\nPlay when a fighter falls.",
+    "description": "Note: Sector Mechanicus only.\nThe fighter is not Pinned by the fall and does not suffer a hit. If they still have any\nactions to take, they can take them.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": "E"
+  },
+  {
+    "name": "Tunnel Runners",
+    "activation": " Play at the start of any round.",
+    "description": "Note: Zone Mortalis only.\nFor the duration of the round, all friendly fighters can move through pitfalls and\nductways as though they were clear terrain. They cannot end their turn on them.",
+    "zoneMortalisOnly": true,
+    "sourceDeck": "E",
+    "gangAffiliation": "E"
+  },
+  {
+    "name": "Ultra-Violence",
+    "activation": " Play instead of activating a fighter.",
+    "description": "For the remainder of the round, all weapons with the Melee trait gain Parry – if they\ndid not already have it – and increase their AP by -1.\n175\nGoliath Tactics\nName Condition Description\nAnything’s a",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "E",
+    "gangAffiliation": "E"
+  },
+  {
+    "name": "Weapon",
+    "activation": "\nOne of your fighters can spend an\naction to play this card.",
+    "description": "Tuck this card under the fighter’s card. While it is there, the fighter’s unarmed attacks\nreceive +1 strength and AP -1.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": "G"
+  },
+  {
+    "name": "Blade Breaker",
+    "activation": " Play this card when one of your\nfighters is hit, but not wounded by\na close combat weapon that does\nnot have the Power trait.",
+    "description": "The close combat weapon (pick one if the fighter was hit but not wounded by more\nthan one) cannot be used for the rest of the battle.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": "G"
+  },
+  {
+    "name": "Brutal Charge",
+    "activation": " Play this card when one of your\nfighters makes a Charge action.",
+    "description": "For the duration of the action, the fighter\u0027s Movement characteristic is increased by\n2’’, and their Attacks characteristic is increased by 1. In addition, any attacks they\nmake gain the Knockback trait.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "B",
+    "gangAffiliation": "G"
+  },
+  {
+    "name": "Ceramite Skin",
+    "activation": " Play this card when a fighter is hit\nby an attack with the Blaze trait.",
+    "description": "The fighter is not pinned and the attack causes no damage.\nInhuman",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": "G"
+  },
+  {
+    "name": "Resilience",
+    "activation": "\nPlay this card instead of activating\na fighter on your turn.",
+    "description": "Each of your Pinned fighters immediately stands up. Then make a Recovery roll for\neach Injured fighter in your gang, treating Out of Action results as Seriously Injured.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "B",
+    "gangAffiliation": "G"
+  },
+  {
+    "name": "Ironhide",
+    "activation": " Play when one of your fighters is\nwounded by an attack that causes\nmore than 1 Damage.",
+    "description": "The attack only causes 1 Damage. In addition, if the fighter is pinned after the attack\nhas been resolved they return to standing.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": "G"
+  },
+  {
+    "name": "Knockout Blow",
+    "activation": " Play this card when a fighter\nmakes close combat attacks before\nrolling to hit.",
+    "description": "Any wound rolls for this fighter’s attacks are automatically successful – no dice roll\nis required.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": "G"
+  },
+  {
+    "name": "Not Done Yet",
+    "activation": " Play when a fighter from your\ngang is taken out of action.",
+    "description": "Tuck this card under the fighters card, they are not removed from play. If they were\nprone, they return to standing. They go out of action after they are next activated and\ntake a turn or when they suffer another unsaved wound, whichever comes first.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": "G"
+  },
+  {
+    "name": "Second Wind",
+    "activation": " Play instead of activating a fighter.",
+    "description": "Remove a flesh wound from any fighter’s card.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": "G"
+  },
+  {
+    "name": "Steel Constitution",
+    "activation": " Play instead of activating a fighter.",
+    "description": "Choose one of your fighters and tuck this card under their fighter card. Until the end\nof the round, this fighter cannot be affected by weapons with the Gas or Toxin trait,\nand their Strength and Toughness are used at their full value, regardless of any\nmodifiers (including flesh wounds).",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "G",
+    "gangAffiliation": "G"
+  },
+  {
+    "name": "Stimm Surge",
+    "activation": " Play this card when activating a\nfighter.",
+    "description": "Tuck this card under the Fighter\u0027s card. While it is there , the fighter\u0027s Move, Strength\nand Toughness are each increased by 1. In each End phase, roll a D6. On a 1, the card\nis discarded and an Injury roll is made for the fighter, using a Damage of 2. On a 2,\nthe card is discarded. On a 3, the fighter suffers a Flesh Wound but the card remains\nin play.\nUnstoppable",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "B",
+    "gangAffiliation": "G"
+  },
+  {
+    "name": "Behemoth",
+    "activation": "\nPlay this card after an attack is\nmade against on of your fighters,\nbefore the Injury roll (if any) is\nmade.",
+    "description": "The attack has no further effect – no Injury roll is made. In addition, if your fighter is\npinned, they immediately stand up.\n176\nOrlock Tactics\nName Condition Description",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "B",
+    "gangAffiliation": "G"
+  },
+  {
+    "name": "Ambition",
+    "activation": " Play this card when it is your turn\nto activate a fighter.",
+    "description": "Pick a Juve or a Ganger with a Ready marker. For this turn only that fighter is treated\nas a Leader for the purposes of activating groups – in other words, if they are\nactivated, you can activate up to two other fighters within 4’’ of them.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": "O"
+  },
+  {
+    "name": "Beat Down",
+    "activation": " Play at the start of any round.",
+    "description": "For the duration of the round, all unarmed close combat attacks made by your\nfighters that hit, automatically inflict a Flesh Wounds unless a save roll is made. No\nwound roll or injury roll is made.\nBond of",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": "O"
+  },
+  {
+    "name": "Brotherhood",
+    "activation": "\nPlay this card at the end of a\nfriendly fighter’s turn, when they\nare within 3’’ of a friendly fighter\nwho is Seriously Injured.",
+    "description": "The fighter can immediately make a Fight [Basic] or Shoot [Basic] action. This is in\naddition to the two other actions they can make during their turn.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": "O"
+  },
+  {
+    "name": "Die Trying",
+    "activation": " Play at the start of any round.",
+    "description": "For the duration of the turn, Seriously Injured fighters in your gang can provide\nassists and interference as if they were standing.\nFor Close",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": "O"
+  },
+  {
+    "name": "Encounters",
+    "activation": "\nPlay this card when activating a\nfighter.",
+    "description": "Put this card under the active fighter’s Fighter card. Until the end of a the battle, this\nfighter has a sawn-off shotgun in addition to their other equipment.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": "O"
+  },
+  {
+    "name": "Intimidation",
+    "activation": " Play instead of activating a fighter.",
+    "description": "Choose an Active fighter from your gang. Each Active enemy fighter within 9’’ of\nthat fighter must make a Nerve test. If a fighter fails the check, they run for cover as\nnormal, but are not Broken.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": "O"
+  },
+  {
+    "name": "Lead by Example",
+    "activation": " Play this when a Leader or\nChampion from your gang takes an\nenemy model Out of Action in\nclose combat.",
+    "description": "Any Broken fighter from your gang immediately rally. In addition, any Pinned\nfighters from your gang within 6’’ of the Leader or Champion can immediately return\nto standing.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": "O"
+  },
+  {
+    "name": "Solidarity",
+    "activation": " Play at the start of any round.",
+    "description": "For the duration of the round, fighters from your gang automatically pass any Cool\nchecks they make as long as they are within 6’’ of another fighter from your gang.\n177\nVan Saar Tactics\nName Condition Description",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "O",
+    "gangAffiliation": "O"
+  },
+  {
+    "name": "Auto-Healer",
+    "activation": " Play this card at the start of any\nEnd phase.",
+    "description": "Choose one Seriously Injured fighter. Rather than rolling the Injury dice, you can\nchoose to have the fighter suffer a Flesh Wound and become Pinned.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": "V"
+  },
+  {
+    "name": "Blood Cleansers",
+    "activation": " Play at the start of any turn.",
+    "description": "For the duration of the round, all friendly models count their Toughness as 1 higher\nwhen affected by weapons with the Toxin or Gas traits.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": "V"
+  },
+  {
+    "name": "Comm Burst",
+    "activation": " Play at the start of any turn.",
+    "description": "For this round, your gang’s Leader can make Rally actions for Broken fighters\nanywhere on the board. In addition, the range of Leading by Example is increased to\n18’’ for Leaders and 12’’ for Champions.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": "V"
+  },
+  {
+    "name": "Cortical Stimulants",
+    "activation": " Play at the start of the game,\nafter deployment.",
+    "description": "One fighter in your gang automatically passes Intelligence checks for the duration of\nthe battle.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": "V"
+  },
+  {
+    "name": "Enhanced Auspexes",
+    "activation": " Play instead of activating a\nfighter.",
+    "description": "For the remainder of the round, friendly fighters may fire through line of sight\nblocking terrain such as doors and barricades, but NOT through any impassable\nterrain. These shots suffer a -2 penalty to hit and the target’s armour save is increased\nby 1.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": "V"
+  },
+  {
+    "name": "Experimental Rig",
+    "activation": " Play at the start of the game,\nafter both sides have deployed.",
+    "description": "Choose a weapon possessed by a friendly fighter. For the duration of the game, this\nweapon increases its Long range by 6’’ and its Strength by 1, but loses the Plentiful\ntrait if it has it, and gains the Scarce trait if it doesn’t have it.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": "V"
+  },
+  {
+    "name": "Hyper Auto-Loader",
+    "activation": " Play when a fighter makes a\nranged attack.",
+    "description": "If the fighter is using a weapon with the Rapid Fire trait, they may roll 2 extra\nFirepower dice. After working out the effects of the shot, their ranged weapon\nautomatically counts as having failed an Ammo check, regardless of the results of the\nFirepower dice.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": "V"
+  },
+  {
+    "name": "Medical Protocols",
+    "activation": " Play at the start of any End\nphase.",
+    "description": "For the duration of this End phase, when any fighter assists a friendly fighter’s\nRecovery test, roll an extra Injury dice, then choose one to keep.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": "V"
+  },
+  {
+    "name": "Mesh Underlay",
+    "activation": " Play when a fighter is hit by a\nranged attack.",
+    "description": "For the remainder of the battle, the chosen fighter\u0027s armour saves are not modified by\nAP when hit by a ranged attack.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": "V"
+  },
+  {
+    "name": "Overcharge",
+    "activation": " Play when a fighter makes a\nranged attack.",
+    "description": "For the duration of the fighter\u0027s activation, one of their Las or Plasma ranged\nweapons increases its Strength by 2.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": "V"
+  },
+  {
+    "name": "Pneumatic Injectors",
+    "activation": " Play when a fighter makes a\nmelee attack.",
+    "description": "For the duration of the fighter\u0027s activation, one of their melee weapons increases its\nStrength by 2.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": "V"
+  },
+  {
+    "name": "Warforge",
+    "activation": " Play at the start of the game,\nafter both sides have deployed.",
+    "description": "For the duration of this battle, all friendly models add a +1 modifier to any Ammo\nchecks they are required to take.",
+    "zoneMortalisOnly": false,
+    "sourceDeck": "V",
+    "gangAffiliation": "V"
+  }
+]

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
     <Properties>
-        <Property name="logPattern">%d{dd-MM-yyyy HH:mm:ss,SSS} [%t] %-5p %c - %m%n</Property>
+        <Property label="logPattern">%d{dd-MM-yyyy HH:mm:ss,SSS} [%t] %-5p %c - %m%n</Property>
     </Properties>
     <Appenders>
-        <Console name="Console" target="SYSTEM_OUT">
+        <Console label="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${logPattern}"/>
         </Console>
     </Appenders>

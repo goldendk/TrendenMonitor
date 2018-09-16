@@ -5,3 +5,13 @@ export function formToQueryString(formDom) {
         .join("&");  // transform the elements into encoded key-value-pairs
     return parameters;
 }
+
+
+export function printDateTimeFromLong(date){
+    return printDateTime(new Date(date));
+}
+
+export function printDateTime(date){
+    return date.toLocaleDateString() + " "+ date.toLocaleTimeString();
+
+}

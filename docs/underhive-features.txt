@@ -1,0 +1,19 @@
+
+Edit cards.
+
+
+"DRAWING"
+Draw N cards from active cards.
+Draw N cards with reload.
+
+Name a deck-drawing.
+
+Keep two or more active drawings.
+
+Retire decks-drawings.
+
+Undo draws.
+Re-roll draws (undo + redo).
+
+
+d
